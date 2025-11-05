@@ -41,14 +41,20 @@ export default function App() {
           setCurrentPage('project');
           window.scrollTo(0, 0);
         }}
-        onNavigateToAbout={() => setCurrentPage('about')}
+        onNavigateToAbout={() => {
+          setCurrentPage('about');
+          window.scrollTo({ top: 0, left: 0 });
+        }}
       />
     );
   }
 
   return (
     <HomePage 
-      onNavigateToAbout={() => setCurrentPage('about')}
+      onNavigateToAbout={() => {
+        setCurrentPage('about');
+        window.scrollTo({ top: 0, left: 0 });
+      }}
       onNavigateToProject={(projectId: string) => {
         setSelectedProject(projectId);
         setCurrentPage('project');
@@ -59,12 +65,13 @@ export default function App() {
 }
 
 // 푸터 비디오 렌더링 컴포넌트 (UnicornStudio 임베드)
-function FooterVideoComponent({ onHeightChange }: { onHeightChange?: (height: number) => void }) {
+function FooterVideoComponent({ onHeightChange, active }: { onHeightChange?: (height: number) => void; active?: boolean }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const embedRef = useRef<HTMLDivElement>(null);
 
   // UnicornStudio 스크립트 로드 및 CSS 주입
   useEffect(() => {
+    if (!active) return; // 활성화될 때만 초기화
     // CSS 스타일 주입으로 크기 강제 고정
     const styleId = 'unicorn-studio-footer-size-fix';
     if (!document.getElementById(styleId)) {
@@ -123,7 +130,7 @@ function FooterVideoComponent({ onHeightChange }: { onHeightChange?: (height: nu
     setTimeout(initCheck, 500);
     setTimeout(initCheck, 1000);
     setTimeout(initCheck, 2000);
-  }, []);
+  }, [active]);
 
   // 기존 비디오와 동일한 스타일 적용
   useEffect(() => {
@@ -288,10 +295,12 @@ function VideoComponent({ onHeightChange }: { onHeightChange?: (height: number) 
 // 전문 분야 아이템 컴포넌트 (비디오 포함)
 function ExpertiseItem({ skill, videoNumber, variants }: { skill: string; videoNumber: number; variants: any }) {
   const videoRef = useRef<HTMLVideoElement>(null);
+  const retroRef = useRef<HTMLVideoElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const [isHovered, setIsHovered] = useState(false);
   const [hasPlayedOnce, setHasPlayedOnce] = useState(false);
   const [isInView, setIsInView] = useState(false);
+  const [retroReady, setRetroReady] = useState(false);
   
 
   // 뷰포트 감지
@@ -330,6 +339,26 @@ function ExpertiseItem({ skill, videoNumber, variants }: { skill: string; videoN
     };
   }, [hasPlayedOnce, isHovered]);
 
+  // 레트로 영상 사전 로드 및 예열(지연 제거)
+  useEffect(() => {
+    const r = retroRef.current;
+    if (!r) return;
+    // 강제로 로드
+    try { r.load(); } catch {}
+    const onLoaded = () => {
+      setRetroReady(true);
+      // 한 번 재생 후 즉시 일시정지하여 디코더/첫 프레임 예열
+      r.play().then(() => {
+        try { r.currentTime = 0; } catch {}
+        r.pause();
+      }).catch(() => {
+        // 자동재생이 차단되어도 muted라 대개 허용됨. 실패해도 이후 호버 시 재생됨
+      });
+    };
+    r.addEventListener('loadeddata', onLoaded, { once: true });
+    return () => r.removeEventListener('loadeddata', onLoaded);
+  }, []);
+
   return (
     <motion.div 
       style={{ 
@@ -340,20 +369,20 @@ function ExpertiseItem({ skill, videoNumber, variants }: { skill: string; videoN
       whileTap={{ scale: 0.99 }}
       onMouseEnter={() => {
         setIsHovered(true);
-        if (videoRef.current) {
-          videoRef.current.loop = true;
-          try { videoRef.current.currentTime = 0; } catch {}
-          videoRef.current.play().catch((err) => {
-            console.error('Video play error:', err);
+        // 레트로 영상 재생
+        if (retroRef.current) {
+          retroRef.current.loop = true;
+          try { retroRef.current.currentTime = 0; } catch {}
+          retroRef.current.play().catch((err) => {
+            console.error('Retro video play error:', err);
           });
         }
       }}
       onMouseLeave={() => {
         setIsHovered(false);
-        if (videoRef.current) {
-          videoRef.current.loop = false;
-          videoRef.current.pause();
-          // keep last frame to avoid flicker
+        if (retroRef.current) {
+          retroRef.current.loop = false;
+          retroRef.current.pause();
         }
       }}
     >
@@ -371,10 +400,10 @@ function ExpertiseItem({ skill, videoNumber, variants }: { skill: string; videoN
           transition: 'all 0.8s cubic-bezier(0.19, 1, 0.22, 1)'
         }}
       >
-        {/* 비디오 - 처음 한 번 재생 후 정지, 호버 시 재생 */}
+        {/* 기본 영상 - 뷰포트 진입 시 1회 재생 */}
         <video
           ref={videoRef}
-          src={`${import.meta.env.BASE_URL}icon${videoNumber}_retro.mp4`}
+          src={`${import.meta.env.BASE_URL}icon${videoNumber}.mp4`}
           muted
           playsInline
           preload="auto"
@@ -385,9 +414,9 @@ function ExpertiseItem({ skill, videoNumber, variants }: { skill: string; videoN
             width: '100%',
             height: '100%',
             objectFit: 'cover',
-            opacity: 1,
+            opacity: isHovered ? 0 : 1,
             pointerEvents: 'none',
-            transition: 'opacity 0.3s ease',
+            transition: 'opacity 0.25s ease',
             transform: 'translateZ(0)',
             willChange: 'transform, opacity',
             backfaceVisibility: 'hidden'
@@ -427,6 +456,32 @@ function ExpertiseItem({ skill, videoNumber, variants }: { skill: string; videoN
             }
           }}
           onError={(e) => {
+            console.error(`Failed to load icon${videoNumber}.mp4`, e);
+          }}
+        />
+
+        {/* 레트로 영상 - 호버 시만 표시/재생 */}
+        <video
+          ref={retroRef}
+          src={`${import.meta.env.BASE_URL}icon${videoNumber}_retro.mp4`}
+          muted
+          playsInline
+          preload="auto"
+          style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            objectFit: 'cover',
+            opacity: isHovered ? 1 : 0,
+            pointerEvents: 'none',
+            transition: 'opacity 0.25s ease',
+            transform: 'translateZ(0) scale(1.2)',
+            willChange: 'transform, opacity',
+            backfaceVisibility: 'hidden'
+          }}
+          onError={(e) => {
             console.error(`Failed to load icon${videoNumber}_retro.mp4`, e);
           }}
         />
@@ -458,6 +513,7 @@ function HomePage({ onNavigateToAbout, onNavigateToProject }: { onNavigateToAbou
   const footerSectionRef = useRef<HTMLElement>(null);
   const [footerHeight, setFooterHeight] = useState<number | null>(null);
   const [isFooterInView, setIsFooterInView] = useState(false);
+  const [activateFooterEmbed, setActivateFooterEmbed] = useState(false);
   const heroEffectContainerRef = useRef<HTMLDivElement>(null);
 
   // Smooth scroll progress tracking
@@ -549,6 +605,25 @@ function HomePage({ onNavigateToAbout, onNavigateToProject }: { onNavigateToAbou
         container.removeAttribute('data-unicorn-id');
       }
     };
+  }, []);
+
+  // Footer in-view observer with 2s delay to activate embed
+  useEffect(() => {
+    const footerEl = footerSectionRef.current;
+    if (!footerEl) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setIsFooterInView(true);
+            setTimeout(() => setActivateFooterEmbed(true), 2000);
+          }
+        });
+      },
+      { threshold: 0.4 }
+    );
+    observer.observe(footerEl);
+    return () => observer.disconnect();
   }, []);
 
   // Animation variants - Spring-based physics
@@ -1383,6 +1458,32 @@ function HomePage({ onNavigateToAbout, onNavigateToProject }: { onNavigateToAbou
                     background: '#2a2a2a'
                   }} />
                   {/* Project-specific thumbnail image */}
+                  {project.projectId === 'hourtaste' && (
+                    <img
+                      src={`${import.meta.env.BASE_URL}project1.png`}
+                      alt={project.name}
+                      style={{
+                        position: 'absolute',
+                        inset: 0,
+                        width: '100%',
+                        height: '100%',
+                        objectFit: 'cover'
+                      }}
+                    />
+                  )}
+                  {project.projectId === 'nook' && (
+                    <img
+                      src={`${import.meta.env.BASE_URL}project2.png`}
+                      alt={project.name}
+                      style={{
+                        position: 'absolute',
+                        inset: 0,
+                        width: '100%',
+                        height: '100%',
+                        objectFit: 'cover'
+                      }}
+                    />
+                  )}
                   {project.projectId === 'cat-peaceful-day' && (
                     <img
                       src={`${import.meta.env.BASE_URL}project4.png`}
@@ -1409,13 +1510,15 @@ function HomePage({ onNavigateToAbout, onNavigateToProject }: { onNavigateToAbou
                       }}
                     />
                   )}
-                  <div style={{
-                    position: 'absolute',
-                    inset: 0,
-                    background: project.gradient,
-                    mixBlendMode: 'multiply',
-                    opacity: 0.95
-                  }} />
+                  {project.projectId !== 'hourtaste' && project.projectId !== 'nook' && (
+                    <div style={{
+                      position: 'absolute',
+                      inset: 0,
+                      background: project.gradient,
+                      mixBlendMode: 'multiply',
+                      opacity: 0.95
+                    }} />
+                  )}
                   
                   {project.desc && (
                     <div style={{
@@ -1615,7 +1718,7 @@ function HomePage({ onNavigateToAbout, onNavigateToProject }: { onNavigateToAbou
                   if (footerSectionRef.current) {
                     footerSectionRef.current.style.height = `${height}px`;
                   }
-                }} />
+                }} active={activateFooterEmbed} />
               </div>
             </div>
           </motion.div>
