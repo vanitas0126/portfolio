@@ -323,6 +323,21 @@ function ExpertiseItem({ skill, videoNumber, variants }: { skill: string; videoN
                 });
               }
             }
+            // 마지막 3개(6,7,8)는 추가 예열: 200ms 정도 백그라운드 재생 후 일시정지
+            if (retroRef.current && (videoNumber >= 6)) {
+              try {
+                const rv = retroRef.current;
+                if (rv.paused) {
+                  rv.muted = true;
+                  rv.playsInline = true;
+                  if (rv.readyState < 2) rv.load();
+                  rv.currentTime = Math.max(0.001, rv.currentTime);
+                  rv.play().then(() => {
+                    setTimeout(() => { try { rv.pause(); } catch {} }, 220);
+                  }).catch(() => {});
+                }
+              } catch {}
+            }
           } else {
             // 뷰포트에서 벗어나면 리소스 절약을 위해 일시정지
             if (videoRef.current) {
@@ -349,13 +364,14 @@ function ExpertiseItem({ skill, videoNumber, variants }: { skill: string; videoN
     const r = retroRef.current;
     if (!r) return;
     // 강제로 로드
+    try { r.preload = 'auto'; r.muted = true; r.playsInline = true; } catch {}
     try { r.load(); } catch {}
     const onLoaded = () => {
       setRetroReady(true);
       // 한 번 재생 후 즉시 일시정지하여 디코더/첫 프레임 예열
+      try { r.currentTime = 0.001; } catch {}
       r.play().then(() => {
-        try { r.currentTime = 0; } catch {}
-        r.pause();
+        try { r.pause(); } catch {}
       }).catch(() => {
         // 자동재생이 차단되어도 muted라 대개 허용됨. 실패해도 이후 호버 시 재생됨
       });
@@ -377,10 +393,15 @@ function ExpertiseItem({ skill, videoNumber, variants }: { skill: string; videoN
         // 레트로 영상 재생
         if (retroRef.current) {
           retroRef.current.loop = true;
-          try { retroRef.current.currentTime = 0; } catch {}
+          try { retroRef.current.currentTime = 0.001; } catch {}
+          try { retroRef.current.playbackRate = 1.0; } catch {}
           retroRef.current.play().catch((err) => {
             console.error('Retro video play error:', err);
           });
+        }
+        // 기본 영상 즉시 멈춰 잔상 방지
+        if (videoRef.current) {
+          try { videoRef.current.pause(); } catch {}
         }
       }}
       onMouseLeave={() => {
@@ -388,6 +409,10 @@ function ExpertiseItem({ skill, videoNumber, variants }: { skill: string; videoN
         if (retroRef.current) {
           retroRef.current.loop = false;
           retroRef.current.pause();
+        }
+        // 기본 영상은 1회만 재생하고 멈춤. 아직 재생 전이라면 재개
+        if (videoRef.current && !hasPlayedOnce) {
+          try { videoRef.current.play(); } catch {}
         }
       }}
     >
@@ -420,8 +445,9 @@ function ExpertiseItem({ skill, videoNumber, variants }: { skill: string; videoN
             height: '100%',
             objectFit: 'cover',
             opacity: isHovered ? 0 : 1,
+            visibility: isHovered ? 'hidden' : 'visible',
             pointerEvents: 'none',
-            transition: 'opacity 0.25s ease',
+            transition: 'opacity 0.12s linear',
             transform: 'translateZ(0)',
             willChange: 'transform, opacity',
             backfaceVisibility: 'hidden'
@@ -480,8 +506,9 @@ function ExpertiseItem({ skill, videoNumber, variants }: { skill: string; videoN
             height: '100%',
             objectFit: 'cover',
             opacity: isHovered ? 1 : 0,
+            visibility: isHovered ? 'visible' : 'hidden',
             pointerEvents: 'none',
-            transition: 'opacity 0.25s ease',
+            transition: 'opacity 0.12s linear',
             transform: 'translateZ(0) scale(1.2)',
             willChange: 'transform, opacity',
             backfaceVisibility: 'hidden'
@@ -1420,9 +1447,9 @@ function HomePage({ onNavigateToAbout, onNavigateToProject }: { onNavigateToAbou
                 projectId: 'railway-redesign'
               },
               { 
-                name: 'A Cat\'s Peaceful Day',
+                name: "Cats' Peaceful Day",
                 desc: '',
-                category: "A Cat's Peaceful Day",
+                category: "Cats' Peaceful Day",
                 tags: 'Figure / Exhibition',
                 gradient: 'rgba(255, 255, 255, 0.04)',
                 neonColor: '#a855f7',

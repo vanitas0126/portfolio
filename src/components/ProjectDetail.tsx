@@ -121,14 +121,14 @@ const projectsData: { [key: string]: ProjectData } = {
   },
   'cat-peaceful-day': {
     id: 'cat-peaceful-day',
-    title: "A Cat's Peaceful Day",
-    heroImage: 'miniature cat peaceful scene',
-    heroVideo: `${import.meta.env.BASE_URL}videos/cat.mp4`,
+    title: "Cats' Peaceful Day",
+    heroImage: `${import.meta.env.BASE_URL}project4/project4_thumbnail.png`,
+    heroVideo: undefined,
     myRole: ['Art Director'],
     team: ['Photographer\n(박소현, 본인, 강민진, 송예준)'],
     duration: '1개월',
     industry: 'Art / Figure Design',
-    summary: '낚시하는 고양이 피규어를 통해 작고 평화로운 하루를 "미니어처 세계"로 표현하는 촬영 프로젝트입니다. 거울을 연못처럼 사용한 반사 연출과 색/톤/각도 조정으로 피규어 세계가 실재감 있게 보이는 이미지를 완성했습니다.',
+    summary: '낚시하는 고양이 피규어 두 마리를 중심으로, 작고 평화로운 하루를 "미니어처 세계"로 표현한 촬영 프로젝트입니다. 거울을 연못처럼 사용해 반사를 적극 활용하고, 샷마다 물/하늘 톤을 조절해 두 고양이의 시선 흐름이 자연스럽게 먼저 읽히도록 구성했습니다.',
     sections: [
       {
         title: '의도 (Why)',
@@ -508,7 +508,9 @@ export function ProjectDetail({ projectId, onBack, onNavigateToProject, onNaviga
               )
             ) : (
               <ImageWithFallback
-                src={`https://source.unsplash.com/1200x600/?${project.heroImage}`}
+                src={project.heroImage && (project.heroImage.startsWith('http') || project.heroImage.includes('/')) 
+                  ? project.heroImage 
+                  : `https://source.unsplash.com/1200x600/?${project.heroImage}`}
                 alt={project.title}
                 style={{
                   width: '100%',
