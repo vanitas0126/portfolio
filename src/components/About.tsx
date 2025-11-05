@@ -400,6 +400,45 @@ export default function About({ onNavigateHome }: AboutProps) {
           maxWidth: '1180px',
           margin: '0 auto'
         }}>
+          <div style={{ display: 'flex', justifyContent: 'flex-start', width: '100%', marginBottom: '24px' }}>
+            <pre style={{
+              margin: 0,
+              padding: '12px 16px',
+              borderRadius: '12px',
+              background: '#000',
+              color: '#fff',
+              fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace',
+              fontSize: '16px',
+              lineHeight: 1.2,
+              textAlign: 'left',
+              overflowX: 'auto',
+              textShadow: 'none'
+            }}>
+{`         _._         `}
+{'\n'}
+{`        (\\!/)        `}
+{'\n'}
+{`      .(|||||).      `}
+{'\n'}
+{`     ((/.'~'.\\))     `}
+{'\n'}
+{`     (! ^   ^ !)     `}
+{'\n'}
+{`     (~.=.-.=.~)     `}
+{'\n'}
+{`      |   <   |      `}
+{'\n'}
+{`      !  '-'  !      `}
+{'\n'}
+{`       !.___.!       `}
+{'\n'}
+{`      /'-. .-'\\      `}
+{'\n'}
+{` _.-~'\\_/\\ /\\_/'~-._ `}
+{'\n'}
+{`'         V         '`}
+            </pre>
+          </div>
           <div style={{ marginBottom: '28px' }}>
             <h2 style={{
               fontSize: '42px',
@@ -413,58 +452,81 @@ export default function About({ onNavigateHome }: AboutProps) {
 
           <div>
             <p style={{
-              fontSize: '18px',
+              fontSize: '16px',
               lineHeight: 1.7,
               color: 'rgba(255, 255, 255, 0.85)',
               marginBottom: '22px',
               fontWeight: 400,
               fontFamily: 'SD Greta Sans'
             }}>
-              저에게 디자인은 표면을 꾸미는 작업이 아니라, 생각을 시각적으로 정리하는 과정 그 자체입니다. 최종 형태는 그 안에 담긴 생각이 논리적으로 전개된 결과이자 흔적입니다.
+              저에게 디자인은 겉을 예쁘게 만드는 일이 아니라, <span style={{ color: '#ffd900', fontWeight: 700 }}>생각을 눈에 보이게 정리하는 과정</span>입니다. 완성된 형태는 그 생각이 차근차근 펼쳐진 결과이고, 그 과정이 남긴 흔적입니다.
             </p>
-            
+
             <p style={{
-              fontSize: '18px',
+              fontSize: '16px',
               lineHeight: 1.7,
               color: 'rgba(255, 255, 255, 0.85)',
               marginBottom: '22px',
               fontWeight: 400,
               fontFamily: 'SD Greta Sans'
             }}>
-              그래서 저는 모든 디자인 작업을 시작할 때 <strong style={{ fontWeight: 600 }}>"왜 이 형태가 최선인가?"</strong>라는 질문을 가장 먼저 던집니다.
+              그래서 작업을 시작할 때 항상 <strong style={{ fontWeight: 600 }}>&quot;왜 이 형태가 가장 좋은가?&quot;</strong>라는 질문부터 던집니다.
             </p>
-            
+
             <p style={{
-              fontSize: '18px',
+              fontSize: '16px',
               lineHeight: 1.7,
               color: 'rgba(255, 255, 255, 0.85)',
               marginBottom: '22px',
               fontWeight: 400,
               fontFamily: 'SD Greta Sans'
             }}>
-              아름다움에 대한 제 관점도 같습니다. 미학은 감각적 즐거움이 아니라 철학이 담긴 판단입니다. 무언가 아름답게 느껴진다면, 그것은 우연이 아니라 그 안에 내재된 가치, 질서, 존재 이유 때문입니다.
+              아름다움을 보는 방식도 비슷합니다. 뭔가 아름답다는 건 단순히 보기 좋다는 게 아니라, 거기에 <span style={{ color: '#ffd900', fontWeight: 700 }}>이유가 있다</span>는 뜻입니다. 그 안에 담긴 가치, 질서, 존재 이유가 아름다움을 만듭니다.
             </p>
-            
+
             <p style={{
-              fontSize: '18px',
+              fontSize: '16px',
               lineHeight: 1.7,
               color: 'rgba(255, 255, 255, 0.85)',
               marginBottom: '22px',
               fontWeight: 400,
               fontFamily: 'SD Greta Sans'
             }}>
-              제가 만드는 디자인은 표면적인 아름다움을 넘어, 윤리 의식과 균형감 같은 깊은 가치들이 함께 작동하기를 바랍니다. 겉모습은 명료하고 단순하게 다듬되, 그 안에는 치밀하게 계산된 논리와 정돈된 감정의 질서가 숨 쉽니다. 제가 가장 중요하게 여기는 것은 바로 이 <strong style={{ fontWeight: 600 }}>'단순함 속에 담긴 깊이'</strong>입니다.
+              제가 만드는 디자인은 겉모습만 그럴듯한 게 아니라, <span style={{ color: '#ffd900', fontWeight: 700 }}>윤리와 균형</span> 같은 깊은 가치가 함께 작동하길 바랍니다.
             </p>
-            
+
             <p style={{
-              fontSize: '18px',
+              fontSize: '16px',
+              lineHeight: 1.7,
+              color: 'rgba(255, 255, 255, 0.85)',
+              marginBottom: '22px',
+              fontWeight: 400,
+              fontFamily: 'SD Greta Sans'
+            }}>
+              겉은 명료하고 간결하게<br />
+              속에는 정교한 논리와 정돈된 감정이 흐르도록
+            </p>
+
+            <p style={{
+              fontSize: '16px',
+              lineHeight: 1.7,
+              color: 'rgba(255, 255, 255, 0.85)',
+              marginBottom: '22px',
+              fontWeight: 400,
+              fontFamily: 'SD Greta Sans'
+            }}>
+              제가 가장 중요하게 여기는 건 &#39;단순해 보이지만 깊이 있는 것&#39;입니다.
+            </p>
+
+            <p style={{
+              fontSize: '16px',
               lineHeight: 1.7,
               color: 'rgba(255, 255, 255, 0.85)',
               marginBottom: '0',
               fontWeight: 400,
               fontFamily: 'SD Greta Sans'
             }}>
-              결국 제가 추구하는 디자인은 '논리'와 '감각'이 분리되지 않고 자연스럽게 하나로 맞물리는 지점��� 있습니다. 생각이 구체적인 감각을 만들어내고, 그 감각이 다시 생각을 날카롭게 다듬는 선순환의 과정이죠. 저는 이 둘 사이의 건강한 '긴장감' 속에서 비로소 진정으로 의미 있는 디자인이 태어난다고 믿습니다.
+              결국 제가 추구하는 디자인은 <span style={{ color: '#ffd900', fontWeight: 700 }}>머리(논리)와 감각이 따로 놀지 않고 자연스럽게 만나는 지점</span>입니다. 생각이 구체적인 감각을 만들고, 그 감각이 다시 생각을 더 선명하게 만드는 순환. 이 둘 사이의 건강한 긴장 속에서 진짜 의미 있는 디자인이 나온다고 믿습니다.
             </p>
           </div>
         </section>

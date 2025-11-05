@@ -292,6 +292,7 @@ function ExpertiseItem({ skill, videoNumber, variants }: { skill: string; videoN
   const [isHovered, setIsHovered] = useState(false);
   const [hasPlayedOnce, setHasPlayedOnce] = useState(false);
   const [isInView, setIsInView] = useState(false);
+  
 
   // 뷰포트 감지
   useEffect(() => {
@@ -341,6 +342,7 @@ function ExpertiseItem({ skill, videoNumber, variants }: { skill: string; videoN
         setIsHovered(true);
         if (videoRef.current) {
           videoRef.current.loop = true;
+          try { videoRef.current.currentTime = 0; } catch {}
           videoRef.current.play().catch((err) => {
             console.error('Video play error:', err);
           });
@@ -351,7 +353,7 @@ function ExpertiseItem({ skill, videoNumber, variants }: { skill: string; videoN
         if (videoRef.current) {
           videoRef.current.loop = false;
           videoRef.current.pause();
-          videoRef.current.currentTime = 0;
+          // keep last frame to avoid flicker
         }
       }}
     >
@@ -359,8 +361,8 @@ function ExpertiseItem({ skill, videoNumber, variants }: { skill: string; videoN
         ref={containerRef}
         style={{
           position: 'relative',
-          width: '70%',
-          paddingBottom: '70%',
+          width: '77%',
+          paddingBottom: '77%',
           margin: '0 auto',
           background: 'transparent',
           borderRadius: '20px',
@@ -372,7 +374,7 @@ function ExpertiseItem({ skill, videoNumber, variants }: { skill: string; videoN
         {/* 비디오 - 처음 한 번 재생 후 정지, 호버 시 재생 */}
         <video
           ref={videoRef}
-          src={`${import.meta.env.BASE_URL}icon${videoNumber}.mp4`}
+          src={`${import.meta.env.BASE_URL}icon${videoNumber}_retro.mp4`}
           muted
           playsInline
           preload="auto"
@@ -385,7 +387,10 @@ function ExpertiseItem({ skill, videoNumber, variants }: { skill: string; videoN
             objectFit: 'cover',
             opacity: 1,
             pointerEvents: 'none',
-            transition: 'opacity 0.3s ease'
+            transition: 'opacity 0.3s ease',
+            transform: 'translateZ(0)',
+            willChange: 'transform, opacity',
+            backfaceVisibility: 'hidden'
           }}
           onLoadedMetadata={() => {
             if (videoRef.current) {
@@ -422,7 +427,7 @@ function ExpertiseItem({ skill, videoNumber, variants }: { skill: string; videoN
             }
           }}
           onError={(e) => {
-            console.error(`Failed to load icon${videoNumber}.mp4`, e);
+            console.error(`Failed to load icon${videoNumber}_retro.mp4`, e);
           }}
         />
         
@@ -611,7 +616,7 @@ function HomePage({ onNavigateToAbout, onNavigateToProject }: { onNavigateToAbou
       color: '#fff',
       fontFamily: '"Darker Grotesque", -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif'
     }}>
-      
+ 
       {/* Google Fonts Import */}
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Darker+Grotesque:wght@300;400;500;600;700;800;900&display=swap');
@@ -1089,6 +1094,8 @@ function HomePage({ onNavigateToAbout, onNavigateToProject }: { onNavigateToAbou
           }}
         />
 
+        {/* 배경 임베드 제거 - 원래 상태로 복원 */}
+
         {/* 메인 영상 */}
         <motion.div
           style={{
@@ -1375,6 +1382,33 @@ function HomePage({ onNavigateToAbout, onNavigateToProject }: { onNavigateToAbou
                     height: '100%',
                     background: '#2a2a2a'
                   }} />
+                  {/* Project-specific thumbnail image */}
+                  {project.projectId === 'cat-peaceful-day' && (
+                    <img
+                      src={`${import.meta.env.BASE_URL}project4.png`}
+                      alt={project.name}
+                      style={{
+                        position: 'absolute',
+                        inset: 0,
+                        width: '100%',
+                        height: '100%',
+                        objectFit: 'cover'
+                      }}
+                    />
+                  )}
+                  {project.projectId === 'railway-redesign' && (
+                    <img
+                      src={`${import.meta.env.BASE_URL}project3.png`}
+                      alt={project.name}
+                      style={{
+                        position: 'absolute',
+                        inset: 0,
+                        width: '100%',
+                        height: '100%',
+                        objectFit: 'cover'
+                      }}
+                    />
+                  )}
                   <div style={{
                     position: 'absolute',
                     inset: 0,
@@ -1767,3 +1801,5 @@ function SectionWithAnimation({ children, id }: { children: React.ReactNode; id?
     </div>
   );
 }
+
+// Hero background embed removed to restore previous state
