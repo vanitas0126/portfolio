@@ -175,7 +175,13 @@ function RailwayChart() {
   }, []);
 
   return (
-    <div style={{ marginTop: '50px', marginBottom: '60px' }}>
+    <div style={{ 
+      marginTop: '50px', 
+      marginBottom: '60px',
+      background: 'rgba(255, 255, 255, 0.02)',
+      borderRadius: '16px',
+      padding: '30px'
+    }}>
       <h3 style={{
         fontSize: '18px',
         fontWeight: 600,
@@ -303,7 +309,7 @@ const projectsData: { [key: string]: ProjectData } = {
       },
       {
         title: '전략 (HOW)',
-        content: '승객 실행 기능(예매/요금) → 승객 전용 포털로 완전 분리.\n기업 정보(회사소개/정책/프로젝트) → 메인 사이트 중심 재편.',
+        content: '승객 실행 기능(예매/요금) → 승객 전용 포털로 분리, 포털 진입은 헤더에 고정 CTA 버튼으로 제공.\n기업 정보(회사소개/정책/프로젝트) → 메인 사이트 중심 재편.',
         image: 'domain-driven ia reconstruction'
       }
     ]
@@ -932,22 +938,20 @@ export function ProjectDetail({ projectId, onBack, onNavigateToProject, onNaviga
                 letterSpacing: '-0.02em'
               }}>{section.title}</h2>
               
-              <p style={{
-                fontSize: '17px',
-                lineHeight: 1.9,
-                color: 'rgba(255, 255, 255, 0.8)',
-                fontFamily: '"SD Greta Sans", "IBM Plex Sans KR", sans-serif',
-                marginBottom: section.image ? '50px' : '0',
-                whiteSpace: 'pre-line',
-                fontWeight: 300
-              }}>
-                {section.content}
-              </p>
-
-              {/* 문제(WHY) 아래 순차 재생 영상 3개 배치 */}
-              {project.id === 'railway-redesign' && section.title === '문제 (WHY)' && (
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '36px', marginTop: '14px', marginBottom: '60px' }}>
-                  {/* 법령 인용 이미지 - problem1 위에 배치 */}
+              {/* 문제 섹션은 특별 처리: 텍스트와 이미지를 분리하여 배치 */}
+              {project.id === 'railway-redesign' && section.title === '문제 (WHY)' ? (
+                <>
+                  <p style={{
+                    fontSize: '17px',
+                    lineHeight: 1.9,
+                    color: 'rgba(255, 255, 255, 0.8)',
+                    fontFamily: '"SD Greta Sans", "IBM Plex Sans KR", sans-serif',
+                    marginBottom: '20px',
+                    whiteSpace: 'pre-line',
+                    fontWeight: 300
+                  }}>
+                    철도 산업은 인프라와 운영이 분리되는 구조가 기본입니다.
+                  </p>
                   <img 
                     src={`${import.meta.env.BASE_URL}project3/상하분리1.png`}
                     alt="상하분리 근거"
@@ -956,17 +960,26 @@ export function ProjectDetail({ projectId, onBack, onNavigateToProject, onNaviga
                       height: 'auto',
                       borderRadius: '12px',
                       border: '1px solid rgba(255, 217, 0, 0.08)',
-                      background: 'rgba(255,255,255,0.02)'
+                      background: 'rgba(255,255,255,0.02)',
+                      marginBottom: '50px'
                     }}
                   />
-                  {/* 문제 스크린샷 3종 */}
-                  {[`${import.meta.env.BASE_URL}project3/problem1.png`,
-                    `${import.meta.env.BASE_URL}project3/problem2.png`,
-                    `${import.meta.env.BASE_URL}project3/problem3.png`].map((src, i) => (
+                  <p style={{
+                    fontSize: '17px',
+                    lineHeight: 1.9,
+                    color: 'rgba(255, 255, 255, 0.8)',
+                    fontFamily: '"SD Greta Sans", "IBM Plex Sans KR", sans-serif',
+                    marginBottom: '50px',
+                    whiteSpace: 'pre-line',
+                    fontWeight: 300
+                  }}>
+                    하지만 NRC 웹사이트는 B2B 정보와 B2C 서비스가 명확히 분리되지 않아, 공공기관의 대표 사이트임에도 불구하고 "예매 포털처럼 보일 수 있는 여지"를 만듭니다.
+                  </p>
+                  {/* 문제 스크린샷 2종 - 2열 그리드 */}
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '20px' }}>
                     <img 
-                      key={`problem-img-${i+1}`}
-                      src={src}
-                      alt={`문제 이미지 ${i+1}`}
+                      src={`${import.meta.env.BASE_URL}project3/problem1.png`}
+                      alt="문제 이미지 1"
                       style={{
                         width: '100%',
                         height: 'auto',
@@ -975,62 +988,235 @@ export function ProjectDetail({ projectId, onBack, onNavigateToProject, onNaviga
                         background: 'rgba(255,255,255,0.02)'
                       }}
                     />
-                  ))}
-                  <div style={{
-                    marginTop: '6px',
-                    color: 'rgba(255, 255, 255, 0.85)',
-                    fontSize: '16px',
-                    lineHeight: 1.8,
-                    fontFamily: '"SD Greta Sans", "IBM Plex Sans KR", sans-serif'
-                  }}>
-                    <p style={{ margin: 0, lineHeight: 2.8 }}>1. <span style={{ 
-                      display: 'inline-block',
-                      padding: '4px 10px',
-                      margin: '0 4px',
-                      background: 'rgba(255, 255, 255, 0.12)',
-                      borderRadius: '6px',
-                      fontWeight: 600,
-                      color: '#fff',
-                      verticalAlign: 'middle',
-                      lineHeight: '24px'
-                    }}>DEPARTMENTS(부서)</span>, <span style={{ 
-                      display: 'inline-block',
-                      padding: '4px 10px',
-                      margin: '0 4px',
-                      background: 'rgba(255, 255, 255, 0.12)',
-                      borderRadius: '6px',
-                      fontWeight: 600,
-                      color: '#fff',
-                      verticalAlign: 'middle',
-                      lineHeight: '24px'
-                    }}>DISTRICTS(지구)</span> 같은 기업 내부 정보 메뉴와</p>
-                    <p style={{ margin: 0, lineHeight: 2.8 }}>2. <span style={{ 
-                      display: 'inline-block',
-                      padding: '4px 10px',
-                      margin: '0 4px',
-                      background: 'rgba(255, 255, 255, 0.12)',
-                      borderRadius: '6px',
-                      fontWeight: 600,
-                      color: '#fff',
-                      verticalAlign: 'middle',
-                      lineHeight: '24px'
-                    }}>PASSENGER SERVICES(승객 서비스)</span>, <span style={{ 
-                      display: 'inline-block',
-                      padding: '4px 10px',
-                      margin: '0 4px',
-                      background: 'rgba(255, 255, 255, 0.12)',
-                      borderRadius: '6px',
-                      fontWeight: 600,
-                      color: '#fff',
-                      verticalAlign: 'middle',
-                      lineHeight: '24px'
-                    }}>BOOK NOW(예매)</span> 같은 승객 서비스 메뉴가</p>
-                    <p style={{ margin: 0 }}>3. 하나의 웹사이트(CORPORATION - 공사)에 혼재 되어있습니다.</p>
+                    <img 
+                      src={`${import.meta.env.BASE_URL}project3/problem2.png`}
+                      alt="문제 이미지 2"
+                      style={{
+                        width: '100%',
+                        height: 'auto',
+                        borderRadius: '12px',
+                        border: '1px solid rgba(255, 217, 0, 0.08)',
+                        background: 'rgba(255,255,255,0.02)'
+                      }}
+                    />
                   </div>
-                </div>
+                </>
+              ) : project.id === 'railway-redesign' && section.title === '근거 (EVIDENCE)' ? (
+                <>
+                  <p style={{
+                    fontSize: '17px',
+                    lineHeight: 1.9,
+                    color: 'rgba(255, 255, 255, 0.8)',
+                    fontFamily: '"SD Greta Sans", "IBM Plex Sans KR", sans-serif',
+                    marginBottom: '50px',
+                    whiteSpace: 'pre-line',
+                    fontWeight: 300
+                  }}>
+                    독일/한국의 국철 사이트들도 공공기관 정보 페이지와 승객용 예매 페이지를 서로 다른 경로로 분리해 제공합니다.
+                  </p>
+                  {/* 국철 사례 비교 이미지 그리드 */}
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.6, delay: 0.3 }}
+                    style={{
+                      display: 'grid',
+                      gridTemplateColumns: 'repeat(4, 1fr)',
+                      gap: '20px'
+                    }}
+                  >
+                    {[
+                      {
+                        country: '독일',
+                        items: [
+                          { type: '예매', file: '독일_예매.png' },
+                          { type: '기업', file: '독일_철도.png' }
+                        ]
+                      },
+                      {
+                        country: '영국',
+                        items: [
+                          { type: '예매', file: '영국_예매.png' },
+                          { type: '기업', file: '영국_철도.png' }
+                        ]
+                      },
+                      {
+                        country: '이탈리아',
+                        items: [
+                          { type: '예매', file: '이탈리아_예매.png' },
+                          { type: '기업', file: '이탈리아_철도.png' }
+                        ]
+                      },
+                      {
+                        country: '한국',
+                        items: [
+                          { type: '예매', file: '한국_예매.png' },
+                          { type: '기업', file: '한국_철도.png' }
+                        ]
+                      }
+                    ].map((group, i) => (
+                      <div
+                        key={i}
+                        style={{
+                          background: 'rgba(255, 255, 255, 0.02)',
+                          borderRadius: '16px',
+                          padding: '20px'
+                        }}
+                      >
+                        <div style={{
+                          marginBottom: '16px',
+                          fontSize: '16px',
+                          fontWeight: 600,
+                          color: '#fff',
+                          fontFamily: '"Darker Grotesque", sans-serif',
+                          textAlign: 'center'
+                        }}>
+                          {group.country}
+                        </div>
+                        <div style={{
+                          display: 'grid',
+                          gridTemplateColumns: '1fr',
+                          gap: '16px'
+                        }}>
+                          {group.items.map((item, j) => (
+                            <div key={j}>
+                              <div style={{
+                                marginBottom: '8px',
+                                fontSize: '13px',
+                                fontWeight: 500,
+                                color: 'rgba(255, 255, 255, 0.6)',
+                                fontFamily: '"SD Greta Sans", "IBM Plex Sans KR", sans-serif'
+                              }}>
+                                {item.type}
+                              </div>
+                              <img
+                                src={`${import.meta.env.BASE_URL}project3/${item.file}`}
+                                alt={`${group.country} ${item.type}`}
+                                style={{
+                                  width: '100%',
+                                  height: 'auto',
+                                  borderRadius: '8px',
+                                  border: '1px solid rgba(255, 217, 0, 0.08)',
+                                  background: 'rgba(0,0,0,0.3)'
+                                }}
+                              />
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    ))}
+                  </motion.div>
+                </>
+              ) : project.id === 'railway-redesign' && section.title === '전략 (HOW)' ? (
+                <>
+                  <p style={{
+                    fontSize: '17px',
+                    lineHeight: 1.9,
+                    color: 'rgba(255, 255, 255, 0.8)',
+                    fontFamily: '"SD Greta Sans", "IBM Plex Sans KR", sans-serif',
+                    marginBottom: '50px',
+                    whiteSpace: 'pre-line',
+                    fontWeight: 300
+                  }}>
+                    {section.content}
+                  </p>
+                  
+                  {/* 홈페이지 단순화 */}
+                  <p style={{
+                    fontSize: '17px',
+                    lineHeight: 1.9,
+                    color: 'rgba(255, 255, 255, 0.8)',
+                    fontFamily: '"SD Greta Sans", "IBM Plex Sans KR", sans-serif',
+                    marginBottom: '20px',
+                    whiteSpace: 'pre-line',
+                    fontWeight: 300
+                  }}>
+                    홈은 "기업 정체성 명확화 + 정보 우선순위 재배치" 중심으로 단순화하고, 승객 실행 기능(예매/노선/요금)은 별도 승객 포털로 분리했습니다.
+                  </p>
+                  <div style={{ marginBottom: '80px' }}>
+                    <img 
+                      src={`${import.meta.env.BASE_URL}project3/homepage.png`}
+                      alt="홈페이지"
+                      style={{
+                        width: '100%',
+                        height: 'auto',
+                        borderRadius: '12px',
+                        border: '1px solid rgba(255, 217, 0, 0.08)',
+                        background: 'rgba(255,255,255,0.02)'
+                      }}
+                    />
+                  </div>
+                  
+                  {/* HISTORY */}
+                  <p style={{
+                    fontSize: '17px',
+                    lineHeight: 1.9,
+                    color: 'rgba(255, 255, 255, 0.8)',
+                    fontFamily: '"SD Greta Sans", "IBM Plex Sans KR", sans-serif',
+                    marginBottom: '20px',
+                    whiteSpace: 'pre-line',
+                    fontWeight: 300
+                  }}>
+                    OUR HISTORY는 "연대기+인프라 발전"을 역순으로 정리해 현재까지의 변화 흐름을 보여주고, 인디케이터로 현재 위치를 확인할 수 있도록 하여 기업의 신뢰성을 강화했습니다
+                  </p>
+                  <div style={{ marginBottom: '80px' }}>
+                    <img 
+                      src={`${import.meta.env.BASE_URL}project3/history.png`}
+                      alt="히스토리"
+                      style={{
+                        width: '100%',
+                        height: 'auto',
+                        borderRadius: '12px',
+                        border: '1px solid rgba(255, 217, 0, 0.08)',
+                        background: 'rgba(255,255,255,0.02)'
+                      }}
+                    />
+                  </div>
+                  
+                  {/* 프로젝트/노선 */}
+                  <p style={{
+                    fontSize: '17px',
+                    lineHeight: 1.9,
+                    color: 'rgba(255, 255, 255, 0.8)',
+                    fontFamily: '"SD Greta Sans", "IBM Plex Sans KR", sans-serif',
+                    marginBottom: '20px',
+                    whiteSpace: 'pre-line',
+                    fontWeight: 300
+                  }}>
+                    기존에 없던 '프로젝트/노선' UI를 추가하고 시각화를 적용해 각 프로젝트의 목적·상태를 직관적으로 제시했습니다.
+최근 나이지리아 철도 인프라 개발 사업이 활발하게 진행되고 있기 때문에, 철도 인프라 투자 확대 상황을 공공적으로 투명하게 전달하기 위한 방향입니다.
+                  </p>
+                  <div>
+                    <img 
+                      src={`${import.meta.env.BASE_URL}project3/projects.png`}
+                      alt="프로젝트"
+                      style={{
+                        width: '100%',
+                        height: 'auto',
+                        borderRadius: '12px',
+                        border: '1px solid rgba(255, 217, 0, 0.08)',
+                        background: 'rgba(255,255,255,0.02)'
+                      }}
+                    />
+                  </div>
+                </>
+              ) : (
+                <p style={{
+                  fontSize: '17px',
+                  lineHeight: 1.9,
+                  color: 'rgba(255, 255, 255, 0.8)',
+                  fontFamily: '"SD Greta Sans", "IBM Plex Sans KR", sans-serif',
+                  marginBottom: section.image ? '50px' : '0',
+                  whiteSpace: 'pre-line',
+                  fontWeight: 300
+                }}>
+                  {section.content}
+                </p>
               )}
 
-              {section.image && !(project.id === 'cat-peaceful-day' && section.title === '방법 (How)') && (
+
+              {section.image && !(project.id === 'cat-peaceful-day' && section.title === '방법 (How)') && !(project.id === 'railway-redesign' && section.title === '근거 (EVIDENCE)') && !(project.id === 'railway-redesign' && section.title === '문제 (WHY)') && !(project.id === 'railway-redesign' && section.title === '전략 (HOW)') && (
                 <motion.div 
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
@@ -1058,10 +1244,6 @@ export function ProjectDetail({ projectId, onBack, onNavigateToProject, onNaviga
                 </motion.div>
               )}
 
-              {/* 근거 섹션 아래 차트 */}
-              {project.id === 'railway-redesign' && section.title === '근거 (EVIDENCE)' && (
-                <RailwayChart />
-              )}
 
               {/* Cat project: show 3 reference images under WHY section */}
               {project.id === 'cat-peaceful-day' && section.title === '의도 (Why)' && (
