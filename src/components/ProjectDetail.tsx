@@ -1,11 +1,15 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { motion, useScroll, useSpring } from 'motion/react';
 import { ArrowLeft } from 'lucide-react';
 import { ImageWithFallback } from './figma/ImageWithFallback';
 
 function InlineVideoOnce({ src, alt }: { src: string; alt?: string }) {
+  const hasReachedOneSecond = useRef(false);
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+
   return (
     <video
+      ref={videoRef}
       src={src}
       muted
       playsInline
@@ -21,13 +25,18 @@ function InlineVideoOnce({ src, alt }: { src: string; alt?: string }) {
       }}
       onCanPlay={(e) => {
         const v = e.currentTarget;
+        videoRef.current = v;
         // play when in view using IntersectionObserver
         const obs = new IntersectionObserver((entries) => {
           entries.forEach((entry) => {
             if (entry.isIntersecting) {
-              if (v.paused) {
+              // 한 번 1초에 도달했으면 재생하지 않고 고정
+              if (v.paused && !hasReachedOneSecond.current) {
                 v.currentTime = 0;
                 v.play().catch(() => {});
+              } else if (hasReachedOneSecond.current) {
+                // 이미 1초에 도달했으면 1초 위치로 고정
+                try { v.currentTime = 1; v.pause(); } catch {}
               }
             } else {
               try { v.pause(); } catch {}
@@ -38,6 +47,15 @@ function InlineVideoOnce({ src, alt }: { src: string; alt?: string }) {
         v.onended = () => {
           try { v.pause(); } catch {}
         };
+      }}
+      onTimeUpdate={(e) => {
+        const v = e.currentTarget;
+        if (v.currentTime >= 1 && !hasReachedOneSecond.current) {
+          hasReachedOneSecond.current = true;
+          try { v.pause(); } catch {}
+          // 정확히 1초 프레임에서 멈추도록 보정
+          try { v.currentTime = 1; } catch {}
+        }
       }}
     >
       {alt && <track kind="captions" label={alt} />}
@@ -73,11 +91,11 @@ const projectsData: { [key: string]: ProjectData } = {
     team: ['3명 (기획 공동, 디자인 1명)'],
     duration: '3개월',
     industry: 'Transportation / Public Service',
-    summary: 'NRC 웹사이트에서 기업/투자자 정보(B2B)와 승객 이용 정보(B2C)가 한 화면에 섞여 있던 문제를 해결하기 위해, 철도 산업의 기본 원칙인 상하 분리를 사이트 구조에 반영한 프로젝트입니다.\n승객 포털과 기업 사이트를 분리하여 각 사용자 그룹의 목적에 맞는 접근 경로를 제공했습니다.',
+    summary: '나이지리아 철도공사(NRC) 웹사이트에서 기업/투자자 정보(B2B)와 승객 이용 정보(B2C)가 한 화면에 섞여 있던 문제를 해결하기 위해, 철도 산업의 기본 원칙인 상하 분리를 사이트 구조에 반영한 프로젝트입니다.\n승객 포털과 기업 사이트를 분리하여 각 사용자 그룹의 목적에 맞는 접근 경로를 제공했습니다.',
     sections: [
       {
         title: '문제 (WHY)',
-        content: 'NRC 웹사이트는 기업/투자자 정보(B2B)와 승객 이용 정보(B2C)가 한 화면에 섞여 있었습니다.\n철도 산업의 기본 원칙인 상하 분리(인프라/운영 분리)가 사이트 구조에 반영되지 않은 상태였습니다.',
+        content: '나이지리아 철도공사(NRC) 웹사이트는 기업/투자자 정보(B2B)와 승객 이용 정보(B2C)가 한 화면에 섞여 있었습니다.\n철도 산업의 기본 원칙인 상하 분리(인프라/운영 분리)가 사이트 구조에 반영되지 않은 상태였습니다.',
       },
       {
         title: '근거 (EVIDENCE)',
@@ -729,10 +747,49 @@ export function ProjectDetail({ projectId, onBack, onNavigateToProject, onNaviga
 
               {/* 문제(WHY) 아래 순차 재생 영상 3개 배치 */}
               {project.id === 'railway-redesign' && section.title === '문제 (WHY)' && (
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '16px', marginBottom: '50px' }}>
-                  <InlineVideoOnce src={`${import.meta.env.BASE_URL}project3/problem1.webm`} alt="problem 1" />
-                  <InlineVideoOnce src={`${import.meta.env.BASE_URL}project3/problem2.webm`} alt="problem 2" />
-                  <InlineVideoOnce src={`${import.meta.env.BASE_URL}project3/problem3.webm`} alt="problem 3" />
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '36px', marginTop: '14px', marginBottom: '60px' }}>
+                  {/* 법령 인용 이미지 - problem1 위에 배치 */}
+                  <img 
+                    src={`${import.meta.env.BASE_URL}project3/상하분리1.png`}
+                    alt="상하분리 근거"
+                    style={{
+                      width: '100%',
+                      height: 'auto',
+                      borderRadius: '12px',
+                      border: '1px solid rgba(255, 217, 0, 0.08)',
+                      background: 'rgba(255,255,255,0.02)'
+                    }}
+                  />
+                  {/* 문제 스크린샷 3종 */}
+                  {[`${import.meta.env.BASE_URL}project3/problem1.png`,
+                    `${import.meta.env.BASE_URL}project3/problem2.png`,
+                    `${import.meta.env.BASE_URL}project3/problem3.png`].map((src, i) => (
+                    <img 
+                      key={`problem-img-${i+1}`}
+                      src={src}
+                      alt={`문제 이미지 ${i+1}`}
+                      style={{
+                        width: '100%',
+                        height: 'auto',
+                        borderRadius: '12px',
+                        border: '1px solid rgba(255, 217, 0, 0.08)',
+                        background: 'rgba(255,255,255,0.02)'
+                      }}
+                    />
+                  ))}
+                  <div style={{
+                    marginTop: '6px',
+                    color: 'rgba(255, 255, 255, 0.85)',
+                    fontSize: '16px',
+                    lineHeight: 1.8,
+                    fontFamily: '"SD Greta Sans", "IBM Plex Sans KR", sans-serif'
+                  }}>
+                    <ol style={{ margin: 0, paddingLeft: '20px' }}>
+                      <li>DEPARTMENTS(부서), DISTRICTS(지구) 같은 기업 내부 정보 메뉴와</li>
+                      <li>PASSENGER SERVICES(승객 서비스), BOOK NOW(예매) 같은 승객 서비스 메뉴가</li>
+                      <li>하나의 웹사이트(CORPORATION - 공사)에 혼재 되어있습니다.</li>
+                    </ol>
+                  </div>
                 </div>
               )}
 
