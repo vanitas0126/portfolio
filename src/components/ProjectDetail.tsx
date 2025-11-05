@@ -3,6 +3,205 @@ import { motion, useScroll, useSpring } from 'motion/react';
 import { ArrowLeft } from 'lucide-react';
 import { ImageWithFallback } from './figma/ImageWithFallback';
 
+// Chart.js 차트 컴포넌트
+function RailwayChart() {
+  const chartRef = useRef<HTMLCanvasElement>(null);
+  const chartInstanceRef = useRef<any>(null);
+
+  useEffect(() => {
+    // Chart.js 동적 로드
+    const loadChart = async () => {
+      if (!chartRef.current) return;
+      
+      // Chart.js가 이미 로드되었는지 확인
+      if ((window as any).Chart) {
+        createChart();
+      } else {
+        const script = document.createElement('script');
+        script.src = 'https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js';
+        script.onload = createChart;
+        document.head.appendChild(script);
+      }
+    };
+
+    const createChart = () => {
+      if (!chartRef.current || chartInstanceRef.current) return;
+      const Chart = (window as any).Chart;
+      if (!Chart) return;
+
+      const build = () => {
+        const data = {
+        labels: [
+          '예매',
+          '요금정보 및 할인',
+          '실시간 운행정보',
+          '노선, 역 시설 정보',
+          '안전, 보안 정보',
+          '계정 관리',
+          '고객 지원',
+          '모바일 친화',
+          '다국어',
+          '웹접근성',
+          '미사용'
+        ],
+        datasets: [{
+          label: '응답률 (%)',
+          data: [66.7, 54.5, 51.5, 27.3, 21.2, 18.2, 18.2, 9.1, 6.1, 6.1, 3.0],
+          backgroundColor: [
+            '#10b981',
+            '#059669',
+            '#34d399',
+            '#06b6d4',
+            '#3b82f6',
+            '#6366f1',
+            '#8b5cf6',
+            '#a78bfa',
+            '#6ee7b7',
+            '#a7f3d0',
+            '#d1fae5'
+          ],
+          borderColor: 'rgba(16, 185, 129, 0.2)',
+          borderWidth: 1,
+          borderRadius: 6,
+          barThickness: 35
+        }]
+        };
+
+        const config = {
+        type: 'bar',
+        data: data,
+        options: {
+          indexAxis: 'y',
+          responsive: true,
+          maintainAspectRatio: false,
+          layout: { padding: { right: 24 } },
+          plugins: {
+            legend: {
+              display: false
+            },
+            title: {
+              display: false
+            },
+            // 퍼센트 레이블을 항상 표시
+            datalabels: {
+              color: '#fff',
+              align: 'right',
+              anchor: 'end',
+              clamp: true,
+              formatter: (val: number) => `${val}%`,
+              font: { size: 12, weight: '600' }
+            },
+            tooltip: {
+              backgroundColor: 'rgba(16, 185, 129, 0.95)',
+              padding: 12,
+              titleFont: {
+                size: 13
+              },
+              bodyFont: {
+                size: 13
+              },
+              titleColor: '#fff',
+              bodyColor: '#fff',
+              borderColor: '#10b981',
+              borderWidth: 1,
+              callbacks: {
+                label: function(context: any) {
+                  return ' ' + context.parsed.x + '%';
+                }
+              }
+            }
+          },
+          scales: {
+            x: {
+              beginAtZero: true,
+              max: 70,
+              grid: {
+                color: 'rgba(16, 185, 129, 0.1)',
+                drawBorder: false
+              },
+              ticks: {
+                callback: function(value: any) {
+                  return value + '%';
+                },
+                font: {
+                  size: 11
+                },
+                color: '#666'
+              }
+            },
+            y: {
+              grid: {
+                display: false
+              },
+              ticks: {
+                font: {
+                  size: 12,
+                  weight: '500'
+                },
+                color: '#aaa'
+              }
+            }
+          },
+          animation: {
+            duration: 1200,
+            easing: 'easeInOutQuart' as const
+          }
+        }
+      };
+
+      chartInstanceRef.current = new Chart(chartRef.current, config);
+      };
+
+      // datalabels 플러그인 로드 및 등록 후 생성
+      if ((window as any).ChartDataLabels) {
+        try { (window as any).Chart.register((window as any).ChartDataLabels); } catch {}
+        build();
+      } else {
+        const p = document.createElement('script');
+        p.src = 'https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0';
+        p.onload = () => { try { (window as any).Chart.register((window as any).ChartDataLabels); } catch {}; build(); };
+        document.head.appendChild(p);
+      }
+    };
+
+    loadChart();
+
+    return () => {
+      if (chartInstanceRef.current) {
+        chartInstanceRef.current.destroy();
+        chartInstanceRef.current = null;
+      }
+    };
+  }, []);
+
+  return (
+    <div style={{ marginTop: '50px', marginBottom: '60px' }}>
+      <h3 style={{
+        fontSize: '18px',
+        fontWeight: 600,
+        marginBottom: '8px',
+        fontFamily: '"Darker Grotesque", sans-serif',
+        color: '#fff',
+        textAlign: 'center'
+      }}>
+        철도사이트에서 가장 중요한 기능은?
+      </h3>
+      <p style={{
+        textAlign: 'center',
+        color: '#888',
+        fontSize: '13px',
+        marginBottom: '24px',
+        fontFamily: '"SD Greta Sans", "IBM Plex Sans KR", sans-serif'
+      }}>
+        2024.10.06 | 33명 대상 설문조사
+      </p>
+      <div style={{ position: 'relative', height: '320px' }}>
+        <canvas ref={chartRef} />
+      </div>
+    </div>
+  );
+}
+
 function InlineVideoOnce({ src, alt }: { src: string; alt?: string }) {
   const hasReachedOneSecond = useRef(false);
   const videoRef = useRef<HTMLVideoElement | null>(null);
@@ -784,11 +983,49 @@ export function ProjectDetail({ projectId, onBack, onNavigateToProject, onNaviga
                     lineHeight: 1.8,
                     fontFamily: '"SD Greta Sans", "IBM Plex Sans KR", sans-serif'
                   }}>
-                    <ol style={{ margin: 0, paddingLeft: '20px' }}>
-                      <li>DEPARTMENTS(부서), DISTRICTS(지구) 같은 기업 내부 정보 메뉴와</li>
-                      <li>PASSENGER SERVICES(승객 서비스), BOOK NOW(예매) 같은 승객 서비스 메뉴가</li>
-                      <li>하나의 웹사이트(CORPORATION - 공사)에 혼재 되어있습니다.</li>
-                    </ol>
+                    <p style={{ margin: 0, lineHeight: 2.8 }}>1. <span style={{ 
+                      display: 'inline-block',
+                      padding: '4px 10px',
+                      margin: '0 4px',
+                      background: 'rgba(255, 255, 255, 0.12)',
+                      borderRadius: '6px',
+                      fontWeight: 600,
+                      color: '#fff',
+                      verticalAlign: 'middle',
+                      lineHeight: '24px'
+                    }}>DEPARTMENTS(부서)</span>, <span style={{ 
+                      display: 'inline-block',
+                      padding: '4px 10px',
+                      margin: '0 4px',
+                      background: 'rgba(255, 255, 255, 0.12)',
+                      borderRadius: '6px',
+                      fontWeight: 600,
+                      color: '#fff',
+                      verticalAlign: 'middle',
+                      lineHeight: '24px'
+                    }}>DISTRICTS(지구)</span> 같은 기업 내부 정보 메뉴와</p>
+                    <p style={{ margin: 0, lineHeight: 2.8 }}>2. <span style={{ 
+                      display: 'inline-block',
+                      padding: '4px 10px',
+                      margin: '0 4px',
+                      background: 'rgba(255, 255, 255, 0.12)',
+                      borderRadius: '6px',
+                      fontWeight: 600,
+                      color: '#fff',
+                      verticalAlign: 'middle',
+                      lineHeight: '24px'
+                    }}>PASSENGER SERVICES(승객 서비스)</span>, <span style={{ 
+                      display: 'inline-block',
+                      padding: '4px 10px',
+                      margin: '0 4px',
+                      background: 'rgba(255, 255, 255, 0.12)',
+                      borderRadius: '6px',
+                      fontWeight: 600,
+                      color: '#fff',
+                      verticalAlign: 'middle',
+                      lineHeight: '24px'
+                    }}>BOOK NOW(예매)</span> 같은 승객 서비스 메뉴가</p>
+                    <p style={{ margin: 0 }}>3. 하나의 웹사이트(CORPORATION - 공사)에 혼재 되어있습니다.</p>
                   </div>
                 </div>
               )}
@@ -819,6 +1056,11 @@ export function ProjectDetail({ projectId, onBack, onNavigateToProject, onNaviga
                     }}
                   />
                 </motion.div>
+              )}
+
+              {/* 근거 섹션 아래 차트 */}
+              {project.id === 'railway-redesign' && section.title === '근거 (EVIDENCE)' && (
+                <RailwayChart />
               )}
 
               {/* Cat project: show 3 reference images under WHY section */}
