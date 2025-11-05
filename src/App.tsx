@@ -313,7 +313,7 @@ function ExpertiseItem({ skill, videoNumber, variants }: { skill: string; videoN
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             setIsInView(true);
-            // 뷰포트에 들어왔을 때 비디오 재생
+            // 뷰포트에 들어왔을 때 기본 비디오 1회 재생
             if (videoRef.current && !hasPlayedOnce && !isHovered) {
               const video = videoRef.current;
               video.loop = false;
@@ -322,6 +322,11 @@ function ExpertiseItem({ skill, videoNumber, variants }: { skill: string; videoN
                   console.error('Video play error:', err);
                 });
               }
+            }
+          } else {
+            // 뷰포트에서 벗어나면 리소스 절약을 위해 일시정지
+            if (videoRef.current) {
+              try { videoRef.current.pause(); } catch {}
             }
           }
         });
