@@ -3,6 +3,48 @@ import { motion, useScroll, useSpring } from 'motion/react';
 import { ArrowLeft } from 'lucide-react';
 import { ImageWithFallback } from './figma/ImageWithFallback';
 
+function InlineVideoOnce({ src, alt }: { src: string; alt?: string }) {
+  return (
+    <video
+      src={src}
+      muted
+      playsInline
+      preload="metadata"
+      controls
+      loop={false}
+      style={{
+        width: '100%',
+        height: 'auto',
+        borderRadius: '12px',
+        border: '1px solid rgba(255, 217, 0, 0.08)',
+        background: 'rgba(255,255,255,0.02)'
+      }}
+      onCanPlay={(e) => {
+        const v = e.currentTarget;
+        // play when in view using IntersectionObserver
+        const obs = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              if (v.paused) {
+                v.currentTime = 0;
+                v.play().catch(() => {});
+              }
+            } else {
+              try { v.pause(); } catch {}
+            }
+          });
+        }, { threshold: 0.6 });
+        obs.observe(v);
+        v.onended = () => {
+          try { v.pause(); } catch {}
+        };
+      }}
+    >
+      {alt && <track kind="captions" label={alt} />}
+    </video>
+  );
+}
+
 interface ProjectData {
   id: string;
   title: string;
@@ -684,6 +726,15 @@ export function ProjectDetail({ projectId, onBack, onNavigateToProject, onNaviga
               }}>
                 {section.content}
               </p>
+
+              {/* 문제(WHY) 아래 순차 재생 영상 3개 배치 */}
+              {project.id === 'railway-redesign' && section.title === '문제 (WHY)' && (
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '16px', marginBottom: '50px' }}>
+                  <InlineVideoOnce src={`${import.meta.env.BASE_URL}project3/problem1.webm`} alt="problem 1" />
+                  <InlineVideoOnce src={`${import.meta.env.BASE_URL}project3/problem2.webm`} alt="problem 2" />
+                  <InlineVideoOnce src={`${import.meta.env.BASE_URL}project3/problem3.webm`} alt="problem 3" />
+                </div>
+              )}
 
               {section.image && !(project.id === 'cat-peaceful-day' && section.title === '방법 (How)') && (
                 <motion.div 

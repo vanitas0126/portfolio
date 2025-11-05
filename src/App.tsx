@@ -1671,13 +1671,15 @@ function HomePage({ onNavigateToAbout, onNavigateToProject }: { onNavigateToAbou
               'Interaction & Motion',
               'Product Thinking',
               'Branding & Visual Direction',
-              'Design System Building',
-              'Information Architecture',
-              'Research & User Insight',
-              'Storytelling & Narrative UX'
+              'Design System Building'
             ].map((skill, i) => (
-              <ExpertiseItem key={i} skill={skill} videoNumber={i + 1} variants={scaleIn} />
+              <ExpertiseItem key={`base-${i+1}`} skill={skill} videoNumber={i + 1} variants={scaleIn} />
             ))}
+
+            {/* Recreated items (to reset previous issues) */}
+            <ExpertiseItem key={`fresh-6`} skill={'Information Architecture'} videoNumber={6} variants={scaleIn} />
+            <ExpertiseItem key={`fresh-7`} skill={'Research & User Insight'} videoNumber={7} variants={scaleIn} />
+            <ExpertiseItem key={`fresh-8`} skill={'Storytelling & Narrative UX'} videoNumber={8} variants={scaleIn} />
           </motion.div>
         </section>
       </SectionWithAnimation>
