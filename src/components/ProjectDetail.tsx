@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { motion, useScroll, useSpring } from 'motion/react';
 import { ArrowLeft } from 'lucide-react';
 import { ImageWithFallback } from './figma/ImageWithFallback';
+import { BeforeAfterSlider } from './BeforeAfterSlider';
 
 interface ProjectData {
   id: string;
@@ -683,7 +684,7 @@ export function ProjectDetail({ projectId, onBack, onNavigateToProject, onNaviga
                 {section.content}
               </p>
 
-              {section.image && (
+              {section.image && !(project.id === 'cat-peaceful-day' && section.title === '방법 (How)') && (
                 <motion.div 
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
@@ -708,6 +709,127 @@ export function ProjectDetail({ projectId, onBack, onNavigateToProject, onNaviga
                       objectFit: 'cover'
                     }}
                   />
+                </motion.div>
+              )}
+
+              {/* Cat project: show 3 reference images under WHY section */}
+              {project.id === 'cat-peaceful-day' && section.title === '의도 (Why)' && (
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6, delay: 0.15 }}
+                  style={{
+                    marginTop: '60px',
+                    marginBottom: '64px',
+                    display: 'grid',
+                    gridTemplateColumns: 'repeat(3, 1fr)',
+                    gap: '18px'
+                  }}
+                >
+                  <div style={{ gridColumn: '1 / -1' }}>
+                    <p style={{
+                      margin: '0 0 2px',
+                      fontSize: '13px',
+                      letterSpacing: '0.02em',
+                      color: 'rgba(255,255,255,0.6)'
+                    }}>나무-물 표현</p>
+                  </div>
+                  {['ref1.png','ref2.png','ref3.png'].map((file, i) => (
+                    <div
+                      key={i}
+                      style={{
+                        background: 'rgba(255, 255, 255, 0.02)',
+                        border: '1px solid rgba(255, 217, 0, 0.08)',
+                        borderRadius: '16px',
+                        overflow: 'hidden',
+                        width: '100%',
+                        aspectRatio: '1 / 1'
+                      }}
+                    >
+                      <img
+                        src={`${import.meta.env.BASE_URL}project4/${file}`}
+                        alt={`reference ${i+1}`}
+                        style={{
+                          width: '100%',
+                          height: '100%',
+                          objectFit: 'cover'
+                        }}
+                      />
+                    </div>
+                  ))}
+                </motion.div>
+              )}
+
+              {project.id === 'cat-peaceful-day' && section.title === '의도 (Why)' && (
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6, delay: 0.25 }}
+                  style={{
+                    marginTop: '18px',
+                    display: 'grid',
+                    gridTemplateColumns: 'repeat(3, 1fr)',
+                    gap: '18px'
+                  }}
+                >
+                  <div style={{ gridColumn: '1 / -1' }}>
+                    <p style={{
+                      margin: '0 0 2px',
+                      fontSize: '13px',
+                      letterSpacing: '0.02em',
+                      color: 'rgba(255,255,255,0.6)'
+                    }}>고양이 피규어</p>
+                  </div>
+                  {['ref4.png','ref5.png','ref6.png'].map((file, i) => (
+                    <div
+                      key={i}
+                      style={{
+                        background: 'rgba(255, 255, 255, 0.02)',
+                        border: '1px solid rgba(255, 217, 0, 0.08)',
+                        borderRadius: '16px',
+                        overflow: 'hidden',
+                        width: '100%',
+                        aspectRatio: '1 / 1'
+                      }}
+                    >
+                      <img
+                        src={`${import.meta.env.BASE_URL}project4/${file}`}
+                        alt={`reference ${i+4}`}
+                        style={{
+                          width: '100%',
+                          height: '100%',
+                          objectFit: 'cover'
+                        }}
+                      />
+                    </div>
+                  ))}
+                </motion.div>
+              )}
+
+              {project.id === 'cat-peaceful-day' && section.title === '방법 (How)' && (
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6, delay: 0.2 }}
+                  style={{
+                    marginTop: '60px',
+                    display: 'grid',
+                    gridTemplateColumns: '1fr',
+                    gap: '32px'
+                  }}
+                >
+                  {[1,2,3,4,5,6].map((i) => (
+                    <BeforeAfterSlider
+                      key={i}
+                      beforeSrc={`${import.meta.env.BASE_URL}project4/before${i}.png`}
+                      afterSrc={`${import.meta.env.BASE_URL}project4/after${i}.png`}
+                      alt={`before after ${i}`}
+                      beforeFlip={i === 2 ? 'horizontal' : 'none'}
+                    />
+                  ))}
                 </motion.div>
               )}
             </motion.div>

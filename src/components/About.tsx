@@ -459,7 +459,8 @@ export default function About({ onNavigateHome }: AboutProps) {
               fontWeight: 400,
               fontFamily: 'SD Greta Sans'
             }}>
-              저에게 디자인은 겉을 예쁘게 만드는 일이 아니라, <span style={{ color: '#ffd900', fontWeight: 700 }}>생각을 눈에 보이게 정리하는 과정</span>입니다. 완성된 형태는 그 생각이 차근차근 펼쳐진 결과이고, 그 과정이 남긴 흔적입니다.
+              저에게 디자인은 겉을 예쁘게 만드는 일이 아니라, 생각을 눈에 보이게 정리하는 과정입니다.<br />
+              완성된 형태는 그 생각이 차근차근 펼쳐진 결과이고, 그 과정이 남긴 흔적입니다.
             </p>
 
             <p style={{
@@ -481,7 +482,8 @@ export default function About({ onNavigateHome }: AboutProps) {
               fontWeight: 400,
               fontFamily: 'SD Greta Sans'
             }}>
-              아름다움을 보는 방식도 비슷합니다. 뭔가 아름답다는 건 단순히 보기 좋다는 게 아니라, 거기에 <span style={{ color: '#ffd900', fontWeight: 700 }}>이유가 있다</span>는 뜻입니다. 그 안에 담긴 가치, 질서, 존재 이유가 아름다움을 만듭니다.
+              아름다움을 보는 방식도 비슷합니다. 뭔가 아름답다는 건 단순히 보기 좋다는 게 아니라, 거기에 이유가 있다는 뜻입니다.<br />
+              그 안에 담긴 가치, 질서, 존재 이유가 아름다움을 만듭니다.
             </p>
 
             <p style={{
@@ -492,7 +494,7 @@ export default function About({ onNavigateHome }: AboutProps) {
               fontWeight: 400,
               fontFamily: 'SD Greta Sans'
             }}>
-              제가 만드는 디자인은 겉모습만 그럴듯한 게 아니라, <span style={{ color: '#ffd900', fontWeight: 700 }}>윤리와 균형</span> 같은 깊은 가치가 함께 작동하길 바랍니다.
+              제가 만드는 디자인은 겉모습만 그럴듯한 게 아니라, 윤리와 균형 같은 깊은 가치가 함께 작동하길 바랍니다.
             </p>
 
             <p style={{
@@ -526,7 +528,8 @@ export default function About({ onNavigateHome }: AboutProps) {
               fontWeight: 400,
               fontFamily: 'SD Greta Sans'
             }}>
-              결국 제가 추구하는 디자인은 <span style={{ color: '#ffd900', fontWeight: 700 }}>머리(논리)와 감각이 따로 놀지 않고 자연스럽게 만나는 지점</span>입니다. 생각이 구체적인 감각을 만들고, 그 감각이 다시 생각을 더 선명하게 만드는 순환. 이 둘 사이의 건강한 긴장 속에서 진짜 의미 있는 디자인이 나온다고 믿습니다.
+              결국 제가 추구하는 디자인은 머리(논리)와 감각이 따로 놀지 않고 자연스럽게 만나는 지점입니다.<br />
+              생각이 구체적인 감각을 만들고, 그 감각이 다시 생각을 더 선명하게 만드는 순환. 이 둘 사이의 건강한 긴장 속에서 진짜 의미 있는 디자인이 나온다고 믿습니다.
             </p>
           </div>
         </section>
