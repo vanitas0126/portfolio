@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { motion, useScroll, useSpring } from 'motion/react';
 import { ArrowLeft } from 'lucide-react';
 import { ImageWithFallback } from './figma/ImageWithFallback';
-import { BeforeAfterSlider } from './BeforeAfterSlider';
 
 interface ProjectData {
   id: string;
@@ -818,17 +817,59 @@ export function ProjectDetail({ projectId, onBack, onNavigateToProject, onNaviga
                     marginTop: '60px',
                     display: 'grid',
                     gridTemplateColumns: '1fr',
-                    gap: '32px'
+                    gap: '28px'
                   }}
                 >
-                  {[1,2,3,4,5,6].map((i) => (
-                    <BeforeAfterSlider
-                      key={i}
-                      beforeSrc={`${import.meta.env.BASE_URL}project4/before${i}.png`}
-                      afterSrc={`${import.meta.env.BASE_URL}project4/after${i}.png`}
-                      alt={`before after ${i}`}
-                      beforeFlip={i === 2 ? 'horizontal' : 'none'}
+                  {/* Top thumbnail image */}
+                  <div
+                    key="thumb"
+                    style={{
+                      position: 'relative',
+                      width: '100%',
+                      aspectRatio: '875 / 583',
+                      borderRadius: '16px',
+                      overflow: 'hidden',
+                      background: 'rgba(255,255,255,0.03)',
+                      border: '1px solid rgba(255, 217, 0, 0.08)'
+                    }}
+                  >
+                    <img
+                      src={`${import.meta.env.BASE_URL}project4/project4_thumbnail.png`}
+                      alt={`thumbnail`}
+                      style={{
+                        position: 'absolute',
+                        inset: 0,
+                        width: '100%',
+                        height: '100%',
+                        objectFit: 'cover'
+                      }}
                     />
+                  </div>
+
+                  {[2,3,4,5,6].map((i) => (
+                    <div key={i}
+                      style={{
+                        position: 'relative',
+                        width: '100%',
+                        aspectRatio: '875 / 583',
+                        borderRadius: '16px',
+                        overflow: 'hidden',
+                        background: 'rgba(255,255,255,0.03)',
+                        border: '1px solid rgba(255, 217, 0, 0.08)'
+                      }}
+                    >
+                      <img
+                        src={`${import.meta.env.BASE_URL}project4/after${i}.png`}
+                        alt={`after ${i}`}
+                        style={{
+                          position: 'absolute',
+                          inset: 0,
+                          width: '100%',
+                          height: '100%',
+                          objectFit: 'cover'
+                        }}
+                      />
+                    </div>
                   ))}
                 </motion.div>
               )}
