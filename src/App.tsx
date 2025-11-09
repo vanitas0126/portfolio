@@ -22,6 +22,13 @@ export default function App() {
   const [currentPage, setCurrentPage] = useState('home');
   const [selectedProject, setSelectedProject] = useState<string | null>(null);
 
+  // 페이지별 제목 설정
+  useEffect(() => {
+    if (currentPage === 'home') {
+      document.title = 'SONGHEE PORTFOLIO';
+    }
+  }, [currentPage]);
+
   // If viewing About page, render About component early
   if (currentPage === 'about') {
     return <About onNavigateHome={() => setCurrentPage('home')} />;
@@ -420,8 +427,8 @@ function ExpertiseItem({ skill, videoNumber, variants }: { skill: string; videoN
         ref={containerRef}
         style={{
           position: 'relative',
-          width: '77%',
-          paddingBottom: '77%',
+          width: '69%',
+          paddingBottom: '69%',
           margin: '0 auto',
           background: 'transparent',
           borderRadius: '20px',
@@ -537,6 +544,7 @@ function HomePage({ onNavigateToAbout, onNavigateToProject }: { onNavigateToAbou
   const [isScrolled, setIsScrolled] = useState(false);
   const [isCompact, setIsCompact] = useState(false);
   const [isWorkHovered, setIsWorkHovered] = useState(false);
+  const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 1920);
   const heroSectionRef = useRef<HTMLElement>(null);
   const blurBgRef = useRef<HTMLDivElement>(null);
   const videoContainerRef = useRef<HTMLDivElement>(null);
@@ -547,6 +555,18 @@ function HomePage({ onNavigateToAbout, onNavigateToProject }: { onNavigateToAbou
   const [isFooterInView, setIsFooterInView] = useState(false);
   const [activateFooterEmbed, setActivateFooterEmbed] = useState(false);
   const heroEffectContainerRef = useRef<HTMLDivElement>(null);
+  
+  // 화면 너비 감지
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+    
+    window.addEventListener('resize', handleResize);
+    handleResize(); // 초기 실행
+    
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   // Smooth scroll progress tracking
   const { scrollYProgress } = useScroll();
@@ -1374,14 +1394,15 @@ function HomePage({ onNavigateToAbout, onNavigateToProject }: { onNavigateToAbou
       {/* Selected Work Section */}
       <SectionWithAnimation id="work">
         <section id="work" style={{
-          padding: '180px 60px 120px',
+          padding: windowWidth < 768 ? '120px 20px 80px' : windowWidth < 1400 ? '180px 40px 120px' : '180px 60px 120px',
           width: '100%',
           maxWidth: '1180px',
           margin: '0 auto'
         }}>
           <motion.div 
             style={{
-              marginBottom: '45px'
+              marginBottom: '45px',
+              textAlign: 'left'
             }}
             initial="hidden"
             whileInView="visible"
@@ -1389,7 +1410,7 @@ function HomePage({ onNavigateToAbout, onNavigateToProject }: { onNavigateToAbou
             variants={fadeInUp}
           >
             <h2 className="section-title" style={{
-              fontSize: '45px',
+              fontSize: windowWidth < 768 ? '36px' : '45px',
               fontWeight: 600,
               marginBottom: '12px',
               color: '#fff'
@@ -1397,7 +1418,7 @@ function HomePage({ onNavigateToAbout, onNavigateToProject }: { onNavigateToAbou
               Selected Work
             </h2>
             <p className="section-subtitle" style={{
-              fontSize: '16px',
+              fontSize: windowWidth < 768 ? '14px' : '16px',
               fontWeight: 400,
               color: 'rgba(255, 255, 255, 0.5)',
               margin: 0
@@ -1410,9 +1431,9 @@ function HomePage({ onNavigateToAbout, onNavigateToProject }: { onNavigateToAbou
             className="work-grid" 
             style={{
               display: 'grid',
-              gridTemplateColumns: 'repeat(2, 1fr)',
-              gap: '30px',
-              rowGap: '50px',
+              gridTemplateColumns: windowWidth < 768 ? '1fr' : 'repeat(2, 1fr)',
+              gap: windowWidth < 1400 ? '20px' : '30px',
+              rowGap: windowWidth < 1400 ? '40px' : '50px',
               width: '100%'
             }}
           >
@@ -1590,7 +1611,7 @@ function HomePage({ onNavigateToAbout, onNavigateToProject }: { onNavigateToAbou
                   marginTop: '20px'
                 }}>
                   <p className="project-category" style={{
-                    fontSize: '24px',
+                    fontSize: windowWidth < 768 ? '20px' : '24px',
                     fontWeight: 600,
                     lineHeight: 1.2,
                     margin: 0,
@@ -1599,7 +1620,7 @@ function HomePage({ onNavigateToAbout, onNavigateToProject }: { onNavigateToAbou
                     {project.category}
                   </p>
                   <p className="project-tags" style={{
-                    fontSize: '15px',
+                    fontSize: windowWidth < 768 ? '13px' : '15px',
                     fontWeight: 500,
                     lineHeight: 'normal',
                     margin: 0,
@@ -1618,7 +1639,7 @@ function HomePage({ onNavigateToAbout, onNavigateToProject }: { onNavigateToAbou
       {/* Expertise Section */}
       <SectionWithAnimation>
         <section style={{
-          padding: '60px 60px 240px',
+          padding: windowWidth < 768 ? '60px 20px 180px' : '60px 60px 240px',
           width: '100%',
           maxWidth: '1180px',
           margin: '0 auto',
@@ -1634,7 +1655,7 @@ function HomePage({ onNavigateToAbout, onNavigateToProject }: { onNavigateToAbou
             variants={fadeInUp}
           >
             <h2 className="section-title" style={{
-              fontSize: '45px',
+              fontSize: windowWidth < 768 ? '36px' : '45px',
               fontWeight: 600,
               marginBottom: '12px',
               color: '#fff'
@@ -1642,7 +1663,7 @@ function HomePage({ onNavigateToAbout, onNavigateToProject }: { onNavigateToAbou
               Expertise I bring
             </h2>
             <p className="section-subtitle" style={{
-              fontSize: '16px',
+              fontSize: windowWidth < 768 ? '14px' : '16px',
               fontWeight: 400,
               color: 'rgba(255, 255, 255, 0.5)',
               margin: 0
@@ -1655,8 +1676,8 @@ function HomePage({ onNavigateToAbout, onNavigateToProject }: { onNavigateToAbou
             className="expertise-grid" 
             style={{
               display: 'grid',
-              gridTemplateColumns: 'repeat(4, 1fr)',
-              gap: '19px',
+              gridTemplateColumns: windowWidth < 768 ? 'repeat(2, 1fr)' : windowWidth < 1024 ? 'repeat(3, 1fr)' : 'repeat(4, 1fr)',
+              gap: windowWidth < 1400 ? '16px' : '19px',
               rowGap: 'clamp(50px, 8vw, 80px)',
               width: '100%',
               justifyContent: 'space-between'

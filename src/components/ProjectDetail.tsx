@@ -208,6 +208,691 @@ function RailwayChart() {
   );
 }
 
+// HourTaste 데이터 차트 컴포넌트
+function HourTasteDataChart() {
+  const barChartRef = useRef<HTMLCanvasElement>(null);
+  const doughnut1Ref = useRef<HTMLCanvasElement>(null);
+  const doughnut2Ref = useRef<HTMLCanvasElement>(null);
+  const barChartInstanceRef = useRef<any>(null);
+  const doughnut1InstanceRef = useRef<any>(null);
+  const doughnut2InstanceRef = useRef<any>(null);
+
+  useEffect(() => {
+    const loadCharts = async () => {
+      if ((window as any).Chart) {
+        createCharts();
+      } else {
+        const script = document.createElement('script');
+        script.src = 'https://cdn.jsdelivr.net/npm/chart.js';
+        script.onload = createCharts;
+        document.head.appendChild(script);
+      }
+    };
+
+    const createCharts = () => {
+      if (!(window as any).Chart) return;
+
+      const Chart = (window as any).Chart;
+      Chart.defaults.color = '#555555';
+      Chart.defaults.font.family = "'SD Greta Sans', 'IBM Plex Sans KR', sans-serif";
+
+      // Bar Chart
+      if (barChartRef.current && !barChartInstanceRef.current) {
+        const ctx = barChartRef.current.getContext('2d');
+        if (ctx) {
+          barChartInstanceRef.current = new Chart(ctx, {
+            type: 'bar',
+            data: {
+              labels: ['2023년', '2024년'],
+              datasets: [{
+                data: [36, 72],
+                backgroundColor: ['#2a2a2a', '#FF6B3D'],
+                borderRadius: 6,
+                barPercentage: 0.5,
+                categoryPercentage: 0.6
+              }]
+            },
+            options: {
+              responsive: true,
+              maintainAspectRatio: false,
+              layout: { padding: { top: 15, bottom: 3, left: 3, right: 3 } },
+              plugins: {
+                legend: { display: false },
+                tooltip: { enabled: false }
+              },
+              scales: {
+                y: {
+                  beginAtZero: true,
+                  max: 80,
+                  grid: { color: '#1a1a1a', drawBorder: false },
+                  ticks: { display: false }
+                },
+                x: {
+                  grid: { display: false, drawBorder: false },
+                  ticks: {
+                    font: { size: 11, weight: '600' },
+                    color: '#888888',
+                    padding: 3
+                  }
+                }
+              },
+              animation: { duration: 0 }
+            },
+            plugins: [{
+              afterDatasetDraw: (chart: any) => {
+                const ctx = chart.ctx;
+                const meta = chart.getDatasetMeta(0);
+                meta.data.forEach((bar: any, index: number) => {
+                  const value = chart.data.datasets[0].data[index];
+                  ctx.fillStyle = '#ffffff';
+                  ctx.font = 'bold 12px "SD Greta Sans", "IBM Plex Sans KR", sans-serif';
+                  ctx.textAlign = 'center';
+                  ctx.fillText(value + '억', bar.x, bar.y - 4);
+                  
+                  if (index === 1) {
+                    ctx.fillStyle = '#FF6B3D';
+                    ctx.font = '700 11px "SD Greta Sans", "IBM Plex Sans KR", sans-serif';
+                    ctx.fillText('+100%', bar.x, bar.y - 18);
+                  }
+                });
+              }
+            }]
+          });
+        }
+      }
+
+      // Doughnut Chart 1
+      if (doughnut1Ref.current && !doughnut1InstanceRef.current) {
+        const ctx = doughnut1Ref.current.getContext('2d');
+        if (ctx) {
+          doughnut1InstanceRef.current = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+              datasets: [{
+                data: [69, 100 - 69],
+                backgroundColor: ['#5B9EFF', '#1a1a1a'],
+                borderWidth: 0
+              }]
+            },
+            options: {
+              cutout: '78%',
+              responsive: true,
+              maintainAspectRatio: true,
+              plugins: { tooltip: { enabled: false } },
+              animation: { duration: 0 }
+            }
+          });
+        }
+      }
+
+      // Doughnut Chart 2
+      if (doughnut2Ref.current && !doughnut2InstanceRef.current) {
+        const ctx = doughnut2Ref.current.getContext('2d');
+        if (ctx) {
+          doughnut2InstanceRef.current = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+              datasets: [{
+                data: [70, 100 - 70],
+                backgroundColor: ['#1DD1A1', '#1a1a1a'],
+                borderWidth: 0
+              }]
+            },
+            options: {
+              cutout: '78%',
+              responsive: true,
+              maintainAspectRatio: true,
+              plugins: { tooltip: { enabled: false } },
+              animation: { duration: 0 }
+            }
+          });
+        }
+      }
+    };
+
+    loadCharts();
+
+    return () => {
+      if (barChartInstanceRef.current) {
+        barChartInstanceRef.current.destroy();
+        barChartInstanceRef.current = null;
+      }
+      if (doughnut1InstanceRef.current) {
+        doughnut1InstanceRef.current.destroy();
+        doughnut1InstanceRef.current = null;
+      }
+      if (doughnut2InstanceRef.current) {
+        doughnut2InstanceRef.current.destroy();
+        doughnut2InstanceRef.current = null;
+      }
+    };
+  }, []);
+
+  return (
+    <motion.div 
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.8, delay: 0.2 }}
+      style={{
+        marginTop: '60px',
+        marginBottom: '40px',
+        display: 'grid',
+        gridTemplateColumns: 'repeat(2, 1fr)',
+        gridTemplateRows: 'repeat(2, 1fr)',
+        gap: '24px',
+        width: '100%',
+        minHeight: '800px'
+      }}
+    >
+      {/* Section 1: Market */}
+      <div style={{
+        background: '#0f0f0f',
+        border: '1px solid #222222',
+        borderRadius: '12px',
+        padding: '60px',
+        display: 'flex',
+        flexDirection: 'column',
+        position: 'relative',
+        overflow: 'hidden'
+      }}>
+        <div style={{
+          fontSize: '12px',
+          color: '#555555',
+          fontWeight: 600,
+          letterSpacing: '0.15em',
+          marginBottom: '20px',
+          textTransform: 'uppercase',
+          flexShrink: 0,
+          fontFamily: '"SD Greta Sans", "IBM Plex Sans KR", sans-serif'
+        }}>Market Growth</div>
+        <div style={{
+          fontSize: '24px',
+          fontWeight: 700,
+          lineHeight: 1.5,
+          marginBottom: '30px',
+          wordBreak: 'keep-all',
+          flexShrink: 0,
+          fontFamily: '"Darker Grotesque", sans-serif',
+          color: '#fff'
+        }}>마감할인 시장<br />1년만에 5.3배 성장</div>
+        <div style={{
+          flex: 1,
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'center',
+          minHeight: 0
+        }}>
+          <div style={{
+            fontSize: 'clamp(50px, 10vw, 120px)',
+            fontWeight: 800,
+            color: '#FF6B3D',
+            lineHeight: 1,
+            letterSpacing: '-0.03em',
+            fontFamily: '"Darker Grotesque", sans-serif'
+          }}>5.3<span style={{ fontSize: '0.5em' }}>배</span></div>
+          <div style={{
+            fontSize: '13px',
+            color: '#999999',
+            marginTop: '20px',
+            textAlign: 'center',
+            fontWeight: 500,
+            fontFamily: '"SD Greta Sans", "IBM Plex Sans KR", sans-serif'
+          }}>MZ세대 가치소비 확산</div>
+        </div>
+        <div style={{
+          fontSize: '11px',
+          color: '#555555',
+          marginTop: 'auto',
+          paddingTop: '20px',
+          borderTop: '1px solid rgba(255, 255, 255, 0.05)',
+          flexShrink: 0,
+          fontFamily: '"SD Greta Sans", "IBM Plex Sans KR", sans-serif'
+        }}>출처: 우리동네GS (2024)</div>
+      </div>
+
+      {/* Section 2: Business Model */}
+      <div style={{
+        background: '#0f0f0f',
+        border: '1px solid #222222',
+        borderRadius: '12px',
+        padding: '60px',
+        display: 'flex',
+        flexDirection: 'column',
+        position: 'relative',
+        overflow: 'hidden'
+      }}>
+        <div style={{
+          fontSize: '12px',
+          color: '#555555',
+          fontWeight: 600,
+          letterSpacing: '0.15em',
+          marginBottom: '20px',
+          textTransform: 'uppercase',
+          flexShrink: 0,
+          fontFamily: '"SD Greta Sans", "IBM Plex Sans KR", sans-serif'
+        }}>Business Model</div>
+        <div style={{
+          fontSize: '24px',
+          fontWeight: 700,
+          lineHeight: 1.5,
+          marginBottom: '30px',
+          wordBreak: 'keep-all',
+          flexShrink: 0,
+          fontFamily: '"Darker Grotesque", sans-serif',
+          color: '#fff'
+        }}>랜덤박스는 수익성 높지만<br />소비자 선택권 낮음</div>
+        <div style={{
+          flex: 1,
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          minHeight: 0
+        }}>
+          <div style={{
+            width: '100%',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '24px'
+          }}>
+            <div style={{
+              display: 'flex',
+              justifyContent: 'flex-end',
+              gap: '16px',
+              paddingBottom: '12px',
+              borderBottom: '1px solid #222222',
+              paddingLeft: '25%'
+            }}>
+              <div style={{
+                fontSize: '14px',
+                fontWeight: 700,
+                color: '#fff',
+                flex: 1,
+                textAlign: 'center',
+                fontFamily: '"SD Greta Sans", "IBM Plex Sans KR", sans-serif'
+              }}>랜덤박스</div>
+              <div style={{
+                fontSize: '14px',
+                fontWeight: 700,
+                color: '#fff',
+                flex: 1,
+                textAlign: 'center',
+                fontFamily: '"SD Greta Sans", "IBM Plex Sans KR", sans-serif'
+              }}>재고공개</div>
+            </div>
+            <div style={{
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '16px'
+            }}>
+              <div style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '16px'
+              }}>
+                <div style={{
+                  fontSize: '12px',
+                  color: '#999999',
+                  fontWeight: 500,
+                  flex: '0 0 23%',
+                  fontFamily: '"SD Greta Sans", "IBM Plex Sans KR", sans-serif'
+                }}>수익성</div>
+                <div style={{
+                  flex: 1,
+                  display: 'flex',
+                  gap: '16px'
+                }}>
+                  <div style={{
+                    fontSize: '13px',
+                    fontWeight: 700,
+                    padding: '8px 20px',
+                    borderRadius: '5px',
+                    flex: 1,
+                    textAlign: 'center',
+                    background: 'rgba(255, 107, 61, 0.15)',
+                    color: '#FF6B3D',
+                    fontFamily: '"SD Greta Sans", "IBM Plex Sans KR", sans-serif'
+                  }}>높음</div>
+                  <div style={{
+                    fontSize: '13px',
+                    fontWeight: 700,
+                    padding: '8px 20px',
+                    borderRadius: '5px',
+                    flex: 1,
+                    textAlign: 'center',
+                    background: 'rgba(255, 255, 255, 0.08)',
+                    color: '#999999',
+                    fontFamily: '"SD Greta Sans", "IBM Plex Sans KR", sans-serif'
+                  }}>중간</div>
+                </div>
+              </div>
+              <div style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '16px'
+              }}>
+                <div style={{
+                  fontSize: '12px',
+                  color: '#999999',
+                  fontWeight: 500,
+                  flex: '0 0 23%',
+                  fontFamily: '"SD Greta Sans", "IBM Plex Sans KR", sans-serif'
+                }}>운영효율</div>
+                <div style={{
+                  flex: 1,
+                  display: 'flex',
+                  gap: '16px'
+                }}>
+                  <div style={{
+                    fontSize: '13px',
+                    fontWeight: 700,
+                    padding: '8px 20px',
+                    borderRadius: '5px',
+                    flex: 1,
+                    textAlign: 'center',
+                    background: 'rgba(255, 107, 61, 0.15)',
+                    color: '#FF6B3D',
+                    fontFamily: '"SD Greta Sans", "IBM Plex Sans KR", sans-serif'
+                  }}>높음</div>
+                  <div style={{
+                    fontSize: '13px',
+                    fontWeight: 700,
+                    padding: '8px 20px',
+                    borderRadius: '5px',
+                    flex: 1,
+                    textAlign: 'center',
+                    background: 'rgba(255, 255, 255, 0.08)',
+                    color: '#999999',
+                    fontFamily: '"SD Greta Sans", "IBM Plex Sans KR", sans-serif'
+                  }}>중간</div>
+                </div>
+              </div>
+              <div style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '16px'
+              }}>
+                <div style={{
+                  fontSize: '12px',
+                  color: '#999999',
+                  fontWeight: 500,
+                  flex: '0 0 23%',
+                  fontFamily: '"SD Greta Sans", "IBM Plex Sans KR", sans-serif'
+                }}>선택권</div>
+                <div style={{
+                  flex: 1,
+                  display: 'flex',
+                  gap: '16px'
+                }}>
+                  <div style={{
+                    fontSize: '13px',
+                    fontWeight: 700,
+                    padding: '8px 20px',
+                    borderRadius: '5px',
+                    flex: 1,
+                    textAlign: 'center',
+                    background: 'rgba(255, 71, 87, 0.15)',
+                    color: '#FF4757',
+                    fontFamily: '"SD Greta Sans", "IBM Plex Sans KR", sans-serif'
+                  }}>낮음</div>
+                  <div style={{
+                    fontSize: '13px',
+                    fontWeight: 700,
+                    padding: '8px 20px',
+                    borderRadius: '5px',
+                    flex: 1,
+                    textAlign: 'center',
+                    background: 'rgba(91, 158, 255, 0.15)',
+                    color: '#5B9EFF',
+                    fontFamily: '"SD Greta Sans", "IBM Plex Sans KR", sans-serif'
+                  }}>높음</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div style={{
+          fontSize: '11px',
+          color: '#555555',
+          marginTop: 'auto',
+          paddingTop: '20px',
+          borderTop: '1px solid rgba(255, 255, 255, 0.05)',
+          flexShrink: 0,
+          fontFamily: '"SD Greta Sans", "IBM Plex Sans KR", sans-serif'
+        }}>출처: Yang & Yu, INFORMS (2025)</div>
+      </div>
+
+      {/* Section 3: Problem */}
+      <div style={{
+        background: '#0f0f0f',
+        border: '1px solid #222222',
+        borderRadius: '12px',
+        padding: '60px',
+        display: 'flex',
+        flexDirection: 'column',
+        position: 'relative',
+        overflow: 'hidden'
+      }}>
+        <div style={{
+          fontSize: '12px',
+          color: '#555555',
+          fontWeight: 600,
+          letterSpacing: '0.15em',
+          marginBottom: '20px',
+          textTransform: 'uppercase',
+          flexShrink: 0,
+          fontFamily: '"SD Greta Sans", "IBM Plex Sans KR", sans-serif'
+        }}>Problem</div>
+        <div style={{
+          fontSize: '24px',
+          fontWeight: 700,
+          lineHeight: 1.5,
+          marginBottom: '30px',
+          wordBreak: 'keep-all',
+          flexShrink: 0,
+          fontFamily: '"Darker Grotesque", sans-serif',
+          color: '#fff'
+        }}>비건·알러지 시장 급성장<br />랜덤박스는 소외</div>
+        <div style={{
+          flex: 1,
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          minHeight: 0
+        }}>
+          <div style={{
+            display: 'flex',
+            width: '100%',
+            height: '100%',
+            gap: '30px',
+            alignItems: 'center'
+          }}>
+            <div style={{
+              flex: 1,
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignItems: 'center'
+            }}>
+              <div style={{
+                fontSize: 'clamp(40px, 6vw, 80px)',
+                fontWeight: 800,
+                color: '#FF4757',
+                lineHeight: 1,
+                fontFamily: '"Darker Grotesque", sans-serif'
+              }}>22<span style={{ fontSize: '0.7em' }}>%</span></div>
+              <div style={{
+                fontSize: '12px',
+                color: '#999999',
+                marginTop: '12px',
+                fontWeight: 500,
+                lineHeight: 1.4,
+                textAlign: 'center',
+                fontFamily: '"SD Greta Sans", "IBM Plex Sans KR", sans-serif'
+              }}>알러지 보유자<br />신뢰 비율</div>
+            </div>
+            <div style={{
+              flex: 1,
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignItems: 'center'
+            }}>
+              <div style={{
+                height: '150px',
+                width: '100%',
+                position: 'relative'
+              }}>
+                <canvas ref={barChartRef} />
+              </div>
+              <div style={{
+                fontSize: '12px',
+                color: '#999999',
+                fontWeight: 500,
+                textAlign: 'center',
+                marginTop: '15px',
+                fontFamily: '"SD Greta Sans", "IBM Plex Sans KR", sans-serif'
+              }}>비건 베이커리 시장 (2023→2024)</div>
+            </div>
+          </div>
+        </div>
+        <div style={{
+          fontSize: '11px',
+          color: '#555555',
+          marginTop: 'auto',
+          paddingTop: '20px',
+          borderTop: '1px solid rgba(255, 255, 255, 0.05)',
+          flexShrink: 0,
+          fontFamily: '"SD Greta Sans", "IBM Plex Sans KR", sans-serif'
+        }}>출처: 식품표준청, 마크로밀엠브레인 (2024)</div>
+      </div>
+
+      {/* Section 4: Solution */}
+      <div style={{
+        background: '#0f0f0f',
+        border: '1px solid #222222',
+        borderRadius: '12px',
+        padding: '60px',
+        display: 'flex',
+        flexDirection: 'column',
+        position: 'relative',
+        overflow: 'hidden'
+      }}>
+        <div style={{
+          fontSize: '12px',
+          color: '#555555',
+          fontWeight: 600,
+          letterSpacing: '0.15em',
+          marginBottom: '20px',
+          textTransform: 'uppercase',
+          flexShrink: 0,
+          fontFamily: '"SD Greta Sans", "IBM Plex Sans KR", sans-serif'
+        }}>Solution</div>
+        <div style={{
+          fontSize: '24px',
+          fontWeight: 700,
+          lineHeight: 1.5,
+          marginBottom: '30px',
+          wordBreak: 'keep-all',
+          flexShrink: 0,
+          fontFamily: '"Darker Grotesque", sans-serif',
+          color: '#fff'
+        }}>재고공개로<br />투명성 확보</div>
+        <div style={{
+          flex: 1,
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          minHeight: 0
+        }}>
+          <div style={{
+            display: 'flex',
+            gap: '40px',
+            width: '100%'
+          }}>
+            <div style={{
+              flex: 1,
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center'
+            }}>
+              <div style={{
+                position: 'relative',
+                width: '160px',
+                height: '160px',
+                marginBottom: '20px'
+              }}>
+                <canvas ref={doughnut1Ref} />
+                <div style={{
+                  position: 'absolute',
+                  top: '50%',
+                  left: '50%',
+                  transform: 'translate(-50%, -50%)',
+                  fontSize: '42px',
+                  fontWeight: 800,
+                  color: '#5B9EFF',
+                  fontFamily: '"Darker Grotesque", sans-serif'
+                }}>69%</div>
+              </div>
+              <div style={{
+                fontSize: '12px',
+                lineHeight: 1.5,
+                textAlign: 'center',
+                color: '#999999',
+                fontWeight: 500,
+                fontFamily: '"SD Greta Sans", "IBM Plex Sans KR", sans-serif'
+              }}>상세정보<br />구매영향도</div>
+            </div>
+            <div style={{
+              flex: 1,
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center'
+            }}>
+              <div style={{
+                position: 'relative',
+                width: '160px',
+                height: '160px',
+                marginBottom: '20px'
+              }}>
+                <canvas ref={doughnut2Ref} />
+                <div style={{
+                  position: 'absolute',
+                  top: '50%',
+                  left: '50%',
+                  transform: 'translate(-50%, -50%)',
+                  fontSize: '42px',
+                  fontWeight: 800,
+                  color: '#1DD1A1',
+                  fontFamily: '"Darker Grotesque", sans-serif'
+                }}>70%</div>
+              </div>
+              <div style={{
+                fontSize: '12px',
+                lineHeight: 1.5,
+                textAlign: 'center',
+                color: '#999999',
+                fontWeight: 500,
+                fontFamily: '"SD Greta Sans", "IBM Plex Sans KR", sans-serif'
+              }}>건강영향<br />체감도</div>
+            </div>
+          </div>
+        </div>
+        <div style={{
+          fontSize: '11px',
+          color: '#555555',
+          marginTop: 'auto',
+          paddingTop: '20px',
+          borderTop: '1px solid rgba(255, 255, 255, 0.05)',
+          flexShrink: 0,
+          fontFamily: '"SD Greta Sans", "IBM Plex Sans KR", sans-serif'
+        }}>출처: Food and Life, Flashfood (2024)</div>
+      </div>
+    </motion.div>
+  );
+}
+
 function InlineVideoOnce({ src, alt }: { src: string; alt?: string }) {
   const hasReachedOneSecond = useRef(false);
   const videoRef = useRef<HTMLVideoElement | null>(null);
@@ -291,7 +976,7 @@ const projectsData: { [key: string]: ProjectData } = {
   'railway-redesign': {
     id: 'railway-redesign',
     title: 'Railway Redesign',
-    heroImage: 'modern train station platform',
+    heroImage: `${import.meta.env.BASE_URL}project3/projects3_thumb.png`,
     myRole: ['Lead UX/UI Designer', 'Web Designer', 'User Research'],
     team: ['3명 (기획 공동, 디자인 1명)'],
     duration: '3개월',
@@ -320,14 +1005,14 @@ const projectsData: { [key: string]: ProjectData } = {
     heroImage: 'food discount shopping mobile',
     heroVideo: `${import.meta.env.BASE_URL}videos/hourtaste.mp4`,
     myRole: ['Product Designer', 'UX/UI Designer', 'Service Planner'],
-    team: ['1 CEO', '1 Product Manager', '2 Designers', '4 Developers'],
-    duration: '4개월 (2024.03 - 2024.07)',
+    team: ['박송희 (1명)'],
+    duration: '15주',
     industry: 'Food Tech / E-commerce',
-    summary: 'HourTaste는 마감 시간이 임박한 음식점의 재고를 실시간으로 할인 판매하는 맞춤 마감할인 앱입니다. 음식물 쓰레기를 줄이고 소비자는 합리적인 가격에 신선한 음식을 구매할 수 있는 윈-윈 플랫폼을 기획하고 디자인했습니다.',
+    summary: 'HourTaste는 단순한 마감 할인을 넘어, 개인 맞춤 알림과 "지도 스탬프"라는 재미 요소를 더해, 사용자가 계속 방문하며 "나만의 맛집 지도"를 완성해나가는 서비스입니다.',
     sections: [
       {
-        title: '서비스 기획 배경',
-        content: '한국에서는 연간 500만 톤 이상의 음식물 쓰레기가 발생하며, 그 중 상당수가 매장의 당일 마감 재고입니다. 반면 물가 상승으로 합리적인 소비를 원하는 소비자가 늘어나고 있습니다. HourTaste는 이 두 니즈를 연결하는 서비스로 기획되었습니다.',
+        title: '시장배경',
+        content: '',
       },
       {
         title: 'Core Concept',
@@ -390,7 +1075,7 @@ const projectsData: { [key: string]: ProjectData } = {
     heroImage: `${import.meta.env.BASE_URL}project4/project4_thumbnail.png`,
     heroVideo: undefined,
     myRole: ['Art Director'],
-    team: ['Photographer\n(박소현, 본인, 강민진, 송예준)'],
+    team: ['(박소현, 본인, 강민진, 송예준)'],
     duration: '1개월',
     industry: 'Art / Figure Design',
     summary: '낚시하는 고양이 피규어 두 마리를 중심으로, 작고 평화로운 하루를 "미니어처 세계"로 표현한 촬영 프로젝트입니다. 거울을 연못처럼 사용해 반사를 적극 활용하고, 샷마다 물/하늘 톤을 조절해 두 고양이의 시선 흐름이 자연스럽게 먼저 읽히도록 구성했습니다.',
@@ -443,6 +1128,13 @@ export function ProjectDetail({ projectId, onBack, onNavigateToProject, onNaviga
     
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  // 프로젝트 제목으로 문서 제목 설정
+  useEffect(() => {
+    if (project) {
+      document.title = `${project.title} - SONGHEE PORTFOLIO`;
+    }
+  }, [project]);
 
   if (!project) {
     return (
@@ -938,8 +1630,37 @@ export function ProjectDetail({ projectId, onBack, onNavigateToProject, onNaviga
                 letterSpacing: '-0.02em'
               }}>{section.title}</h2>
               
-              {/* 문제 섹션은 특별 처리: 텍스트와 이미지를 분리하여 배치 */}
-              {project.id === 'railway-redesign' && section.title === '문제 (WHY)' ? (
+              {/* 시장배경 섹션은 특별 처리: 텍스트와 이미지를 분리하여 배치 */}
+              {project.id === 'hourtaste' && section.title === '시장배경' ? (
+                <>
+                  {section.content && (
+                    <p style={{
+                      fontSize: '17px',
+                      lineHeight: 1.9,
+                      color: 'rgba(255, 255, 255, 0.8)',
+                      fontFamily: '"SD Greta Sans", "IBM Plex Sans KR", sans-serif',
+                      marginBottom: '0',
+                      whiteSpace: 'pre-line',
+                      fontWeight: 300
+                    }}>
+                      {section.content}
+                    </p>
+                  )}
+                  <p style={{
+                    fontSize: '17px',
+                    lineHeight: 1.9,
+                    color: 'rgba(255, 255, 255, 0.8)',
+                    fontFamily: '"SD Greta Sans", "IBM Plex Sans KR", sans-serif',
+                    marginBottom: '60px',
+                    whiteSpace: 'pre-line',
+                    fontWeight: 300
+                  }}>
+                    마감 할인 시장은 MZ세대의 가치 소비로 급성장 중이지만, 기존 모델은 명확한 딜레마가 있습니다. '랜덤박스'는 수익과 효율이 높지만, 정보가 불투명해 알레르기나 비건 등 '목적성 구매' 고객을 배제합니다. 반면 '재고공개'는 투명하지만 수익성이 낮습니다.<br /><br />
+                    따라서 이 문제를 해결하기 위해, 수익성 높은 '랜덤박스'를 기본으로 하되 '재고 공개'를 옵션으로 제공하는 하이브리드 모델을 제안합니다. 이는 매장의 효율을 챙기면서 동시에 정보 투명성을 확보하여, 기존에 배제되었던 새로운 고객층까지 포용하는 차별화 전략입니다.
+                  </p>
+                  <HourTasteDataChart />
+                </>
+              ) : project.id === 'railway-redesign' && section.title === '문제 (WHY)' ? (
                 <>
                   <p style={{
                     fontSize: '17px',
@@ -975,8 +1696,8 @@ export function ProjectDetail({ projectId, onBack, onNavigateToProject, onNaviga
                   }}>
                     하지만 NRC 웹사이트는 B2B 정보와 B2C 서비스가 명확히 분리되지 않아, 공공기관의 대표 사이트임에도 불구하고 "예매 포털처럼 보일 수 있는 여지"를 만듭니다.
                   </p>
-                  {/* 문제 스크린샷 2종 - 2열 그리드 */}
-                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '20px' }}>
+                  {/* 문제 스크린샷 2종 - 1단 */}
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
                     <img 
                       src={`${import.meta.env.BASE_URL}project3/problem1.png`}
                       alt="문제 이미지 1"
@@ -1059,7 +1780,7 @@ export function ProjectDetail({ projectId, onBack, onNavigateToProject, onNaviga
                       <div
                         key={i}
                         style={{
-                          background: 'rgba(255, 255, 255, 0.02)',
+                          background: 'rgba(255, 255, 255, 0.1)',
                           borderRadius: '16px',
                           padding: '20px'
                         }}
@@ -1134,7 +1855,18 @@ export function ProjectDetail({ projectId, onBack, onNavigateToProject, onNaviga
                   }}>
                     홈은 "기업 정체성 명확화 + 정보 우선순위 재배치" 중심으로 단순화하고, 승객 실행 기능(예매/노선/요금)은 별도 승객 포털로 분리했습니다.
                   </p>
-                  <div style={{ marginBottom: '80px' }}>
+                  <div style={{ display: 'grid', gridTemplateColumns: '40% 60%', gap: '20px', marginBottom: '80px' }}>
+                    <img 
+                      src={`${import.meta.env.BASE_URL}project3/철도공사.JPG`}
+                      alt="철도공사"
+                      style={{
+                        width: '100%',
+                        height: 'auto',
+                        borderRadius: '12px',
+                        border: '1px solid rgba(255, 217, 0, 0.08)',
+                        background: 'rgba(255,255,255,0.02)'
+                      }}
+                    />
                     <img 
                       src={`${import.meta.env.BASE_URL}project3/homepage.png`}
                       alt="홈페이지"
@@ -1160,7 +1892,18 @@ export function ProjectDetail({ projectId, onBack, onNavigateToProject, onNaviga
                   }}>
                     OUR HISTORY는 "연대기+인프라 발전"을 역순으로 정리해 현재까지의 변화 흐름을 보여주고, 인디케이터로 현재 위치를 확인할 수 있도록 하여 기업의 신뢰성을 강화했습니다
                   </p>
-                  <div style={{ marginBottom: '80px' }}>
+                  <div style={{ display: 'grid', gridTemplateColumns: '40% 60%', gap: '20px', marginBottom: '80px' }}>
+                    <img 
+                      src={`${import.meta.env.BASE_URL}project3/철도공사2.JPG`}
+                      alt="철도공사 2"
+                      style={{
+                        width: '100%',
+                        height: 'auto',
+                        borderRadius: '12px',
+                        border: '1px solid rgba(255, 217, 0, 0.08)',
+                        background: 'rgba(255,255,255,0.02)'
+                      }}
+                    />
                     <img 
                       src={`${import.meta.env.BASE_URL}project3/history.png`}
                       alt="히스토리"
@@ -1187,7 +1930,31 @@ export function ProjectDetail({ projectId, onBack, onNavigateToProject, onNaviga
                     기존에 없던 '프로젝트/노선' UI를 추가하고 시각화를 적용해 각 프로젝트의 목적·상태를 직관적으로 제시했습니다.
 최근 나이지리아 철도 인프라 개발 사업이 활발하게 진행되고 있기 때문에, 철도 인프라 투자 확대 상황을 공공적으로 투명하게 전달하기 위한 방향입니다.
                   </p>
-                  <div>
+                  <div style={{ display: 'grid', gridTemplateColumns: '40% 60%', gap: '20px' }}>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+                      <img 
+                        src={`${import.meta.env.BASE_URL}project3/프로젝트웹.png`}
+                        alt="프로젝트 웹"
+                        style={{
+                          width: '100%',
+                          height: 'auto',
+                          borderRadius: '12px',
+                          border: '1px solid rgba(255, 217, 0, 0.08)',
+                          background: 'rgba(255,255,255,0.02)'
+                        }}
+                      />
+                      <img 
+                        src={`${import.meta.env.BASE_URL}project3/철도공사2.3.JPG`}
+                        alt="철도공사 2.3"
+                        style={{
+                          width: '100%',
+                          height: 'auto',
+                          borderRadius: '12px',
+                          border: '1px solid rgba(255, 217, 0, 0.08)',
+                          background: 'rgba(255,255,255,0.02)'
+                        }}
+                      />
+                    </div>
                     <img 
                       src={`${import.meta.env.BASE_URL}project3/projects.png`}
                       alt="프로젝트"

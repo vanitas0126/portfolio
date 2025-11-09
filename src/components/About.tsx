@@ -144,6 +144,11 @@ export default function About({ onNavigateHome }: AboutProps) {
     restDelta: 0.001
   });
 
+  // 문서 제목 설정
+  useEffect(() => {
+    document.title = 'About - SONGHEE PORTFOLIO';
+  }, []);
+
   useEffect(() => {
     const handleScroll = () => {
       const scrollY = window.scrollY;
