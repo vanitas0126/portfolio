@@ -555,6 +555,32 @@ function HomePage({ onNavigateToAbout, onNavigateToProject }: { onNavigateToAbou
   const [isFooterInView, setIsFooterInView] = useState(false);
   const [activateFooterEmbed, setActivateFooterEmbed] = useState(false);
   const heroEffectContainerRef = useRef<HTMLDivElement>(null);
+  const [typedText, setTypedText] = useState('');
+  const [showMainText, setShowMainText] = useState(false);
+  const typingIndexRef = useRef(0);
+  const typingText = "I'm Product Designer,\nSonghee Park";
+  
+  // 타이핑 애니메이션
+  useEffect(() => {
+    typingIndexRef.current = 0;
+    setTypedText('');
+    setShowMainText(false);
+    
+    const typingInterval = setInterval(() => {
+      if (typingIndexRef.current < typingText.length) {
+        setTypedText(typingText.slice(0, typingIndexRef.current + 1));
+        typingIndexRef.current++;
+      } else {
+        clearInterval(typingInterval);
+        // 타이핑 완료 후 잠시 대기하고 메인 텍스트 표시
+        setTimeout(() => {
+          setShowMainText(true);
+        }, 800);
+      }
+    }, 80); // 타이핑 속도
+
+    return () => clearInterval(typingInterval);
+  }, [typingText]);
   
   // 화면 너비 감지
   useEffect(() => {
@@ -768,6 +794,12 @@ function HomePage({ onNavigateToAbout, onNavigateToProject }: { onNavigateToAbou
               0 0 1.4vw rgba(255, 217, 0, 0.8),
               0 0 2vw rgba(255, 217, 0, 0.6);
           }
+        }
+        
+        /* 타이핑 커서 깜빡임 효과 */
+        @keyframes blink {
+          0%, 50% { opacity: 1; }
+          51%, 100% { opacity: 0; }
         }
         
         /* 아주 작은 모바일 - 히어로 텍스트 제거 */
@@ -1315,40 +1347,79 @@ function HomePage({ onNavigateToAbout, onNavigateToProject }: { onNavigateToAbou
             animate={{ opacity: 1 }}
               transition={{ duration: 0.6, delay: 0.1 }}
           >
-            <motion.div 
-              className="hero-main-text" 
-              style={{ 
+            {/* 타이핑 텍스트 */}
+            {!showMainText && (
+              <motion.div 
+                className="hero-typing-text" 
+                style={{ 
                   position: 'absolute',
                   left: '2.25rem',
                   bottom: '-20px',
-                y: useTransform(smoothProgress, [0, 0.3], [0, -30])
-              }}
-              initial={{ opacity: 0, x: -80 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ 
-                type: "spring",
+                  y: useTransform(smoothProgress, [0, 0.3], [0, -30])
+                }}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.5 }}
+              >
+                <h1 style={{
+                  fontSize: 'clamp(32px, 4.5vw, 70px)',
+                  fontWeight: 600,
+                  lineHeight: 0.95,
+                  margin: 0,
+                  textShadow: `
+                    0 8px 50px rgba(0, 0, 0, 0.9),
+                    0 4px 25px rgba(0, 0, 0, 0.8),
+                    0 2px 12px rgba(0, 0, 0, 0.6)
+                  `,
+                  color: '#fff',
+                  whiteSpace: 'pre-line'
+                }}>
+                  {typedText}
+                  {!showMainText && (
+                    <span style={{ 
+                      animation: 'blink 1s infinite'
+                    }}>|</span>
+                  )}
+                </h1>
+              </motion.div>
+            )}
+            
+            {/* 메인 텍스트 */}
+            {showMainText && (
+              <motion.div 
+                className="hero-main-text" 
+                style={{ 
+                  position: 'absolute',
+                  left: '2.25rem',
+                  bottom: '-20px',
+                  y: useTransform(smoothProgress, [0, 0.3], [0, -30])
+                }}
+                initial={{ opacity: 0, x: -80 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ 
+                  type: "spring",
                   stiffness: 100,
-                  damping: 25,
-                  delay: 0.2
-              }}
-            >
-              <h1 style={{
-                fontSize: 'clamp(32px, 4.5vw, 70px)',
-                fontWeight: 600,
-                lineHeight: 0.95,
-                margin: 0,
-                textShadow: `
-                  0 8px 50px rgba(0, 0, 0, 0.9),
-                  0 4px 25px rgba(0, 0, 0, 0.8),
-                  0 2px 12px rgba(0, 0, 0, 0.6)
-                `,
-                color: '#fff'
-              }}>
-                Turning challenges
-                <br />
-                into opportunities!
-              </h1>
-            </motion.div>
+                  damping: 25
+                }}
+              >
+                <h1 style={{
+                  fontSize: 'clamp(32px, 4.5vw, 70px)',
+                  fontWeight: 600,
+                  lineHeight: 0.95,
+                  margin: 0,
+                  textShadow: `
+                    0 8px 50px rgba(0, 0, 0, 0.9),
+                    0 4px 25px rgba(0, 0, 0, 0.8),
+                    0 2px 12px rgba(0, 0, 0, 0.6)
+                  `,
+                  color: '#fff'
+                }}>
+                  Turning challenges
+                  <br />
+                  into opportunities!
+                </h1>
+              </motion.div>
+            )}
             
             <motion.div 
               className="hero-chinese" 

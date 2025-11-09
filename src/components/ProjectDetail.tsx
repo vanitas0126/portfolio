@@ -375,8 +375,8 @@ function HourTasteDataChart() {
       viewport={{ once: true }}
       transition={{ duration: 0.8, delay: 0.2 }}
       style={{
-        marginTop: '60px',
-        marginBottom: '40px',
+        marginTop: '30px',
+        marginBottom: '0px',
         display: 'grid',
         gridTemplateColumns: 'repeat(2, 1fr)',
         gridTemplateRows: 'repeat(2, 1fr)',
@@ -387,8 +387,8 @@ function HourTasteDataChart() {
     >
       {/* Section 1: Market */}
       <div style={{
-        background: '#0f0f0f',
-        border: '1px solid #222222',
+        background: 'rgba(255, 255, 255, 0.1)',
+        border: 'none',
         borderRadius: '12px',
         padding: '60px',
         display: 'flex',
@@ -454,8 +454,8 @@ function HourTasteDataChart() {
 
       {/* Section 2: Business Model */}
       <div style={{
-        background: '#0f0f0f',
-        border: '1px solid #222222',
+        background: 'rgba(255, 255, 255, 0.1)',
+        border: 'none',
         borderRadius: '12px',
         padding: '60px',
         display: 'flex',
@@ -665,8 +665,8 @@ function HourTasteDataChart() {
 
       {/* Section 3: Problem */}
       <div style={{
-        background: '#0f0f0f',
-        border: '1px solid #222222',
+        background: 'rgba(255, 255, 255, 0.1)',
+        border: 'none',
         borderRadius: '12px',
         padding: '60px',
         display: 'flex',
@@ -770,8 +770,8 @@ function HourTasteDataChart() {
 
       {/* Section 4: Solution */}
       <div style={{
-        background: '#0f0f0f',
-        border: '1px solid #222222',
+        background: 'rgba(255, 255, 255, 0.1)',
+        border: 'none',
         borderRadius: '12px',
         padding: '60px',
         display: 'flex',
@@ -888,6 +888,654 @@ function HourTasteDataChart() {
           flexShrink: 0,
           fontFamily: '"SD Greta Sans", "IBM Plex Sans KR", sans-serif'
         }}>출처: Food and Life, Flashfood (2024)</div>
+      </div>
+    </motion.div>
+  );
+}
+
+// HourTaste 사용자 분석 차트 컴포넌트
+function HourTasteUserChart() {
+  const pieChartRef = useRef<HTMLCanvasElement>(null);
+  const pieChartInstanceRef = useRef<any>(null);
+
+  useEffect(() => {
+    const loadCharts = async () => {
+      if ((window as any).Chart) {
+        createPieChart();
+      } else {
+        const script = document.createElement('script');
+        script.src = 'https://cdn.jsdelivr.net/npm/chart.js';
+        script.onload = createPieChart;
+        document.head.appendChild(script);
+      }
+    };
+
+    const createPieChart = () => {
+      if (!(window as any).Chart) return;
+
+      const Chart = (window as any).Chart;
+      Chart.defaults.color = '#555555';
+      Chart.defaults.font.family = "'SD Greta Sans', 'IBM Plex Sans KR', sans-serif";
+
+      // Pie Chart
+      if (pieChartRef.current && !pieChartInstanceRef.current) {
+        const ctx = pieChartRef.current.getContext('2d');
+        if (ctx) {
+          pieChartInstanceRef.current = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+              labels: ['사용 (18%)', '비활성 (50%)', '삭제 (32%)'],
+              datasets: [{
+                data: [18, 50, 32],
+                backgroundColor: ['#FF6B3D', '#666666', '#2a2a2a'],
+                borderWidth: 0,
+                spacing: 2
+              }]
+            },
+            options: {
+              cutout: '45%',
+              responsive: true,
+              maintainAspectRatio: true,
+              plugins: {
+                legend: {
+                  display: false
+                },
+                tooltip: {
+                  enabled: true,
+                  backgroundColor: 'rgba(0, 0, 0, 0.9)',
+                  titleColor: '#fff',
+                  bodyColor: '#fff',
+                  padding: 10,
+                  borderColor: 'rgba(255, 255, 255, 0.1)',
+                  borderWidth: 1
+                }
+              },
+              animation: { duration: 0 }
+            }
+          });
+        }
+      }
+    };
+
+    loadCharts();
+
+    return () => {
+      if (pieChartInstanceRef.current) {
+        pieChartInstanceRef.current.destroy();
+        pieChartInstanceRef.current = null;
+      }
+    };
+  }, []);
+
+  return (
+    <motion.div 
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.8, delay: 0.2 }}
+      style={{
+        marginTop: '30px',
+        marginBottom: '100px',
+        display: 'flex',
+        gap: '24px',
+        width: '100%'
+      }}
+    >
+      {/* Section 1: User Status */}
+      <div style={{
+        background: 'rgba(255, 255, 255, 0.1)',
+        border: 'none',
+        borderRadius: '12px',
+        padding: '60px',
+        display: 'flex',
+        flexDirection: 'column',
+        position: 'relative',
+        overflow: 'hidden',
+        flex: 1
+      }}>
+        <div style={{
+          fontSize: '12px',
+          color: '#555555',
+          fontWeight: 600,
+          letterSpacing: '0.15em',
+          marginBottom: '20px',
+          textTransform: 'uppercase',
+          flexShrink: 0,
+          fontFamily: '"SD Greta Sans", "IBM Plex Sans KR", sans-serif'
+        }}>User Status</div>
+        <div style={{
+          fontSize: '24px',
+          fontWeight: 700,
+          lineHeight: 1.5,
+          marginBottom: '30px',
+          wordBreak: 'keep-all',
+          flexShrink: 0,
+          fontFamily: '"Darker Grotesque", sans-serif',
+          color: '#fff'
+        }}>82%가 비활성 또는<br />앱 삭제 상태</div>
+        <div style={{
+          flex: 1,
+          display: 'flex',
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          minHeight: 0,
+          paddingTop: '10px',
+          gap: '30px'
+        }}>
+          {/* 차트 */}
+          <div style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            flex: 1,
+            padding: '20px'
+          }}>
+            <div style={{
+              width: '220px',
+              height: '220px',
+              position: 'relative'
+            }}>
+              <canvas ref={pieChartRef} />
+            </div>
+          </div>
+          {/* 범례 */}
+          <div style={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '12px',
+            flexShrink: 0
+          }}>
+            <div style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '10px'
+            }}>
+              <div style={{
+                width: '12px',
+                height: '12px',
+                borderRadius: '50%',
+                background: '#FF6B3D',
+                flexShrink: 0
+              }} />
+              <span style={{
+                fontSize: '13px',
+                color: '#999999',
+                fontWeight: 500,
+                fontFamily: '"SD Greta Sans", "IBM Plex Sans KR", sans-serif'
+              }}>사용 (18%)</span>
+            </div>
+            <div style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '10px'
+            }}>
+              <div style={{
+                width: '12px',
+                height: '12px',
+                borderRadius: '50%',
+                background: '#666666',
+                flexShrink: 0
+              }} />
+              <span style={{
+                fontSize: '13px',
+                color: '#999999',
+                fontWeight: 500,
+                fontFamily: '"SD Greta Sans", "IBM Plex Sans KR", sans-serif'
+              }}>비활성 (50%)</span>
+            </div>
+            <div style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '10px'
+            }}>
+              <div style={{
+                width: '12px',
+                height: '12px',
+                borderRadius: '50%',
+                background: '#2a2a2a',
+                flexShrink: 0
+              }} />
+              <span style={{
+                fontSize: '13px',
+                color: '#999999',
+                fontWeight: 500,
+                fontFamily: '"SD Greta Sans", "IBM Plex Sans KR", sans-serif'
+              }}>삭제 (32%)</span>
+            </div>
+          </div>
+        </div>
+        <div style={{
+          fontSize: '11px',
+          color: '#555555',
+          marginTop: 'auto',
+          paddingTop: '20px',
+          borderTop: '1px solid rgba(255, 255, 255, 0.05)',
+          flexShrink: 0,
+          fontFamily: '"SD Greta Sans", "IBM Plex Sans KR", sans-serif'
+        }}>출처: Uppsala University (2021, N=22)</div>
+      </div>
+
+      {/* Section 2: Delete Reason */}
+      <div style={{
+        background: 'rgba(255, 255, 255, 0.1)',
+        border: 'none',
+        borderRadius: '12px',
+        padding: '60px',
+        display: 'flex',
+        flexDirection: 'column',
+        position: 'relative',
+        overflow: 'hidden',
+        flex: 1
+      }}>
+        <div style={{
+          fontSize: '12px',
+          color: '#555555',
+          fontWeight: 600,
+          letterSpacing: '0.15em',
+          marginBottom: '20px',
+          textTransform: 'uppercase',
+          flexShrink: 0,
+          fontFamily: '"SD Greta Sans", "IBM Plex Sans KR", sans-serif'
+        }}>Churn Analysis</div>
+        <div style={{
+          fontSize: '24px',
+          fontWeight: 700,
+          lineHeight: 1.5,
+          marginBottom: '30px',
+          wordBreak: 'keep-all',
+          flexShrink: 0,
+          fontFamily: '"Darker Grotesque", sans-serif',
+          color: '#fff'
+        }}>71%가 시간·위치·음식<br />불일치로 삭제</div>
+        <div style={{
+          flex: 1,
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          minHeight: 0
+        }}>
+          <div style={{
+            display: 'flex',
+            width: '100%',
+            height: '100%',
+            gap: '30px',
+            alignItems: 'center'
+          }}>
+            <div style={{
+              flex: 1,
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignItems: 'center'
+            }}>
+              <div style={{
+                fontSize: 'clamp(60px, 8vw, 100px)',
+                fontWeight: 800,
+                color: '#FF4757',
+                lineHeight: 1,
+                fontFamily: '"Darker Grotesque", sans-serif'
+              }}>71<span style={{ fontSize: '0.7em' }}>%</span></div>
+              <div style={{
+                fontSize: '13px',
+                color: '#999999',
+                marginTop: '15px',
+                fontWeight: 500,
+                lineHeight: 1.4,
+                textAlign: 'center',
+                fontFamily: '"SD Greta Sans", "IBM Plex Sans KR", sans-serif'
+              }}>앱 삭제 원인</div>
+            </div>
+            <div style={{
+              flex: 1,
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '16px'
+            }}>
+              <div style={{
+                background: 'rgba(255, 255, 255, 0.03)',
+                border: '1px solid rgba(255, 255, 255, 0.08)',
+                borderLeft: '3px solid #FFC107',
+                padding: '16px',
+                borderRadius: '6px',
+                fontSize: '13px',
+                lineHeight: 1.5,
+                color: '#999999',
+                fontFamily: '"SD Greta Sans", "IBM Plex Sans KR", sans-serif'
+              }}>
+                픽업 시간에 생활 맞춰야 해서 불편
+              </div>
+              <div style={{
+                background: 'rgba(255, 255, 255, 0.03)',
+                border: '1px solid rgba(255, 255, 255, 0.08)',
+                borderLeft: '3px solid #FF6B3D',
+                padding: '16px',
+                borderRadius: '6px',
+                fontSize: '13px',
+                lineHeight: 1.5,
+                color: '#999999',
+                fontFamily: '"SD Greta Sans", "IBM Plex Sans KR", sans-serif'
+              }}>
+                시간 맞추기 어렵고 매장 탐색 20-30분 소요
+              </div>
+            </div>
+          </div>
+        </div>
+        <div style={{
+          fontSize: '11px',
+          color: '#555555',
+          marginTop: 'auto',
+          paddingTop: '20px',
+          borderTop: '1px solid rgba(255, 255, 255, 0.05)',
+          flexShrink: 0,
+          fontFamily: '"SD Greta Sans", "IBM Plex Sans KR", sans-serif'
+        }}>출처: Uppsala University (2021, N=7, N=2)</div>
+      </div>
+    </motion.div>
+  );
+}
+
+// HourTaste Solution Visualization Component
+function HourTasteSolutionViz() {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const svgRef = useRef<SVGSVGElement>(null);
+  const linesRef = useRef<Array<{ line: SVGLineElement; problemCard: HTMLDivElement; solutionCard: HTMLDivElement }>>([]);
+
+  useEffect(() => {
+    const drawLines = () => {
+      if (!containerRef.current || !svgRef.current) return;
+      
+      svgRef.current.innerHTML = '';
+      linesRef.current = [];
+      const container = containerRef.current;
+      const containerRect = container.getBoundingClientRect();
+
+      for (let i = 1; i <= 3; i++) {
+        const problemCard = container.querySelector(`#problem-${i}`) as HTMLDivElement;
+        const solutionCard = container.querySelector(`#solution-${i}`) as HTMLDivElement;
+
+        if (problemCard && solutionCard && svgRef.current) {
+          const problemRect = problemCard.getBoundingClientRect();
+          const solutionRect = solutionCard.getBoundingClientRect();
+
+          const x1 = (problemRect.left + problemRect.width / 2) - containerRect.left;
+          const y1 = problemRect.bottom - containerRect.top;
+          
+          const x2 = (solutionRect.left + solutionRect.width / 2) - containerRect.left;
+          const y2 = solutionRect.top - containerRect.top;
+
+          const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+          line.setAttribute('x1', String(x1));
+          line.setAttribute('y1', String(y1));
+          line.setAttribute('x2', String(x2));
+          line.setAttribute('y2', String(y2));
+          line.style.stroke = '#262626';
+          line.style.strokeWidth = '2';
+          line.style.strokeDasharray = '4 4';
+          line.style.transition = 'all 0.3s ease';
+          svgRef.current.appendChild(line);
+          linesRef.current.push({ line, problemCard, solutionCard });
+        }
+      }
+      addHoverListeners();
+    };
+
+    const addHoverListeners = () => {
+      linesRef.current.forEach(({ line, problemCard, solutionCard }) => {
+        problemCard.addEventListener('mouseenter', () => {
+          line.style.stroke = '#FF4757';
+          line.style.strokeWidth = '3';
+          line.style.strokeDasharray = 'none';
+        });
+        problemCard.addEventListener('mouseleave', () => {
+          line.style.stroke = '#262626';
+          line.style.strokeWidth = '2';
+          line.style.strokeDasharray = '4 4';
+        });
+        
+        solutionCard.addEventListener('mouseenter', () => {
+          line.style.stroke = '#1DD1A1';
+          line.style.strokeWidth = '3';
+          line.style.strokeDasharray = 'none';
+        });
+        solutionCard.addEventListener('mouseleave', () => {
+          line.style.stroke = '#262626';
+          line.style.strokeWidth = '2';
+          line.style.strokeDasharray = '4 4';
+        });
+      });
+    };
+
+    drawLines();
+    const resizeObserver = new ResizeObserver(drawLines);
+    if (containerRef.current) {
+      resizeObserver.observe(containerRef.current);
+    }
+
+    return () => {
+      resizeObserver.disconnect();
+    };
+  }, []);
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.8, delay: 0.2 }}
+      style={{
+        marginTop: '0px',
+        marginBottom: '40px',
+        width: '100%',
+        position: 'relative'
+      }}
+    >
+      <div
+        ref={containerRef}
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          width: '100%',
+          gap: 0,
+          position: 'relative',
+          justifyContent: 'center',
+          padding: '20px 0'
+        }}
+      >
+        <style>{`
+          .solution-viz-header {
+            font-size: clamp(11px, 1.3vmin, 14px);
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            opacity: 0.9;
+            text-align: left;
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+            margin-bottom: 1.5vmin;
+          }
+          .solution-viz-header.problem { color: #FF4757; }
+          .solution-viz-header.solution { color: #1DD1A1; }
+          .solution-viz-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2vmin;
+            width: 100%;
+          }
+          .solution-viz-card {
+            background: #141414;
+            border: none;
+            border-radius: 2vmin;
+            padding: 2.5vmin;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+            position: relative;
+            transition: all 0.3s ease;
+            z-index: 1;
+            width: 100%;
+          }
+          .solution-viz-card-number {
+            position: absolute;
+            top: 2vmin;
+            right: 2.5vmin;
+            font-size: 5vmin;
+            font-weight: 800;
+            color: rgba(255, 255, 255, 0.05);
+            line-height: 1;
+            font-family: 'Pretendard', sans-serif;
+          }
+          .solution-viz-card-icon {
+            font-size: 5vmin;
+            margin-bottom: 2vmin;
+            filter: grayscale(30%);
+          }
+          .solution-viz-card.problem .solution-viz-card-icon {
+            filter: grayscale(100%);
+            opacity: 0.6;
+          }
+          .solution-viz-card-title {
+            font-size: clamp(14px, 1.8vmin, 18px);
+            font-weight: 700;
+            margin-bottom: 1vmin;
+            line-height: 1.3;
+            word-break: keep-all;
+            color: #ffffff;
+            font-family: 'Pretendard', sans-serif;
+          }
+          .solution-viz-card-desc {
+            font-size: clamp(12px, 1.4vmin, 15px);
+            color: #a0a0a0;
+            font-weight: 500;
+            line-height: 1.4;
+            word-break: keep-all;
+            font-family: 'Pretendard', sans-serif;
+          }
+          .solution-viz-card.problem:hover {
+            background: rgba(255, 71, 87, 0.1);
+            transform: translateY(-0.5vmin);
+          }
+          .solution-viz-card.solution {
+            background: linear-gradient(145deg, rgba(29, 209, 161, 0.05) 0%, rgba(20, 20, 20, 0.8) 100%);
+            border: 1px solid rgba(29, 209, 161, 0.2);
+          }
+          .solution-viz-card.solution:hover {
+            border-color: #1DD1A1;
+            transform: translateY(-0.5vmin);
+          }
+          .solution-viz-badge {
+            display: inline-block;
+            background: rgba(29, 209, 161, 0.15);
+            color: #1DD1A1;
+            font-size: clamp(10px, 1.1vmin, 12px);
+            font-weight: 700;
+            padding: 0.5vmin 1.2vmin;
+            border-radius: 100px;
+            margin-bottom: 1.5vmin;
+            letter-spacing: 0.05em;
+            font-family: 'Pretendard', sans-serif;
+          }
+          .solution-viz-card.solution .solution-viz-card-number {
+            color: rgba(29, 209, 161, 0.05);
+          }
+          @media (max-width: 768px) {
+            .solution-viz-grid {
+              grid-template-columns: 1fr;
+              gap: 3vmin;
+            }
+            .solution-viz-card {
+              flex-direction: row;
+              align-items: center;
+              justify-content: flex-start;
+              gap: 3vmin;
+              padding: 3vmin;
+            }
+            .solution-viz-card-icon, .solution-viz-badge {
+              margin-bottom: 0;
+            }
+            .solution-viz-card-number {
+              position: static;
+              font-size: 4vmin;
+              order: 3;
+              margin-left: auto;
+            }
+          }
+        `}</style>
+        
+        {/* Problem Area */}
+        <div className="solution-viz-header problem">Current Problems</div>
+        <div className="solution-viz-grid" style={{ marginBottom: '6vmin' }}>
+          <div className="solution-viz-card problem" id="problem-1">
+            <div className="solution-viz-card-number">1</div>
+            <div className="solution-viz-card-icon">📦</div>
+            <div>
+              <div className="solution-viz-card-title">특수 식단 배제</div>
+              <div className="solution-viz-card-desc">비건, 알러지 등<br />랜덤박스의 한계</div>
+            </div>
+          </div>
+          <div className="solution-viz-card problem" id="problem-2">
+            <div className="solution-viz-card-number">2</div>
+            <div className="solution-viz-card-icon">🔍</div>
+            <div>
+              <div className="solution-viz-card-title">탐색의 비효율성</div>
+              <div className="solution-viz-card-desc">원하는 시간과 위치<br />찾기의 어려움</div>
+            </div>
+          </div>
+          <div className="solution-viz-card problem" id="problem-3">
+            <div className="solution-viz-card-number">3</div>
+            <div className="solution-viz-card-icon">😟</div>
+            <div>
+              <div className="solution-viz-card-title">구매 실패 리스크</div>
+              <div className="solution-viz-card-desc">원하는 제품이 없을<br />불확실성</div>
+            </div>
+          </div>
+        </div>
+
+        {/* Solution Area */}
+        <div className="solution-viz-header solution">Our Solution</div>
+        <div className="solution-viz-grid">
+          <div className="solution-viz-card solution" id="solution-1">
+            <div className="solution-viz-card-number">1</div>
+            <div className="solution-viz-badge">선택권</div>
+            <div>
+              <div className="solution-viz-card-icon">📋</div>
+              <div className="solution-viz-card-title">재고 공개 옵션</div>
+              <div className="solution-viz-card-desc">랜덤박스 외<br />확정 구매 기능 제공</div>
+            </div>
+          </div>
+          <div className="solution-viz-card solution" id="solution-2">
+            <div className="solution-viz-card-number">2</div>
+            <div className="solution-viz-badge">효율성</div>
+            <div>
+              <div className="solution-viz-card-icon">🔔</div>
+              <div className="solution-viz-card-title">맞춤 알림 서비스</div>
+              <div className="solution-viz-card-desc">선호 시간·위치·식단<br />자동 매칭 알림</div>
+            </div>
+          </div>
+          <div className="solution-viz-card solution" id="solution-3">
+            <div className="solution-viz-card-number">3</div>
+            <div className="solution-viz-badge">지속성</div>
+            <div>
+              <div className="solution-viz-card-icon">✅</div>
+              <div className="solution-viz-card-title">지도 스탬프 & 보상</div>
+              <div className="solution-viz-card-desc">직관적 탐색 및<br />재방문 유도 리워드</div>
+            </div>
+          </div>
+        </div>
+
+        {/* SVG for drawing connector lines */}
+        <svg
+          ref={svgRef}
+          style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            pointerEvents: 'none',
+            zIndex: 0
+          }}
+        />
       </div>
     </motion.div>
   );
@@ -1015,7 +1663,7 @@ const projectsData: { [key: string]: ProjectData } = {
         content: '',
       },
       {
-        title: 'Core Concept',
+        title: 'Solution',
         content: '시간대별 동적 할인율이 핵심입니다. 마감 2시간 전 20% 할인으로 시작하여, 마감 30분 전에는 최대 60%까지 할인율이 올라갑니다. 사용자는 실시간으로 변하는 할인율을 보며 최적의 타이밍에 구매할 수 있습니다. 게이미피케이션 요소를 더해 "할인 헌터" 배지 시스템도 도입했습니다.',
         image: 'mobile app timer discount'
       },
@@ -1639,7 +2287,7 @@ export function ProjectDetail({ projectId, onBack, onNavigateToProject, onNaviga
                       lineHeight: 1.9,
                       color: 'rgba(255, 255, 255, 0.8)',
                       fontFamily: '"SD Greta Sans", "IBM Plex Sans KR", sans-serif',
-                      marginBottom: '0',
+                      marginBottom: '50px',
                       whiteSpace: 'pre-line',
                       fontWeight: 300
                     }}>
@@ -1651,14 +2299,43 @@ export function ProjectDetail({ projectId, onBack, onNavigateToProject, onNaviga
                     lineHeight: 1.9,
                     color: 'rgba(255, 255, 255, 0.8)',
                     fontFamily: '"SD Greta Sans", "IBM Plex Sans KR", sans-serif',
-                    marginBottom: '60px',
+                    marginBottom: '30px',
                     whiteSpace: 'pre-line',
                     fontWeight: 300
                   }}>
-                    마감 할인 시장은 MZ세대의 가치 소비로 급성장 중이지만, 기존 모델은 명확한 딜레마가 있습니다. '랜덤박스'는 수익과 효율이 높지만, 정보가 불투명해 알레르기나 비건 등 '목적성 구매' 고객을 배제합니다. 반면 '재고공개'는 투명하지만 수익성이 낮습니다.<br /><br />
-                    따라서 이 문제를 해결하기 위해, 수익성 높은 '랜덤박스'를 기본으로 하되 '재고 공개'를 옵션으로 제공하는 하이브리드 모델을 제안합니다. 이는 매장의 효율을 챙기면서 동시에 정보 투명성을 확보하여, 기존에 배제되었던 새로운 고객층까지 포용하는 차별화 전략입니다.
+                    수익성 높은 '랜덤박스'는 정보 불투명성으로 특정 고객(알레르기, 비건 등)을 배제하고, 투명한 '재고공개'는 수익성이 낮습니다.<br />
+                    <span style={{ color: '#ffffff', fontWeight: 700 }}>'랜덤박스'를 기본으로 '재고공개' 옵션을 제공해 수익성과 투명성을 동시에 확보하고, 목적성 구매를 하는 새로운 고객층까지 포용하여 차별화 했습니다.</span>
                   </p>
                   <HourTasteDataChart />
+                  <p style={{
+                    fontSize: '17px',
+                    lineHeight: 1.9,
+                    color: 'rgba(255, 255, 255, 0.8)',
+                    fontFamily: '"SD Greta Sans", "IBM Plex Sans KR", sans-serif',
+                    marginTop: '100px',
+                    marginBottom: '30px',
+                    whiteSpace: 'pre-line',
+                    fontWeight: 300
+                  }}>
+                    마감할인 앱 삭제의 핵심 원인은 '탐색 피로'입니다. 사용자의 1/3이 시간·위치·취향 불일치로 인한 탐색 실패로 앱을 삭제합니다.<br />
+                    이는 마감 할인 앱의 성공 본질이 가격 할인이 아닌, <span style={{ color: '#ffffff', fontWeight: 700 }}>'실패 없는 편리한 탐색 경험' 제공</span>에 있음을 의미합니다.
+                  </p>
+                  <HourTasteUserChart />
+                </>
+              ) : project.id === 'hourtaste' && section.title === 'Solution' ? (
+                <>
+                  <p style={{
+                    fontSize: '17px',
+                    lineHeight: 1.9,
+                    color: 'rgba(255, 255, 255, 0.8)',
+                    fontFamily: '"SD Greta Sans", "IBM Plex Sans KR", sans-serif',
+                    marginBottom: '40px',
+                    whiteSpace: 'pre-line',
+                    fontWeight: 300
+                  }}>
+                    '탐색 피로'를 줄이고 '모든 고객층'을 포용하기 위해 3가지 전략을 사용했습니다.
+                  </p>
+                  <HourTasteSolutionViz />
                 </>
               ) : project.id === 'railway-redesign' && section.title === '문제 (WHY)' ? (
                 <>
@@ -1969,21 +2646,21 @@ export function ProjectDetail({ projectId, onBack, onNavigateToProject, onNaviga
                   </div>
                 </>
               ) : (
-                <p style={{
-                  fontSize: '17px',
-                  lineHeight: 1.9,
-                  color: 'rgba(255, 255, 255, 0.8)',
-                  fontFamily: '"SD Greta Sans", "IBM Plex Sans KR", sans-serif',
-                  marginBottom: section.image ? '50px' : '0',
-                  whiteSpace: 'pre-line',
-                  fontWeight: 300
-                }}>
-                  {section.content}
-                </p>
+              <p style={{
+                fontSize: '17px',
+                lineHeight: 1.9,
+                color: 'rgba(255, 255, 255, 0.8)',
+                fontFamily: '"SD Greta Sans", "IBM Plex Sans KR", sans-serif',
+                marginBottom: section.image ? '50px' : '0',
+                whiteSpace: 'pre-line',
+                fontWeight: 300
+              }}>
+                {section.content}
+              </p>
               )}
 
 
-              {section.image && !(project.id === 'cat-peaceful-day' && section.title === '방법 (How)') && !(project.id === 'railway-redesign' && section.title === '근거 (EVIDENCE)') && !(project.id === 'railway-redesign' && section.title === '문제 (WHY)') && !(project.id === 'railway-redesign' && section.title === '전략 (HOW)') && (
+              {section.image && !(project.id === 'cat-peaceful-day' && section.title === '방법 (How)') && !(project.id === 'railway-redesign' && section.title === '근거 (EVIDENCE)') && !(project.id === 'railway-redesign' && section.title === '문제 (WHY)') && !(project.id === 'railway-redesign' && section.title === '전략 (HOW)') && !(project.id === 'hourtaste' && section.title === 'Solution') && (
                 <motion.div 
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
@@ -2058,7 +2735,7 @@ export function ProjectDetail({ projectId, onBack, onNavigateToProject, onNaviga
                       />
                     </div>
                   ))}
-                </motion.div>
+            </motion.div>
               )}
 
               {project.id === 'cat-peaceful-day' && section.title === '의도 (Why)' && (
