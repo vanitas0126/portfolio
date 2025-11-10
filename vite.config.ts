@@ -4,7 +4,7 @@
   import path from 'path';
 
 export default defineConfig({
-  base: '/portfolio/',
+  base: process.env.NODE_ENV === 'production' ? '/portfolio/' : '/',
   plugins: [react()],
   resolve: {
       extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
@@ -73,6 +73,8 @@ export default defineConfig({
     },
     server: {
       port: 3000,
+      host: true, // 모든 네트워크 인터페이스에서 접근 가능
       open: true,
+      strictPort: false, // 포트가 사용 중이면 다른 포트 사용
     },
   });
