@@ -1675,10 +1675,6 @@ const projectsData: { [key: string]: ProjectData } = {
       {
         title: 'Personalization',
         content: 'AI 기반 추천 알고리즘으로 사용자의 선호 음식, 자주 방문하는 지역, 평균 구매 시간대를 분석하여 맞춤 알림을 보냅니다. "곧 출근하시네요! 회사 근처 ○○카페에서 샌드위치 40% 할인 중"처럼 상황에 맞는 푸시 알림으로 전환율을 높였습니다.',
-      },
-      {
-        title: '성과',
-        content: '',
       }
     ]
   },

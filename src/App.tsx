@@ -558,7 +558,7 @@ function HomePage({ onNavigateToAbout, onNavigateToProject }: { onNavigateToAbou
   const [typedText, setTypedText] = useState('');
   const [showMainText, setShowMainText] = useState(false);
   const typingIndexRef = useRef(0);
-  const typingText = "I'm Product Designer,\nSonghee Park";
+  const typingText = "I'm Songhee,\na Product Designer";
   
   // 타이핑 애니메이션
   useEffect(() => {
