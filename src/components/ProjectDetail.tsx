@@ -2110,8 +2110,8 @@ const projectsData: { [key: string]: ProjectData } = {
     title: 'NOOK',
     heroImage: `${import.meta.env.BASE_URL}project2/Indoor 1.1.png`,
     myRole: ['Lead Product Designer', 'AR UX Designer', 'Service Planner'],
-    team: ['3 Product Strategy', '1 Designer (본인)'],
-    duration: '6개월 (2024.02 - 2024.08)',
+    team: ['3 Product Strategy (공동)'],
+    duration: '15 weeks',
     industry: 'Furniture / AR Tech / Rental Service',
     summary: 'NOOK은 명품 가구를 구매 전 AR로 내 공간에 미리 배치해보고, 합리적인 가격에 렌탈할 수 있는 서비스입니다. AR 기술과 가구 렌탈을 결합하여 새로운 인테리어 경험을 제공하는 앱을 기획하고 디자인했습니다.',
     sections: [
