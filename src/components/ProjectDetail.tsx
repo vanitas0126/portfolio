@@ -2676,14 +2676,8 @@ export function ProjectDetail({ projectId, onBack, onNavigateToProject, onNaviga
 
           {/* Detail Sections */}
           {project.sections.map((section, index) => {
-            const nextSection = project.sections[index + 1];
-            const prevSection = project.sections[index - 1];
-            const isBeforeSolution = project.id === 'hourtaste' && 
-              section.title === '시장배경' && 
-              nextSection?.title === 'Solution';
-            const isSolution = project.id === 'hourtaste' && 
-              section.title === 'Solution' && 
-              prevSection?.title === '시장배경';
+            const isHourtasteSolution = project.id === 'hourtaste' && section.title === 'Solution';
+            const isHourtasteMarket = project.id === 'hourtaste' && section.title === '시장배경';
             
             return (
             <motion.div
@@ -2693,17 +2687,14 @@ export function ProjectDetail({ projectId, onBack, onNavigateToProject, onNaviga
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 0.6, delay: 0.1 }}
               style={{
-                marginTop: isSolution ? '-150px' : '0px',
-                marginBottom: isBeforeSolution ? '-50px' : '100px',
-                paddingBottom: isBeforeSolution ? '0px' : undefined,
-                position: isSolution ? 'relative' : undefined,
-                zIndex: isSolution ? 0 : undefined
+                marginTop: isHourtasteSolution ? '0px' : '0px',
+                marginBottom: isHourtasteMarket ? '0px' : '100px'
               }}
             >
               <h2 style={{
                 fontSize: '32px',
                 fontWeight: 600,
-                marginTop: isSolution ? '-100px' : '0px',
+                marginTop: isHourtasteSolution ? '0px' : '0px',
                 marginBottom: '24px',
                 fontFamily: '"Darker Grotesque", sans-serif',
                 color: '#fff',
@@ -2752,7 +2743,7 @@ export function ProjectDetail({ projectId, onBack, onNavigateToProject, onNaviga
                     마감할인 앱 삭제의 핵심 원인은 '탐색 피로'입니다. 사용자의 1/3이 시간·위치·취향 불일치로 인한 탐색 실패로 앱을 삭제합니다.<br />
                     이는 마감 할인 앱의 성공 본질이 가격 할인이 아닌, <span style={{ color: '#ffffff', fontWeight: 700 }}>'실패 없는 편리한 탐색 경험' 제공</span>에 있음을 의미합니다.
                   </p>
-                  <div style={{ marginBottom: '-150px', position: 'relative', zIndex: 1 }}>
+                  <div style={{ marginBottom: '-120px' }}>
                     <HourTasteUserChart />
                   </div>
                 </>
