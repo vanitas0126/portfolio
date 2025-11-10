@@ -135,7 +135,6 @@ function AboutFooterVideoComponent({ onHeightChange }: { onHeightChange?: (heigh
 export default function About({ onNavigateHome, onNavigateToWork, onNavigateToProject }: AboutProps) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isCompact, setIsCompact] = useState(false);
-  const [isWorkHovered, setIsWorkHovered] = useState(false);
   const footerSectionRef = useRef<HTMLElement>(null);
   const [footerHeight, setFooterHeight] = useState<number | null>(null);
 
@@ -276,19 +275,18 @@ export default function About({ onNavigateHome, onNavigateToWork, onNavigateToPr
                 padding: '10px 15px',
                 margin: '-10px -15px'
               }}
-              onMouseEnter={() => setIsWorkHovered(true)}
-              onMouseLeave={(e) => {
-                const relatedTarget = e.relatedTarget;
-                if (!relatedTarget || !(relatedTarget instanceof HTMLElement) || !relatedTarget.closest('.work-dropdown-wrapper')) {
-                  setIsWorkHovered(false);
-                }
-              }}
             >
               <button 
                 onClick={(e) => {
                   e.preventDefault();
-                  setIsWorkHovered(false);
-                  onNavigateToWork?.();
+                  onNavigateHome?.();
+                  // 홈으로 이동한 후 Selected Work 섹션으로 스크롤
+                  setTimeout(() => {
+                    const workSection = document.getElementById('work');
+                    if (workSection) {
+                      workSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                  }, 100);
                 }}
                 style={{ 
                   color: 'rgba(255, 217, 0, 0.6)', 
@@ -303,82 +301,6 @@ export default function About({ onNavigateHome, onNavigateToWork, onNavigateToPr
               >
                 WORK
               </button>
-              
-              {/* Dropdown Menu */}
-              {isWorkHovered && (
-                <motion.div
-                  className="work-dropdown-wrapper"
-                  initial={{ opacity: 0, y: -10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
-                  transition={{ duration: 0.2, ease: "easeOut" }}
-                  onMouseEnter={() => setIsWorkHovered(true)}
-                  onMouseLeave={() => setIsWorkHovered(false)}
-                  onClick={(e) => { e.stopPropagation(); }}
-                  style={{
-                    position: 'absolute',
-                    top: '-10px',
-                    left: '-40px',
-                    right: '-40px',
-                    paddingTop: '50px',
-                    background: 'transparent',
-                    zIndex: 10000
-                  }}
-                >
-                  <div style={{
-                    background: 'rgba(0, 0, 0, 0.95)',
-                    backdropFilter: 'blur(20px)',
-                    borderRadius: '12px',
-                    padding: '12px 0',
-                    minWidth: '200px',
-                    boxShadow: '0 8px 32px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 217, 0, 0.2)'
-                  }}>
-                  {[
-                    { name: 'HourTaste', label: 'HourTaste', projectId: 'hourtaste' },
-                    { name: 'NOOK', label: 'NOOK', projectId: 'nook' },
-                    { name: 'Railway', label: 'Railway Redesign', projectId: 'railway-redesign' },
-                    { name: 'ACat', label: "A Cat's Peaceful Day", projectId: 'cat-peaceful-day' }
-                  ].map((project, idx) => (
-                    <button
-                      key={idx}
-                      onClick={(e) => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        setIsWorkHovered(false);
-                        if (project.projectId) {
-                          onNavigateToProject?.(project.projectId);
-                        } else {
-                          onNavigateToWork?.();
-                        }
-                      }}
-                      style={{
-                        display: 'block',
-                        width: '100%',
-                        padding: '10px 20px',
-                        background: 'none',
-                        border: 'none',
-                        color: 'rgba(255, 255, 255, 0.7)',
-                        fontSize: '15px',
-                        fontWeight: 500,
-                        textAlign: 'left',
-                        cursor: 'pointer',
-                        transition: 'all 0.2s ease'
-                      }}
-                      onMouseEnter={(e) => {
-                        e.currentTarget.style.color = '#ffd900';
-                        e.currentTarget.style.background = 'rgba(255, 217, 0, 0.08)';
-                      }}
-                      onMouseLeave={(e) => {
-                        e.currentTarget.style.color = 'rgba(255, 255, 255, 0.7)';
-                        e.currentTarget.style.background = 'none';
-                      }}
-                    >
-                      {project.label}
-                    </button>
-                  ))}
-                  </div>
-                </motion.div>
-              )}
             </div>
             <div 
               style={{ 

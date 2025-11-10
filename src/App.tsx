@@ -569,7 +569,6 @@ function ExpertiseItem({ skill, videoNumber, variants }: { skill: string; videoN
 function HomePage({ onNavigateToAbout, onNavigateToProject }: { onNavigateToAbout: () => void; onNavigateToProject: (projectId: string) => void }) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isCompact, setIsCompact] = useState(false);
-  const [isWorkHovered, setIsWorkHovered] = useState(false);
   const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 1920);
   const heroSectionRef = useRef<HTMLElement>(null);
   const blurBgRef = useRef<HTMLDivElement>(null);
@@ -1127,7 +1126,6 @@ function HomePage({ onNavigateToAbout, onNavigateToProject }: { onNavigateToAbou
               if (el) {
                 el.scrollIntoView({ behavior: 'smooth', block: 'start' });
               }
-              setIsWorkHovered(false);
             }}
               style={{ 
                 color: '#ffd900', 

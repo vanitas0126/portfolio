@@ -2167,9 +2167,7 @@ export function ProjectDetail({ projectId, onBack, onNavigateToProject, onNaviga
   const [scrollY, setScrollY] = useState(0);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isCompact, setIsCompact] = useState(false);
-  const [isWorkHovered, setIsWorkHovered] = useState(false);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
-  const canShowWorkDropdown = !!onNavigateToProject && !onNavigateToWork;
   
   const project = projectsData[projectId];
   const heroHasVideo = !!project?.heroVideo;
@@ -2317,132 +2315,32 @@ export function ProjectDetail({ projectId, onBack, onNavigateToProject, onNaviga
           </div>
           
           <div style={{ display: 'flex', gap: isCompact ? '36px' : '47px' }}>
-            {/* WORK Dropdown */}
-            <div 
+            <motion.button 
+              onClick={(e) => {
+                e.preventDefault();
+                if (onNavigateToWork) {
+                  onNavigateToWork();
+                }
+              }}
               style={{ 
-                position: 'relative',
-                padding: '10px 15px',
-                margin: '-10px -15px'
+                color: '#ffd900', 
+                textDecoration: 'none', 
+                fontSize: isCompact ? '14px' : '17px', 
+                fontWeight: 600,
+                cursor: 'pointer',
+                background: 'none',
+                border: 'none',
+                padding: 0
               }}
-              onMouseEnter={() => {
-                if (canShowWorkDropdown) {
-                  setIsWorkHovered(true);
-                }
+              whileHover={{ 
+                scale: 1.08,
+                color: 'rgba(255, 217, 0, 0.7)',
+                transition: { type: "spring", stiffness: 300, damping: 15 }
               }}
-              onMouseLeave={(e) => {
-                if (canShowWorkDropdown) {
-                const relatedTarget = e.relatedTarget;
-                if (relatedTarget && relatedTarget instanceof HTMLElement && relatedTarget.closest('.work-dropdown-wrapper')) {
-                  return;
-                }
-                setIsWorkHovered(false);
-                }
-              }}
+              whileTap={{ scale: 0.95 }}
             >
-              <motion.button 
-                onClick={(e) => {
-                  if (onNavigateToWork) {
-                    e.preventDefault();
-                    setIsWorkHovered(false);
-                    onNavigateToWork();
-                  } else if (canShowWorkDropdown) {
-                    e.preventDefault();
-                    setIsWorkHovered((prev) => !prev);
-                  }
-                }}
-                style={{ 
-                  color: '#ffd900', 
-                  textDecoration: 'none', 
-                  fontSize: isCompact ? '14px' : '17px', 
-                  fontWeight: 600,
-                  cursor: 'pointer',
-                  background: 'none',
-                  border: 'none',
-                  padding: 0
-                }}
-                whileHover={{ 
-                  scale: 1.08,
-                  color: 'rgba(255, 217, 0, 0.7)',
-                  transition: { type: "spring", stiffness: 300, damping: 15 }
-                }}
-                whileTap={{ scale: 0.95 }}
-              >
-                WORK
-              </motion.button>
-              
-              {/* Dropdown Menu */}
-              {isWorkHovered && canShowWorkDropdown && (
-                <motion.div
-                  className="work-dropdown-wrapper"
-                  initial={{ opacity: 0, y: -10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
-                  transition={{ duration: 0.2, ease: "easeOut" }}
-                  onMouseEnter={() => setIsWorkHovered(true)}
-                  onMouseLeave={() => setIsWorkHovered(false)}
-                  style={{
-                    position: 'absolute',
-                    top: '-10px',
-                    left: '-40px',
-                    right: '-40px',
-                    paddingTop: '50px',
-                    background: 'transparent',
-                    zIndex: 10000
-                  }}
-                >
-                  <div style={{
-                    background: 'rgba(0, 0, 0, 0.95)',
-                    backdropFilter: 'blur(20px)',
-                    borderRadius: '12px',
-                    padding: '12px 0',
-                    minWidth: '200px',
-                    boxShadow: '0 8px 32px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 217, 0, 0.2)'
-                  }}>
-                    {[
-                      { name: 'HourTaste', projectId: 'hourtaste' },
-                      { name: 'NOOK', projectId: 'nook' },
-                      { name: 'Railway Redesign', projectId: 'railway-redesign' },
-                      { name: "A Cat's Peaceful Day", projectId: 'cat-peaceful-day' }
-                    ].map((proj, idx) => (
-                      <a
-                        key={idx}
-                        href="#"
-                        onClick={(e) => {
-                          e.preventDefault();
-                          onNavigateToProject(proj.projectId);
-                          setIsWorkHovered(false);
-                          window.scrollTo(0, 0);
-                        }}
-                        style={{
-                          display: 'block',
-                          width: '100%',
-                          padding: '10px 20px',
-                          background: 'none',
-                          border: 'none',
-                          color: 'rgba(255, 255, 255, 0.7)',
-                          fontSize: '15px',
-                          fontWeight: 500,
-                          textAlign: 'left',
-                          cursor: 'pointer',
-                          textDecoration: 'none',
-                          transition: 'all 0.2s ease'
-                        }}
-                        onMouseEnter={(e) => {
-                          e.currentTarget.style.background = 'rgba(255, 217, 0, 0.1)';
-                          e.currentTarget.style.color = '#ffd900';
-                        }}
-                        onMouseLeave={(e) => {
-                          e.currentTarget.style.background = 'none';
-                          e.currentTarget.style.color = 'rgba(255, 255, 255, 0.7)';
-                        }}
-                      >
-                        {proj.name}
-                      </a>
-                    ))}
-                  </div>
-                </motion.div>
-              )}
-            </div>
+              WORK
+            </motion.button>
 
             {/* ABOUT Button */}
             {onNavigateToAbout && (
