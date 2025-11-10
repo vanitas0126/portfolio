@@ -498,7 +498,6 @@ function HourTasteDataChart() {
           <div style={{
             display: 'flex',
             width: '100%',
-            display: 'flex',
             flexDirection: 'column',
             gap: '18px'
           }}>
