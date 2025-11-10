@@ -13,6 +13,8 @@ declare global {
 
 interface AboutProps {
   onNavigateHome?: () => void;
+  onNavigateToWork?: () => void;
+  onNavigateToProject?: (projectId: string) => void;
 }
 
 // About 페이지 푸터 비디오 렌더링 컴포넌트 (UnicornStudio 임베드)
@@ -130,7 +132,7 @@ function AboutFooterVideoComponent({ onHeightChange }: { onHeightChange?: (heigh
   );
 }
 
-export default function About({ onNavigateHome }: AboutProps) {
+export default function About({ onNavigateHome, onNavigateToWork, onNavigateToProject }: AboutProps) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isCompact, setIsCompact] = useState(false);
   const [isWorkHovered, setIsWorkHovered] = useState(false);
@@ -285,7 +287,8 @@ export default function About({ onNavigateHome }: AboutProps) {
               <button 
                 onClick={(e) => {
                   e.preventDefault();
-                  setIsWorkHovered((v) => !v);
+                  setIsWorkHovered(false);
+                  onNavigateToWork?.();
                 }}
                 style={{ 
                   color: 'rgba(255, 217, 0, 0.6)', 
@@ -331,10 +334,10 @@ export default function About({ onNavigateHome }: AboutProps) {
                     boxShadow: '0 8px 32px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 217, 0, 0.2)'
                   }}>
                   {[
-                    { name: 'HourTaste', label: 'HourTaste' },
-                    { name: 'NOOK', label: 'NOOK' },
-                    { name: 'Railway', label: 'Railway Redesign' },
-                    { name: 'ACat', label: "A Cat's Peaceful Day" }
+                    { name: 'HourTaste', label: 'HourTaste', projectId: 'hourtaste' },
+                    { name: 'NOOK', label: 'NOOK', projectId: 'nook' },
+                    { name: 'Railway', label: 'Railway Redesign', projectId: 'railway-redesign' },
+                    { name: 'ACat', label: "A Cat's Peaceful Day", projectId: 'cat-peaceful-day' }
                   ].map((project, idx) => (
                     <button
                       key={idx}
@@ -342,6 +345,11 @@ export default function About({ onNavigateHome }: AboutProps) {
                         e.preventDefault();
                         e.stopPropagation();
                         setIsWorkHovered(false);
+                        if (project.projectId) {
+                          onNavigateToProject?.(project.projectId);
+                        } else {
+                          onNavigateToWork?.();
+                        }
                       }}
                       style={{
                         display: 'block',

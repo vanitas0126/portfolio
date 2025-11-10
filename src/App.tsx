@@ -19,43 +19,70 @@ declare global {
 }
 
 export default function App() {
-  const [currentPage, setCurrentPage] = useState('home');
+  const [currentPage, setCurrentPage] = useState<'home' | 'about'>('home');
   const [selectedProject, setSelectedProject] = useState<string | null>(null);
 
-  // 페이지별 제목 설정
   useEffect(() => {
-    if (currentPage === 'home') {
-      document.title = 'SONGHEE PORTFOLIO';
+    if (!selectedProject) {
+      document.title = currentPage === 'about' ? 'About - SONGHEE PORTFOLIO' : 'SONGHEE PORTFOLIO';
     }
-  }, [currentPage]);
+  }, [currentPage, selectedProject]);
 
-  // If viewing About page, render About component early
-  if (currentPage === 'about') {
-    return <About onNavigateHome={() => setCurrentPage('home')} />;
-  }
-
-  // If viewing a project detail page
-  if (currentPage === 'project' && selectedProject) {
+  if (selectedProject) {
     return (
-      <ProjectDetail 
-        projectId={selectedProject} 
+      <ProjectDetail
+        projectId={selectedProject}
         onBack={() => {
-          setCurrentPage('home');
           setSelectedProject(null);
+          setCurrentPage('home');
         }}
         onNavigateToProject={(projectId: string) => {
           setSelectedProject(projectId);
-          setCurrentPage('project');
           window.scrollTo(0, 0);
         }}
         onNavigateToAbout={() => {
+          setSelectedProject(null);
           setCurrentPage('about');
           window.scrollTo({ top: 0, left: 0 });
+        }}
+        onNavigateToWork={() => {
+          setSelectedProject(null);
+          setCurrentPage('home');
+          setTimeout(() => {
+            const workSection = document.getElementById('work');
+            if (workSection) {
+              workSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+          }, 100);
         }}
       />
     );
   }
-
+ 
+  if (currentPage === 'about') {
+    return (
+      <About
+        onNavigateHome={() => {
+          setCurrentPage('home');
+          window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+        }}
+        onNavigateToWork={() => {
+          setCurrentPage('home');
+          setTimeout(() => {
+            const workSection = document.getElementById('work');
+            if (workSection) {
+              workSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+          }, 100);
+        }}
+        onNavigateToProject={(projectId: string) => {
+          setSelectedProject(projectId);
+          setCurrentPage('home');
+        }}
+      />
+    );
+  }
+ 
   return (
     <HomePage 
       onNavigateToAbout={() => {
@@ -64,7 +91,6 @@ export default function App() {
       }}
       onNavigateToProject={(projectId: string) => {
         setSelectedProject(projectId);
-        setCurrentPage('project');
         window.scrollTo(0, 0);
       }}
     />
@@ -558,7 +584,7 @@ function HomePage({ onNavigateToAbout, onNavigateToProject }: { onNavigateToAbou
   const [typedText, setTypedText] = useState('');
   const [showMainText, setShowMainText] = useState(false);
   const typingIndexRef = useRef(0);
-  const typingText = "I'm Songhee,\na Product Designer";
+  const typingText = "I'm Songhee,\na UX/UI Designer";
   
   // 타이핑 애니메이션
   useEffect(() => {
@@ -1088,22 +1114,21 @@ function HomePage({ onNavigateToAbout, onNavigateToProject }: { onNavigateToAbou
           </div>
         <div style={{ display: 'flex', gap: isCompact ? '36px' : '47px' }}>
           <div 
-            style={{ 
-              position: 'relative',
-              padding: '10px 15px',
-              margin: '-10px -15px'
-            }}
-            onMouseEnter={() => setIsWorkHovered(true)}
-            onMouseLeave={(e) => {
-              const relatedTarget = e.relatedTarget;
-              if (relatedTarget && relatedTarget instanceof HTMLElement && relatedTarget.closest('.work-dropdown-wrapper')) {
-                return;
+          style={{ 
+            position: 'relative',
+            padding: '10px 15px',
+            margin: '-10px -15px'
+          }}
+        >
+            <motion.button 
+            onClick={(e) => {
+              e.preventDefault();
+              const el = document.getElementById('work');
+              if (el) {
+                el.scrollIntoView({ behavior: 'smooth', block: 'start' });
               }
               setIsWorkHovered(false);
             }}
-          >
-            <motion.button 
-              onClick={(e) => e.preventDefault()}
               style={{ 
                 color: '#ffd900', 
                 textDecoration: 'none', 
@@ -1123,78 +1148,6 @@ function HomePage({ onNavigateToAbout, onNavigateToProject }: { onNavigateToAbou
             >
               WORK
             </motion.button>
-            
-            {/* Dropdown Menu */}
-            {isWorkHovered && (
-              <motion.div
-                className="work-dropdown-wrapper"
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                transition={{ duration: 0.2, ease: "easeOut" }}
-                onMouseEnter={() => setIsWorkHovered(true)}
-                onMouseLeave={() => setIsWorkHovered(false)}
-                style={{
-                  position: 'absolute',
-                  top: '-10px',
-                  left: '-40px',
-                  right: '-40px',
-                  paddingTop: '50px',
-                  background: 'transparent',
-                  zIndex: 10000
-                }}
-              >
-                <div style={{
-                  background: 'rgba(0, 0, 0, 0.95)',
-                  backdropFilter: 'blur(20px)',
-                  borderRadius: '12px',
-                  padding: '12px 0',
-                  minWidth: '200px',
-                  boxShadow: '0 8px 32px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 217, 0, 0.2)'
-                }}>
-                {[
-                  { name: 'HourTaste', projectId: 'hourtaste' },
-                  { name: 'NOOK', projectId: 'nook' },
-                  { name: 'Railway Redesign', projectId: 'railway-redesign' },
-                  { name: "A Cat's Peaceful Day", projectId: 'cat-peaceful-day' }
-                ].map((project, idx) => (
-                  <a
-                    key={idx}
-                    href="#"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      onNavigateToProject(project.projectId);
-                      setIsWorkHovered(false);
-                    }}
-                    style={{
-                      display: 'block',
-                      width: '100%',
-                      padding: '10px 20px',
-                      background: 'none',
-                      border: 'none',
-                      color: 'rgba(255, 255, 255, 0.7)',
-                      fontSize: '15px',
-                      fontWeight: 500,
-                      textAlign: 'left',
-                      cursor: 'pointer',
-                      textDecoration: 'none',
-                      transition: 'all 0.2s ease'
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.color = '#ffd900';
-                      e.currentTarget.style.background = 'rgba(255, 217, 0, 0.08)';
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.color = 'rgba(255, 255, 255, 0.7)';
-                      e.currentTarget.style.background = 'none';
-                    }}
-                  >
-                    {project.name}
-                  </a>
-                ))}
-                </div>
-              </motion.div>
-            )}
           </div>
           <motion.button 
             onClick={onNavigateToAbout}
@@ -1584,7 +1537,7 @@ function HomePage({ onNavigateToAbout, onNavigateToProject }: { onNavigateToAbou
                   {/* Project-specific thumbnail image */}
                   {project.projectId === 'hourtaste' && (
                     <img
-                      src={`${import.meta.env.BASE_URL}project1.png`}
+                      src={`${import.meta.env.BASE_URL}project1/projects1_thumb.png`}
                       alt={project.name}
                       style={{
                         position: 'absolute',
@@ -1679,7 +1632,8 @@ function HomePage({ onNavigateToAbout, onNavigateToProject }: { onNavigateToAbou
                   display: 'flex',
                   justifyContent: 'space-between',
                   alignItems: 'baseline',
-                  marginTop: '20px'
+                  marginTop: '20px',
+                  padding: windowWidth < 768 ? '0 8px' : windowWidth < 1400 ? '0 12px' : '0 16px'
                 }}>
                   <p className="project-category" style={{
                     fontSize: windowWidth < 768 ? '20px' : '24px',

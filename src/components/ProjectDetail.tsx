@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion, useScroll, useSpring } from 'motion/react';
 import { ArrowLeft } from 'lucide-react';
 import { ImageWithFallback } from './figma/ImageWithFallback';
@@ -382,7 +382,7 @@ function HourTasteDataChart() {
         gridTemplateRows: 'repeat(2, 1fr)',
         gap: '24px',
         width: '100%',
-        minHeight: '800px'
+        aspectRatio: '1 / 1'
       }}
     >
       {/* Section 1: Market */}
@@ -390,7 +390,7 @@ function HourTasteDataChart() {
         background: 'rgba(255, 255, 255, 0.1)',
         border: 'none',
         borderRadius: '12px',
-        padding: '60px',
+        padding: '40px',
         display: 'flex',
         flexDirection: 'column',
         position: 'relative',
@@ -401,16 +401,16 @@ function HourTasteDataChart() {
           color: '#555555',
           fontWeight: 600,
           letterSpacing: '0.15em',
-          marginBottom: '20px',
+          marginBottom: '16px',
           textTransform: 'uppercase',
           flexShrink: 0,
           fontFamily: '"SD Greta Sans", "IBM Plex Sans KR", sans-serif'
         }}>Market Growth</div>
         <div style={{
-          fontSize: '24px',
+          fontSize: '22px',
           fontWeight: 700,
-          lineHeight: 1.5,
-          marginBottom: '30px',
+          lineHeight: 1.4,
+          marginBottom: '24px',
           wordBreak: 'keep-all',
           flexShrink: 0,
           fontFamily: '"Darker Grotesque", sans-serif',
@@ -445,7 +445,7 @@ function HourTasteDataChart() {
           fontSize: '11px',
           color: '#555555',
           marginTop: 'auto',
-          paddingTop: '20px',
+          paddingTop: '28px',
           borderTop: '1px solid rgba(255, 255, 255, 0.05)',
           flexShrink: 0,
           fontFamily: '"SD Greta Sans", "IBM Plex Sans KR", sans-serif'
@@ -457,7 +457,7 @@ function HourTasteDataChart() {
         background: 'rgba(255, 255, 255, 0.1)',
         border: 'none',
         borderRadius: '12px',
-        padding: '60px',
+        padding: '40px',
         display: 'flex',
         flexDirection: 'column',
         position: 'relative',
@@ -468,16 +468,16 @@ function HourTasteDataChart() {
           color: '#555555',
           fontWeight: 600,
           letterSpacing: '0.15em',
-          marginBottom: '20px',
+          marginBottom: '16px',
           textTransform: 'uppercase',
           flexShrink: 0,
           fontFamily: '"SD Greta Sans", "IBM Plex Sans KR", sans-serif'
         }}>Business Model</div>
         <div style={{
-          fontSize: '24px',
+          fontSize: '22px',
           fontWeight: 700,
-          lineHeight: 1.5,
-          marginBottom: '30px',
+          lineHeight: 1.4,
+          marginBottom: '24px',
           wordBreak: 'keep-all',
           flexShrink: 0,
           fontFamily: '"Darker Grotesque", sans-serif',
@@ -488,21 +488,26 @@ function HourTasteDataChart() {
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'center',
-          minHeight: 0
+          minHeight: 0,
+          background: 'rgba(255, 255, 255, 0.05)',
+          borderRadius: '16px',
+          padding: '24px',
+          width: '100%',
+          marginBottom: '28px'
         }}>
           <div style={{
+            display: 'flex',
             width: '100%',
             display: 'flex',
             flexDirection: 'column',
-            gap: '24px'
+            gap: '18px'
           }}>
             <div style={{
               display: 'flex',
               justifyContent: 'flex-end',
               gap: '16px',
-              paddingBottom: '12px',
-              borderBottom: '1px solid #222222',
-              paddingLeft: '25%'
+              paddingLeft: '25%',
+              marginBottom: '10px'
             }}>
               <div style={{
                 fontSize: '14px',
@@ -656,7 +661,7 @@ function HourTasteDataChart() {
           fontSize: '11px',
           color: '#555555',
           marginTop: 'auto',
-          paddingTop: '20px',
+          paddingTop: '28px',
           borderTop: '1px solid rgba(255, 255, 255, 0.05)',
           flexShrink: 0,
           fontFamily: '"SD Greta Sans", "IBM Plex Sans KR", sans-serif'
@@ -668,7 +673,7 @@ function HourTasteDataChart() {
         background: 'rgba(255, 255, 255, 0.1)',
         border: 'none',
         borderRadius: '12px',
-        padding: '60px',
+        padding: '40px',
         display: 'flex',
         flexDirection: 'column',
         position: 'relative',
@@ -679,16 +684,16 @@ function HourTasteDataChart() {
           color: '#555555',
           fontWeight: 600,
           letterSpacing: '0.15em',
-          marginBottom: '20px',
+          marginBottom: '16px',
           textTransform: 'uppercase',
           flexShrink: 0,
           fontFamily: '"SD Greta Sans", "IBM Plex Sans KR", sans-serif'
         }}>Problem</div>
         <div style={{
-          fontSize: '24px',
+          fontSize: '22px',
           fontWeight: 700,
-          lineHeight: 1.5,
-          marginBottom: '30px',
+          lineHeight: 1.4,
+          marginBottom: '24px',
           wordBreak: 'keep-all',
           flexShrink: 0,
           fontFamily: '"Darker Grotesque", sans-serif',
@@ -705,42 +710,63 @@ function HourTasteDataChart() {
             display: 'flex',
             width: '100%',
             height: '100%',
-            gap: '30px',
-            alignItems: 'center'
+            gap: '18px',
+            alignItems: 'stretch'
           }}>
             <div style={{
               flex: 1,
+              minWidth: 0,
               display: 'flex',
               flexDirection: 'column',
               justifyContent: 'center',
-              alignItems: 'center'
+              alignItems: 'center',
+              background: 'rgba(255, 255, 255, 0.05)',
+              borderRadius: '16px',
+              padding: '24px',
+              width: '100%',
+              marginBottom: '28px'
             }}>
               <div style={{
-                fontSize: 'clamp(40px, 6vw, 80px)',
-                fontWeight: 800,
-                color: '#FF4757',
-                lineHeight: 1,
-                fontFamily: '"Darker Grotesque", sans-serif'
-              }}>22<span style={{ fontSize: '0.7em' }}>%</span></div>
-              <div style={{
-                fontSize: '12px',
-                color: '#999999',
-                marginTop: '12px',
-                fontWeight: 500,
-                lineHeight: 1.4,
-                textAlign: 'center',
-                fontFamily: '"SD Greta Sans", "IBM Plex Sans KR", sans-serif'
-              }}>알러지 보유자<br />신뢰 비율</div>
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+                alignItems: 'center',
+                width: '100%',
+                height: '100%'
+              }}>
+                <div style={{
+                  fontSize: 'clamp(40px, 6vw, 80px)',
+                  fontWeight: 800,
+                  color: '#FF4757',
+                  lineHeight: 1,
+                  fontFamily: '"Darker Grotesque", sans-serif'
+                }}>22<span style={{ fontSize: '0.7em' }}>%</span></div>
+                <div style={{
+                  fontSize: '12px',
+                  color: '#999999',
+                  marginTop: '12px',
+                  fontWeight: 500,
+                  lineHeight: 1.4,
+                  textAlign: 'center',
+                  fontFamily: '"SD Greta Sans", "IBM Plex Sans KR", sans-serif'
+                }}>알러지 보유자<br />신뢰 비율</div>
+              </div>
             </div>
             <div style={{
               flex: 1,
+              minWidth: 0,
               display: 'flex',
               flexDirection: 'column',
               justifyContent: 'center',
-              alignItems: 'center'
+              alignItems: 'center',
+              background: 'rgba(255, 255, 255, 0.05)',
+              borderRadius: '16px',
+              padding: '24px',
+              width: '100%',
+              marginBottom: '28px'
             }}>
               <div style={{
-                height: '150px',
+                height: '100%',
                 width: '100%',
                 position: 'relative'
               }}>
@@ -761,7 +787,7 @@ function HourTasteDataChart() {
           fontSize: '11px',
           color: '#555555',
           marginTop: 'auto',
-          paddingTop: '20px',
+          paddingTop: '28px',
           borderTop: '1px solid rgba(255, 255, 255, 0.05)',
           flexShrink: 0,
           fontFamily: '"SD Greta Sans", "IBM Plex Sans KR", sans-serif'
@@ -773,7 +799,7 @@ function HourTasteDataChart() {
         background: 'rgba(255, 255, 255, 0.1)',
         border: 'none',
         borderRadius: '12px',
-        padding: '60px',
+        padding: '40px',
         display: 'flex',
         flexDirection: 'column',
         position: 'relative',
@@ -784,16 +810,16 @@ function HourTasteDataChart() {
           color: '#555555',
           fontWeight: 600,
           letterSpacing: '0.15em',
-          marginBottom: '20px',
+          marginBottom: '16px',
           textTransform: 'uppercase',
           flexShrink: 0,
           fontFamily: '"SD Greta Sans", "IBM Plex Sans KR", sans-serif'
         }}>Solution</div>
         <div style={{
-          fontSize: '24px',
+          fontSize: '22px',
           fontWeight: 700,
-          lineHeight: 1.5,
-          marginBottom: '30px',
+          lineHeight: 1.4,
+          marginBottom: '24px',
           wordBreak: 'keep-all',
           flexShrink: 0,
           fontFamily: '"Darker Grotesque", sans-serif',
@@ -808,19 +834,28 @@ function HourTasteDataChart() {
         }}>
           <div style={{
             display: 'flex',
-            gap: '40px',
-            width: '100%'
+            gap: '18px',
+            width: '100%',
+            height: '100%',
+            alignItems: 'stretch'
           }}>
             <div style={{
               flex: 1,
+              minWidth: 0,
               display: 'flex',
               flexDirection: 'column',
-              alignItems: 'center'
+              alignItems: 'center',
+              justifyContent: 'center',
+              background: 'rgba(255, 255, 255, 0.05)',
+              borderRadius: '16px',
+              padding: '24px',
+              width: '100%',
+              marginBottom: '28px'
             }}>
               <div style={{
                 position: 'relative',
-                width: '160px',
-                height: '160px',
+                width: '140px',
+                height: '140px',
                 marginBottom: '20px'
               }}>
                 <canvas ref={doughnut1Ref} />
@@ -829,7 +864,7 @@ function HourTasteDataChart() {
                   top: '50%',
                   left: '50%',
                   transform: 'translate(-50%, -50%)',
-                  fontSize: '42px',
+                  fontSize: '40px',
                   fontWeight: 800,
                   color: '#5B9EFF',
                   fontFamily: '"Darker Grotesque", sans-serif'
@@ -842,18 +877,25 @@ function HourTasteDataChart() {
                 color: '#999999',
                 fontWeight: 500,
                 fontFamily: '"SD Greta Sans", "IBM Plex Sans KR", sans-serif'
-              }}>상세정보<br />구매영향도</div>
+              }}>상세정보 구매영향도</div>
             </div>
             <div style={{
               flex: 1,
+              minWidth: 0,
               display: 'flex',
               flexDirection: 'column',
-              alignItems: 'center'
+              alignItems: 'center',
+              justifyContent: 'center',
+              background: 'rgba(255, 255, 255, 0.05)',
+              borderRadius: '16px',
+              padding: '24px',
+              width: '100%',
+              marginBottom: '28px'
             }}>
               <div style={{
                 position: 'relative',
-                width: '160px',
-                height: '160px',
+                width: '140px',
+                height: '140px',
                 marginBottom: '20px'
               }}>
                 <canvas ref={doughnut2Ref} />
@@ -862,7 +904,7 @@ function HourTasteDataChart() {
                   top: '50%',
                   left: '50%',
                   transform: 'translate(-50%, -50%)',
-                  fontSize: '42px',
+                  fontSize: '40px',
                   fontWeight: 800,
                   color: '#1DD1A1',
                   fontFamily: '"Darker Grotesque", sans-serif'
@@ -875,7 +917,7 @@ function HourTasteDataChart() {
                 color: '#999999',
                 fontWeight: 500,
                 fontFamily: '"SD Greta Sans", "IBM Plex Sans KR", sans-serif'
-              }}>건강영향<br />체감도</div>
+              }}>건강영향 체감도</div>
             </div>
           </div>
         </div>
@@ -883,7 +925,7 @@ function HourTasteDataChart() {
           fontSize: '11px',
           color: '#555555',
           marginTop: 'auto',
-          paddingTop: '20px',
+          paddingTop: '28px',
           borderTop: '1px solid rgba(255, 255, 255, 0.05)',
           flexShrink: 0,
           fontFamily: '"SD Greta Sans", "IBM Plex Sans KR", sans-serif'
@@ -975,10 +1017,12 @@ function HourTasteUserChart() {
       transition={{ duration: 0.8, delay: 0.2 }}
       style={{
         marginTop: '30px',
-        marginBottom: '100px',
-        display: 'flex',
+        marginBottom: '0px',
+        display: 'grid',
+        gridTemplateColumns: 'repeat(2, 1fr)',
         gap: '24px',
-        width: '100%'
+        width: '100%',
+        aspectRatio: '1 / 1'
       }}
     >
       {/* Section 1: User Status */}
@@ -986,28 +1030,28 @@ function HourTasteUserChart() {
         background: 'rgba(255, 255, 255, 0.1)',
         border: 'none',
         borderRadius: '12px',
-        padding: '60px',
+        padding: '40px',
         display: 'flex',
         flexDirection: 'column',
         position: 'relative',
         overflow: 'hidden',
-        flex: 1
+        aspectRatio: '1 / 1'
       }}>
         <div style={{
           fontSize: '12px',
           color: '#555555',
           fontWeight: 600,
           letterSpacing: '0.15em',
-          marginBottom: '20px',
+          marginBottom: '16px',
           textTransform: 'uppercase',
           flexShrink: 0,
           fontFamily: '"SD Greta Sans", "IBM Plex Sans KR", sans-serif'
         }}>User Status</div>
         <div style={{
-          fontSize: '24px',
+          fontSize: '22px',
           fontWeight: 700,
-          lineHeight: 1.5,
-          marginBottom: '30px',
+          lineHeight: 1.4,
+          marginBottom: '24px',
           wordBreak: 'keep-all',
           flexShrink: 0,
           fontFamily: '"Darker Grotesque", sans-serif',
@@ -1018,22 +1062,22 @@ function HourTasteUserChart() {
           display: 'flex',
           flexDirection: 'row',
           justifyContent: 'space-between',
-          alignItems: 'center',
+          alignItems: 'flex-start',
           minHeight: 0,
-          paddingTop: '10px',
+          paddingTop: '0px',
           gap: '30px'
         }}>
           {/* 차트 */}
           <div style={{
             display: 'flex',
             justifyContent: 'center',
-            alignItems: 'center',
+            alignItems: 'flex-start',
             flex: 1,
-            padding: '20px'
+            padding: '10px 20px'
           }}>
             <div style={{
-              width: '220px',
-              height: '220px',
+              width: '180px',
+              height: '180px',
               position: 'relative'
             }}>
               <canvas ref={pieChartRef} />
@@ -1059,7 +1103,7 @@ function HourTasteUserChart() {
                 flexShrink: 0
               }} />
               <span style={{
-                fontSize: '13px',
+                fontSize: '15px',
                 color: '#999999',
                 fontWeight: 500,
                 fontFamily: '"SD Greta Sans", "IBM Plex Sans KR", sans-serif'
@@ -1078,7 +1122,7 @@ function HourTasteUserChart() {
                 flexShrink: 0
               }} />
               <span style={{
-                fontSize: '13px',
+                fontSize: '15px',
                 color: '#999999',
                 fontWeight: 500,
                 fontFamily: '"SD Greta Sans", "IBM Plex Sans KR", sans-serif'
@@ -1097,7 +1141,7 @@ function HourTasteUserChart() {
                 flexShrink: 0
               }} />
               <span style={{
-                fontSize: '13px',
+                fontSize: '15px',
                 color: '#999999',
                 fontWeight: 500,
                 fontFamily: '"SD Greta Sans", "IBM Plex Sans KR", sans-serif'
@@ -1109,7 +1153,7 @@ function HourTasteUserChart() {
           fontSize: '11px',
           color: '#555555',
           marginTop: 'auto',
-          paddingTop: '20px',
+          paddingTop: '28px',
           borderTop: '1px solid rgba(255, 255, 255, 0.05)',
           flexShrink: 0,
           fontFamily: '"SD Greta Sans", "IBM Plex Sans KR", sans-serif'
@@ -1121,28 +1165,28 @@ function HourTasteUserChart() {
         background: 'rgba(255, 255, 255, 0.1)',
         border: 'none',
         borderRadius: '12px',
-        padding: '60px',
+        padding: '40px',
         display: 'flex',
         flexDirection: 'column',
         position: 'relative',
         overflow: 'hidden',
-        flex: 1
+        aspectRatio: '1 / 1'
       }}>
         <div style={{
           fontSize: '12px',
           color: '#555555',
           fontWeight: 600,
           letterSpacing: '0.15em',
-          marginBottom: '20px',
+          marginBottom: '16px',
           textTransform: 'uppercase',
           flexShrink: 0,
           fontFamily: '"SD Greta Sans", "IBM Plex Sans KR", sans-serif'
         }}>Churn Analysis</div>
         <div style={{
-          fontSize: '24px',
+          fontSize: '22px',
           fontWeight: 700,
-          lineHeight: 1.5,
-          marginBottom: '30px',
+          lineHeight: 1.4,
+          marginBottom: '24px',
           wordBreak: 'keep-all',
           flexShrink: 0,
           fontFamily: '"Darker Grotesque", sans-serif',
@@ -1198,7 +1242,7 @@ function HourTasteUserChart() {
                 borderLeft: '3px solid #FFC107',
                 padding: '16px',
                 borderRadius: '6px',
-                fontSize: '13px',
+                fontSize: '15px',
                 lineHeight: 1.5,
                 color: '#999999',
                 fontFamily: '"SD Greta Sans", "IBM Plex Sans KR", sans-serif'
@@ -1211,7 +1255,7 @@ function HourTasteUserChart() {
                 borderLeft: '3px solid #FF6B3D',
                 padding: '16px',
                 borderRadius: '6px',
-                fontSize: '13px',
+                fontSize: '15px',
                 lineHeight: 1.5,
                 color: '#999999',
                 fontFamily: '"SD Greta Sans", "IBM Plex Sans KR", sans-serif'
@@ -1225,7 +1269,7 @@ function HourTasteUserChart() {
           fontSize: '11px',
           color: '#555555',
           marginTop: 'auto',
-          paddingTop: '20px',
+          paddingTop: '28px',
           borderTop: '1px solid rgba(255, 255, 255, 0.05)',
           flexShrink: 0,
           fontFamily: '"SD Greta Sans", "IBM Plex Sans KR", sans-serif'
@@ -1344,28 +1388,28 @@ function HourTasteSolutionViz() {
       >
         <style>{`
           .solution-viz-header {
-            font-size: clamp(11px, 1.3vmin, 14px);
+            font-size: clamp(13px, 1.6vmin, 17px);
             font-weight: 700;
             letter-spacing: 0.15em;
             text-transform: uppercase;
-            opacity: 0.9;
+            opacity: 0.92;
             text-align: left;
             font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
-            margin-bottom: 1.5vmin;
+            margin-bottom: 1.8vmin;
           }
           .solution-viz-header.problem { color: #FF4757; }
           .solution-viz-header.solution { color: #1DD1A1; }
           .solution-viz-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 2vmin;
+            gap: 2.6vmin;
             width: 100%;
           }
           .solution-viz-card {
             background: #141414;
             border: none;
-            border-radius: 2vmin;
-            padding: 2.5vmin;
+            border-radius: 2.4vmin;
+            padding: 3.2vmin;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -1377,17 +1421,17 @@ function HourTasteSolutionViz() {
           }
           .solution-viz-card-number {
             position: absolute;
-            top: 2vmin;
-            right: 2.5vmin;
-            font-size: 5vmin;
+            top: 2.2vmin;
+            right: 2.8vmin;
+            font-size: 6vmin;
             font-weight: 800;
             color: rgba(255, 255, 255, 0.05);
             line-height: 1;
             font-family: 'Pretendard', sans-serif;
           }
           .solution-viz-card-icon {
-            font-size: 5vmin;
-            margin-bottom: 2vmin;
+            font-size: 6vmin;
+            margin-bottom: 2.4vmin;
             filter: grayscale(30%);
           }
           .solution-viz-card.problem .solution-viz-card-icon {
@@ -1395,19 +1439,19 @@ function HourTasteSolutionViz() {
             opacity: 0.6;
           }
           .solution-viz-card-title {
-            font-size: clamp(14px, 1.8vmin, 18px);
+            font-size: clamp(16px, 2.2vmin, 22px);
             font-weight: 700;
-            margin-bottom: 1vmin;
+            margin-bottom: 1.3vmin;
             line-height: 1.3;
             word-break: keep-all;
             color: #ffffff;
             font-family: 'Pretendard', sans-serif;
           }
           .solution-viz-card-desc {
-            font-size: clamp(12px, 1.4vmin, 15px);
-            color: #a0a0a0;
+            font-size: clamp(13px, 1.7vmin, 16px);
+            color: rgba(215, 215, 215, 0.85);
             font-weight: 500;
-            line-height: 1.4;
+            line-height: 1.45;
             word-break: keep-all;
             font-family: 'Pretendard', sans-serif;
           }
@@ -1416,8 +1460,8 @@ function HourTasteSolutionViz() {
             transform: translateY(-0.5vmin);
           }
           .solution-viz-card.solution {
-            background: linear-gradient(145deg, rgba(29, 209, 161, 0.05) 0%, rgba(20, 20, 20, 0.8) 100%);
-            border: 1px solid rgba(29, 209, 161, 0.2);
+            background: linear-gradient(145deg, rgba(29, 209, 161, 0.12) 0%, rgba(20, 20, 20, 0.85) 100%);
+            border: 1px solid rgba(29, 209, 161, 0.3);
           }
           .solution-viz-card.solution:hover {
             border-color: #1DD1A1;
@@ -1425,14 +1469,14 @@ function HourTasteSolutionViz() {
           }
           .solution-viz-badge {
             display: inline-block;
-            background: rgba(29, 209, 161, 0.15);
+            background: rgba(29, 209, 161, 0.25);
             color: #1DD1A1;
-            font-size: clamp(10px, 1.1vmin, 12px);
+            font-size: clamp(11px, 1.3vmin, 13px);
             font-weight: 700;
-            padding: 0.5vmin 1.2vmin;
+            padding: 0.6vmin 1.4vmin;
             border-radius: 100px;
-            margin-bottom: 1.5vmin;
-            letter-spacing: 0.05em;
+            margin-bottom: 1.8vmin;
+            letter-spacing: 0.06em;
             font-family: 'Pretendard', sans-serif;
           }
           .solution-viz-card.solution .solution-viz-card-number {
@@ -1441,21 +1485,21 @@ function HourTasteSolutionViz() {
           @media (max-width: 768px) {
             .solution-viz-grid {
               grid-template-columns: 1fr;
-              gap: 3vmin;
+              gap: 3.4vmin;
             }
             .solution-viz-card {
               flex-direction: row;
               align-items: center;
               justify-content: flex-start;
-              gap: 3vmin;
-              padding: 3vmin;
+              gap: 3.2vmin;
+              padding: 3.4vmin;
             }
             .solution-viz-card-icon, .solution-viz-badge {
               margin-bottom: 0;
             }
             .solution-viz-card-number {
               position: static;
-              font-size: 4vmin;
+              font-size: 4.8vmin;
               order: 3;
               margin-left: auto;
             }
@@ -1536,6 +1580,384 @@ function HourTasteSolutionViz() {
             zIndex: 0
           }}
         />
+      </div>
+    </motion.div>
+  );
+}
+
+function NookServiceBackgroundViz() {
+  const chart1Ref = useRef<HTMLCanvasElement>(null);
+  const chart1InstanceRef = useRef<any>(null);
+
+  useEffect(() => {
+    const createCharts = () => {
+      const Chart = (window as any).Chart;
+      if (!Chart) return;
+
+      if (chart1Ref.current && !chart1InstanceRef.current) {
+        chart1InstanceRef.current = new Chart(chart1Ref.current, {
+          type: 'bar',
+          data: {
+            labels: ['2022', '2023', '2024'],
+            datasets: [{
+              data: [83, 337, 540],
+              backgroundColor: [
+                'rgba(90, 90, 90, 0.9)',
+                'rgba(16, 185, 129, 0.9)',
+                '#10B981'
+              ],
+              borderRadius: 6,
+              barPercentage: 0.45,
+              categoryPercentage: 0.65
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            layout: { padding: { top: 16, bottom: 8, left: 6, right: 6 } },
+            plugins: {
+              legend: { display: false },
+              tooltip: { enabled: false }
+            },
+            scales: {
+              y: {
+                beginAtZero: true,
+                max: 600,
+                grid: { color: '#1a1a1a', drawBorder: false },
+                ticks: { display: false }
+              },
+              x: {
+                grid: { display: false, drawBorder: false },
+                ticks: {
+                  color: '#888888',
+                  font: { size: 10, weight: '600' },
+                  padding: 6
+                }
+              }
+            },
+            animation: { duration: 0 }
+          },
+          plugins: [{
+            afterDatasetsDraw: (ctx: any) => {
+              const chart = ctx.chart;
+              const meta = chart.getDatasetMeta(0);
+              meta.data.forEach((bar: any, index: number) => {
+                const value = chart.data.datasets[0].data[index];
+                const canvas = chart.ctx;
+                canvas.save();
+                canvas.font = '700 11px "SD Greta Sans", "IBM Plex Sans KR", sans-serif';
+                canvas.fillStyle = index === 0 ? '#A0A0A0' : '#10B981';
+                canvas.textAlign = 'center';
+                canvas.fillText(String(value), bar.x, bar.y - 6);
+                canvas.restore();
+              });
+            }
+          }]
+        });
+      }
+
+    };
+
+    if ((window as any).Chart) {
+      createCharts();
+    } else {
+      const script = document.createElement('script');
+      script.src = 'https://cdn.jsdelivr.net/npm/chart.js';
+      script.onload = createCharts;
+      document.head.appendChild(script);
+    }
+
+    return () => {
+      if (chart1InstanceRef.current) {
+        chart1InstanceRef.current.destroy();
+        chart1InstanceRef.current = null;
+      }
+    };
+  }, []);
+
+  const containerStyle = {
+    width: '100%',
+    maxWidth: '1180px',
+    margin: '0 auto 72px',
+    display: 'grid',
+    gridTemplateColumns: 'repeat(2, minmax(0, 1fr))',
+    gap: '28px'
+  } as const;
+
+  const cardWrapperStyle = {
+    position: 'relative',
+    width: '100%',
+    aspectRatio: '1 / 1',
+    borderRadius: '22px',
+    overflow: 'hidden',
+    background: 'rgba(255, 255, 255, 0.12)'
+  } as const;
+
+  const sectionStyle = {
+    position: 'absolute',
+    inset: 0,
+    padding: '38px',
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '26px',
+    borderRadius: 'inherit'
+  } as const;
+
+  const headerStyle = {
+    fontSize: '13px',
+    letterSpacing: '0.18em',
+    textTransform: 'uppercase',
+    color: 'rgba(255, 255, 255, 0.58)',
+    fontWeight: 600,
+    fontFamily: '"Darker Grotesque", sans-serif'
+  } as const;
+
+  const titleStyle = {
+    fontSize: '24px',
+    fontWeight: 700,
+    lineHeight: 1.35,
+    color: '#ffffff',
+    marginBottom: '22px',
+    fontFamily: '"SD Greta Sans", "IBM Plex Sans KR", sans-serif'
+  } as const;
+
+  const gridStyle = {
+    flex: 1,
+    display: 'grid',
+    gridTemplateColumns: '1fr 1fr',
+    gap: '18px',
+    alignItems: 'stretch',
+    height: '100%'
+  } as const;
+
+  const sourceStyle = {
+    fontSize: '11px',
+    color: 'rgba(255, 255, 255, 0.38)',
+    marginTop: 'auto',
+    paddingTop: '16px',
+    borderTop: '1px solid rgba(255, 255, 255, 0.06)',
+    fontFamily: '"SD Greta Sans", "IBM Plex Sans KR", sans-serif',
+    letterSpacing: '0.02em'
+  } as const;
+
+  const problemReasons = ['제품 및 품질 신뢰', '치수 측정 어려움', '제품 신뢰도 낮음'];
+  const rentalReasons = [
+    { label: '저렴한 관리', value: '66%' },
+    { label: '저렴한 초기비용', value: '55%' },
+    { label: '소유권 이전', value: '39%' }
+  ];
+  const returnDrops = [
+    { label: '사이즈', value: '71%' },
+    { label: '색상·패턴', value: '58%' }
+  ];
+
+  const innerCardStyle = {
+    background: 'rgba(255, 255, 255, 0.05)',
+    borderRadius: '18px',
+    padding: '24px',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    flex: 1,
+    width: '100%',
+    minHeight: 0
+  } as const;
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 24 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-120px' }}
+      transition={{ duration: 0.7, ease: [0.19, 1, 0.22, 1] }}
+      style={containerStyle}
+    >
+      <div style={cardWrapperStyle}>
+        <div style={sectionStyle}>
+          <div style={headerStyle}>Market Opportunity</div>
+          <h3 style={titleStyle}>'감도' 소비 증가로<br />디자이너 가구 848% 폭증</h3>
+          <div style={gridStyle}>
+            <div style={{ ...innerCardStyle }}>
+              <div style={{ fontSize: '12px', fontWeight: 600, color: '#9DA0A6', textAlign: 'center' }}>'감도' 키워드 검색량 추이</div>
+              <div style={{ position: 'relative', flex: 1, minHeight: 0 }}>
+                <canvas ref={chart1Ref} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%' }} />
+              </div>
+              <div style={{ fontSize: '11px', color: '#9DA0A6', textAlign: 'center' }}>2년간 6.5배 증가</div>
+            </div>
+            <div style={{ ...innerCardStyle, alignItems: 'center', justifyContent: 'center', gap: '18px' }}>
+              <div style={{ fontSize: '52px', fontWeight: 800, color: '#10B981', lineHeight: 1 }}>848%</div>
+              <p style={{ margin: 0, fontSize: '15px', color: 'rgba(255, 255, 255, 0.82)', textAlign: 'center', lineHeight: 1.55 }}>
+                오늘의집 디자이너 가구<br />거래액 증가
+              </p>
+            </div>
+          </div>
+          <div style={sourceStyle}>출처: 마크로밀 엠브레인 트렌드모니터 (2024) / 엠브레인트렌드모니터 (2012, n=1000)</div>
+        </div>
+      </div>
+
+      <div style={cardWrapperStyle}>
+        <div style={sectionStyle}>
+          <div style={headerStyle}>Problem</div>
+          <h3 style={titleStyle}>높은 가격과 온라인 불확실성이 구매 장벽</h3>
+          <div style={gridStyle}>
+            <div style={{ ...innerCardStyle, justifyContent: 'center', alignItems: 'center', gap: '12px' }}>
+              <div style={{ flex: 1, width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <div style={{
+                  width: '150px',
+                  height: '150px',
+                  position: 'relative',
+                  borderRadius: '50%',
+                  background: 'conic-gradient(#F59E0B 0deg 180deg, rgba(34,34,34,0.85) 180deg 360deg)',
+                  boxShadow: '0 12px 30px rgba(0,0,0,0.35)'
+                }}>
+                  <div style={{
+                    position: 'absolute',
+                    inset: '18px',
+                    borderRadius: '50%',
+                    background: 'rgba(5,5,5,0.92)',
+                    boxShadow: 'inset 0 0 12px rgba(0,0,0,0.6)'
+                  }} />
+                  <div style={{
+                    position: 'absolute',
+                    top: '50%',
+                    left: '50%',
+                    transform: 'translate(-50%, -50%)',
+                    fontSize: '24px',
+                    fontWeight: 800,
+                    color: '#F59E0B'
+                  }}>50%</div>
+                </div>
+              </div>
+              <div style={{ fontSize: '12px', color: '#9DA0A6', textAlign: 'center' }}>가격 때문에 구매 연기</div>
+            </div>
+            <div style={{ ...innerCardStyle, padding: '24px 28px', gap: '22px' }}>
+              <div style={{ fontSize: '12px', fontWeight: 600, color: '#9DA0A6', textAlign: 'center' }}>온라인 구매 불편 요인</div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', flex: 1, justifyContent: 'center' }}>
+                {problemReasons.map((reason, index) => (
+                  <div key={reason} style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+                    <div style={{ width: '42px', height: '42px', borderRadius: '999px', background: '#F59E0B', color: '#0B0B0B', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '17px', fontWeight: 800 }}>{index + 1}</div>
+                    <span style={{ fontSize: '15px', fontWeight: 600, color: 'rgba(255, 255, 255, 0.88)', whiteSpace: 'nowrap' }}>{reason}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+          <div style={sourceStyle}>출처: Why Some Consumers Are Putting Furniture Purchases on Hold (CIN, 2024, N=1,835) / 어반베이스 (2019, n=500)</div>
+        </div>
+      </div>
+
+      <div style={cardWrapperStyle}>
+        <div style={sectionStyle}>
+          <div style={headerStyle}>Solution 1</div>
+          <h3 style={titleStyle}>렌탈로 가격 장벽 해소, 5년간 2.5배 성장</h3>
+          <div style={gridStyle}>
+            <div style={{ ...innerCardStyle, alignItems: 'center', gap: '24px' }}>
+              <div style={{ fontSize: '12px', fontWeight: 600, color: '#9DA0A6', textAlign: 'center', letterSpacing: '0.08em' }}>국내 렌탈 시장 규모</div>
+              <div style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(2, minmax(0, 1fr))',
+                gap: '26px',
+                width: '100%',
+                height: '100%',
+                padding: '0 8%'
+              }}>
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'flex-end', height: '100%', gap: '10px' }}>
+                  <div style={{ width: '100%', height: '62%', background: 'rgba(90, 90, 90, 0.95)', borderRadius: '12px 12px 6px 6px', position: 'relative', boxShadow: '0 -4px 16px rgba(0, 0, 0, 0.25)' }}>
+                    <span style={{ position: 'absolute', top: '-26px', left: '50%', transform: 'translateX(-50%)', fontSize: '16px', fontWeight: 700, color: 'rgba(255, 255, 255, 0.78)', whiteSpace: 'nowrap' }}>40조</span>
+                  </div>
+                  <span style={{ display: 'none' }}>일반 제품</span>
+                  <span style={{ fontSize: '11px', fontWeight: 500, color: 'rgba(255, 255, 255, 0.5)' }}>2020</span>
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'flex-end', height: '100%', gap: '10px' }}>
+                  <div style={{ width: '100%', height: '100%', background: '#10B981', borderRadius: '12px 12px 6px 6px', position: 'relative', boxShadow: '0 -6px 22px rgba(16, 185, 129, 0.4)' }}>
+                    <span style={{ position: 'absolute', top: '-26px', left: '50%', transform: 'translateX(-50%)', fontSize: '16px', fontWeight: 700, color: '#12CC8C', whiteSpace: 'nowrap' }}>100조</span>
+                    <span style={{ position: 'absolute', bottom: '8px', left: '50%', transform: 'translateX(-50%)', padding: '4px 10px', borderRadius: '999px', background: 'rgba(255, 255, 255, 0.92)', color: '#0b0b0b', fontSize: '12px', fontWeight: 700 }}>×2.5</span>
+                  </div>
+                  <span style={{ display: 'none' }}>AR 제품</span>
+                  <span style={{ fontSize: '11px', fontWeight: 500, color: 'rgba(255, 255, 255, 0.5)' }}>2025</span>
+                </div>
+              </div>
+            </div>
+            <div style={{ ...innerCardStyle, gap: '24px' }}>
+              <div style={{ fontSize: '12px', fontWeight: 600, color: '#9DA0A6', textAlign: 'center', letterSpacing: '0.08em' }}>렌탈 선택 이유</div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', flex: 1, justifyContent: 'center' }}>
+                {rentalReasons.map((item) => (
+                  <div key={item.label} style={{ display: 'flex', flexDirection: 'column', gap: '10px', width: '100%' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', fontSize: '13px', color: 'rgba(255, 255, 255, 0.78)', fontWeight: 600 }}>
+                      <span style={{ color: 'rgba(255, 255, 255, 0.74)' }}>{item.label}</span>
+                      <span style={{ color: '#ffffff' }}>{item.value}</span>
+                    </div>
+                    <div style={{ width: '100%', height: '12px', borderRadius: '999px', background: 'rgba(255, 255, 255, 0.12)', overflow: 'hidden', position: 'relative' }}>
+                      <div style={{
+                        width: item.value,
+                        height: '100%',
+                        borderRadius: '999px',
+                        background: 'linear-gradient(90deg, rgba(16, 185, 129, 0.85) 0%, rgba(16, 185, 129, 1) 100%)',
+                        boxShadow: '0 0 16px rgba(16, 185, 129, 0.35)'
+                      }} />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+          <div style={sourceStyle}>출처: 마크로밀 엠브레인 트렌드모니터 (2024) / 엠브레인트렌드모니터 (2012, n=1000)</div>
+        </div>
+      </div>
+
+      <div style={cardWrapperStyle}>
+        <div style={sectionStyle}>
+          <div style={headerStyle}>Solution 2</div>
+          <h3 style={titleStyle}>AR로 제품 불확실성 해소, 전환율 업</h3>
+          <div style={gridStyle}>
+            <div style={{ ...innerCardStyle, alignItems: 'center', gap: '24px' }}>
+              <div style={{ fontSize: '12px', fontWeight: 600, color: '#9DA0A6', textAlign: 'center' }}>구매 전환율 비교</div>
+              <div style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(2, minmax(0, 1fr))',
+                gap: '26px',
+                width: '100%',
+                height: '100%',
+                padding: '0 8%'
+              }}>
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'flex-end', height: '100%', gap: '10px' }}>
+                  <div style={{ width: '100%', height: '62%', background: 'rgba(80, 80, 80, 0.95)', borderRadius: '12px 12px 6px 6px', position: 'relative', boxShadow: '0 -4px 16px rgba(0, 0, 0, 0.25)' }}>
+                    <span style={{ position: 'absolute', top: '-28px', left: '50%', transform: 'translateX(-50%)', fontSize: '16px', fontWeight: 700, color: 'rgba(255, 255, 255, 0.75)' }}>100</span>
+                  </div>
+                  <span style={{ fontSize: '12px', fontWeight: 600, color: 'rgba(255, 255, 255, 0.65)' }}>일반 제품</span>
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'flex-end', height: '100%', gap: '10px' }}>
+                  <div style={{ width: '100%', height: '100%', background: '#3B82F6', borderRadius: '12px 12px 6px 6px', position: 'relative', boxShadow: '0 -6px 22px rgba(59, 130, 246, 0.28)' }}>
+                    <span style={{ position: 'absolute', top: '-26px', left: '50%', transform: 'translateX(-50%)', fontSize: '16px', fontWeight: 700, color: '#3B82F6' }}>194</span>
+                    <span style={{ position: 'absolute', bottom: '8px', left: '50%', transform: 'translateX(-50%)', padding: '4px 10px', borderRadius: '999px', background: 'rgba(255, 255, 255, 0.92)', color: '#0b0b0b', fontSize: '12px', fontWeight: 700 }}>+94%</span>
+                  </div>
+                  <span style={{ fontSize: '12px', fontWeight: 600, color: 'rgba(255, 255, 255, 0.65)' }}>AR 제품</span>
+                </div>
+              </div>
+            </div>
+            <div style={{ ...innerCardStyle, gap: '18px' }}>
+              <div style={{ fontSize: '12px', fontWeight: 600, color: '#9DA0A6', textAlign: 'center' }}>반품 감소율</div>
+              <div style={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '10px',
+                flex: 1,
+                width: '100%',
+                padding: '0 6%'
+              }}>
+                {returnDrops.map((item) => (
+                  <div key={item.label} style={{ display: 'grid', gridTemplateColumns: '1fr auto auto', alignItems: 'center', gap: '10px', width: '100%' }}>
+                    <span style={{ fontSize: '13px', color: 'rgba(255, 255, 255, 0.76)', fontWeight: 600, textAlign: 'left' }}>{item.label}</span>
+                    <span style={{ fontSize: '20px', fontWeight: 800, color: '#EF4444', textAlign: 'center' }}>↓</span>
+                    <span style={{ fontSize: '26px', fontWeight: 800, color: '#EF4444', textAlign: 'right' }}>{item.value}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+          <div style={sourceStyle}>출처: Shopify (2022) / Macy's, West Elm (2019~2023, Research)</div>
+        </div>
       </div>
     </motion.div>
   );
@@ -1650,8 +2072,8 @@ const projectsData: { [key: string]: ProjectData } = {
   'hourtaste': {
     id: 'hourtaste',
     title: 'HourTaste',
-    heroImage: 'food discount shopping mobile',
-    heroVideo: `${import.meta.env.BASE_URL}videos/hourtaste.mp4`,
+    heroImage: `${import.meta.env.BASE_URL}project1/projects1_thumb.png`,
+    heroVideo: undefined,
     myRole: ['Product Designer', 'UX/UI Designer', 'Service Planner'],
     team: ['박송희 (1명)'],
     duration: '15주',
@@ -1668,23 +2090,28 @@ const projectsData: { [key: string]: ProjectData } = {
         image: 'mobile app timer discount'
       },
       {
-        title: 'UX/UI Design',
-        content: '메인 화면은 지도 기반으로, 내 주변 마감 임박 매장을 한눈에 확인할 수 있습니다. 각 매장 카드에는 실시간 카운트다운 타이머와 현재 할인율이 크게 표시됩니다. 오렌지-레드 그라데이션을 사용해 긴급함과 기회를 시각적으로 전달했습니다. 예약 프로세스는 3단계로 단순화하여 10초 안에 완료 가능합니다.',
-        image: 'app interface screens'
+        title: 'Onboarding',
+        content: '사용자가 자주 방문하는 \'주요 위치\'와 알림을 받고 싶은 \'알림 시간\'을 미리 설정합니다. 이는 불필요한 탐색 없이 원하는 상품 정보를 적시에 제공받기 위한 핵심 장치입니다.\n\n\'랜덤박스\'의 한계를 극복하기 위해 \'선호 식단\' 및 \'알레르기/기피 재료\'를 사전에 필터링합니다. 이를 통해 사용자는 구매 실패 리스크 없이 자신에게 맞는 상품만 추천받을 수 있습니다.',
+        image: `${import.meta.env.BASE_URL}project1/온보딩.png`
       },
       {
-        title: 'Personalization',
-        content: 'AI 기반 추천 알고리즘으로 사용자의 선호 음식, 자주 방문하는 지역, 평균 구매 시간대를 분석하여 맞춤 알림을 보냅니다. "곧 출근하시네요! 회사 근처 ○○카페에서 샌드위치 40% 할인 중"처럼 상황에 맞는 푸시 알림으로 전환율을 높였습니다.',
+        title: 'Home to Payment',
+        content: '홈 화면과 상세 페이지에서 \'오늘의 메뉴\', \'내일의 메뉴\' 등 재고를 투명하게 공개합니다. 사용자는 더 이상 내용물을 모르는 랜덤 상품이 아닌, \'골든 서프라이즈 백\'처럼 원하는 메뉴를 직접 눈으로 확인하고 \'확정 구매\'할 수 있습니다.',
+        image: `${import.meta.env.BASE_URL}project1/홈-결제.png`
+      },
+      {
+        title: 'After Payment',
+        content: '픽업 완료 즉시(4번), 사용자는 절약한 금액(3,900원)과 탄소 절감량(2.5kg CO₂e)이라는 2가지 핵심 가치를 확인합니다. 이어서 \'새로운 도장\'이 바로 발급되며(5번), 쿠폰까지 남은 횟수(9/10)를 시각적으로 보여줍니다.\n\n이 즉각적인 가치 확인과 보상은 사용자에게 강한 성취감과 재방문 동기를 부여합니다.',
+        image: `${import.meta.env.BASE_URL}project1/결제 이후.png`
       }
     ]
   },
   'nook': {
     id: 'nook',
     title: 'NOOK',
-    heroImage: 'luxury furniture interior ar',
-    heroVideo: `${import.meta.env.BASE_URL}videos/nook.mp4`,
+    heroImage: `${import.meta.env.BASE_URL}project2/Indoor 1.1.png`,
     myRole: ['Lead Product Designer', 'AR UX Designer', 'Service Planner'],
-    team: ['1 Product Owner', '2 Designers', '3 AR Developers', '2 Backend Developers'],
+    team: ['3 Product Strategy', '1 Designer (본인)'],
     duration: '6개월 (2024.02 - 2024.08)',
     industry: 'Furniture / AR Tech / Rental Service',
     summary: 'NOOK은 명품 가구를 구매 전 AR로 내 공간에 미리 배치해보고, 합리적인 가격에 렌탈할 수 있는 서비스입니다. AR 기술과 가구 렌탈을 결합하여 새로운 인테리어 경험을 제공하는 앱을 기획하고 디자인했습니다.',
@@ -1694,22 +2121,14 @@ const projectsData: { [key: string]: ProjectData } = {
         content: '명품 가구는 가격이 비싸 구매 결정이 어렵고, 실제 공간에 놓았을 때의 느낌을 사전에 확인하기 어렵습니다. 또한 이사나 라이프스타일 변화로 가구를 자주 바꾸고 싶어하는 니즈가 증가하고 있습니다. NOOK은 AR 기술로 가구 배치를 시뮬레이션하고, 렌탈 서비스로 부담을 낮춘 새로운 형태의 인테리어 플랫폼입니다.',
       },
       {
-        title: 'AR Experience Design',
-        content: '스마트폰 카메라로 공간을 스캔하면 자동으로 벽, 바닥, 창문을 인식합니다. 1,000개 이상의 명품 가구를 AR로 실제 크기 그대로 배치해볼 수 있으며, 360도 회전, 색상 변경, 조명 시뮬레이션이 가능합니다. 특히 햇빛 각도에 따른 가구의 색감 변화까지 시뮬레이션하여 실제와 거의 동일한 경험을 제공합니다.',
-        image: 'augmented reality furniture'
+        title: 'Home to Detail Page',
+        content: '사용자가 \'일시불 구매(Sales)\'를 할지, 아니면 가격 장벽을 낮추는 \'렌탈(Rental)\'을 할지 선택하는 가장 중요한 분기점입니다.\n\n이 단계에서 사용자는 두 가지 옵션의 가격과 조건을 비교하고 자신의 상황에 맞는 모델을 선택하게 됩니다.',
+        image: `${import.meta.env.BASE_URL}project2/홈-상세페이지.png`
       },
       {
-        title: 'UI/UX Design',
-        content: 'AR 인터페이스는 최소화하여 가구에 집중할 수 있도록 했습니다. 하단에 플로팅 컨트롤 바만 배치하고, 제스처 기반 인터랙션으로 직관적인 조작이 가능합니다. 렌탈 기간은 1개월부터 선택 가능하며, 구매 전환 시 렌탈비의 70%를 차감해주는 시스템으로 부담 없는 체험을 유도했습니다.',
-        image: 'mobile app interface design'
-      },
-      {
-        title: 'Social Features',
-        content: 'AR로 꾸민 나만의 공간을 3D 이미지로 저장하고 커뮤니티에 공유할 수 있습니다. 다른 사용자의 인테리어를 보고 원클릭으로 똑같이 따라할 수 있는 "Copy This Room" 기능이 인기를 끌었습니다. 인테리어 디자이너의 큐레이션 컬렉션도 제공하여 전문적인 조합을 쉽게 적용할 수 있습니다.',
-      },
-      {
-        title: 'Results',
-        content: '출시 4개월 만에 앱 다운로드 5만 건, 월 활성 사용자 1.2만 명 달성했습니다. AR 체험 후 렌탈 전환율 42%, 렌탈 후 구매 전환율 28%로 높은 전환율을 기록했습니다. 특히 2030 여성과 신혼부부 사이에서 "가구 쇼핑의 새로운 기준"이라는 평가를 받으며 빠르게 성장하고 있습니다.',
+        title: '3D/AR',
+        content: 'AR을 통해 3D 모델을 실제 공간에 배치해 봄으로써, 사용자는 값비싼 가구를 구매(혹은 렌탈)하기 전 실패 리스크를 최소화할 수 있습니다\n\n단순히 가구를 배치하는 것을 넘어, 가로/세로/높이(60cm, 57.5cm 등)의 실측 치수를 AR 화면에 바로 표시해줍니다. 이는 특히 까다로운 설치가 필요하거나 공간에 딱 맞아야 하는 \'렌탈\' 서비스를 결정할 때, 사용자에게 결정적인 확신을 줍니다',
+        image: `${import.meta.env.BASE_URL}project2/3D.png`
       }
     ]
   },
@@ -1742,15 +2161,21 @@ interface ProjectDetailProps {
   onBack: () => void;
   onNavigateToProject?: (projectId: string) => void;
   onNavigateToAbout?: () => void;
+  onNavigateToWork?: () => void;
 }
 
-export function ProjectDetail({ projectId, onBack, onNavigateToProject, onNavigateToAbout }: ProjectDetailProps) {
+export function ProjectDetail({ projectId, onBack, onNavigateToProject, onNavigateToAbout, onNavigateToWork }: ProjectDetailProps) {
   const [scrollY, setScrollY] = useState(0);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isCompact, setIsCompact] = useState(false);
   const [isWorkHovered, setIsWorkHovered] = useState(false);
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const canShowWorkDropdown = !!onNavigateToProject && !onNavigateToWork;
   
   const project = projectsData[projectId];
+  const heroHasVideo = !!project?.heroVideo;
+  const heroAspectRatio = heroHasVideo ? '16 / 9' : '875 / 583';
+  const heroMaxHeight = heroHasVideo ? '600px' : '620px';
 
   const { scrollYProgress } = useScroll();
   const smoothProgress = useSpring(scrollYProgress, {
@@ -1900,17 +2325,32 @@ export function ProjectDetail({ projectId, onBack, onNavigateToProject, onNaviga
                 padding: '10px 15px',
                 margin: '-10px -15px'
               }}
-              onMouseEnter={() => setIsWorkHovered(true)}
+              onMouseEnter={() => {
+                if (canShowWorkDropdown) {
+                  setIsWorkHovered(true);
+                }
+              }}
               onMouseLeave={(e) => {
+                if (canShowWorkDropdown) {
                 const relatedTarget = e.relatedTarget;
                 if (relatedTarget && relatedTarget instanceof HTMLElement && relatedTarget.closest('.work-dropdown-wrapper')) {
                   return;
                 }
                 setIsWorkHovered(false);
+                }
               }}
             >
               <motion.button 
-                onClick={(e) => e.preventDefault()}
+                onClick={(e) => {
+                  if (onNavigateToWork) {
+                    e.preventDefault();
+                    setIsWorkHovered(false);
+                    onNavigateToWork();
+                  } else if (canShowWorkDropdown) {
+                    e.preventDefault();
+                    setIsWorkHovered((prev) => !prev);
+                  }
+                }}
                 style={{ 
                   color: '#ffd900', 
                   textDecoration: 'none', 
@@ -1932,7 +2372,7 @@ export function ProjectDetail({ projectId, onBack, onNavigateToProject, onNaviga
               </motion.button>
               
               {/* Dropdown Menu */}
-              {isWorkHovered && onNavigateToProject && (
+              {isWorkHovered && canShowWorkDropdown && (
                 <motion.div
                   className="work-dropdown-wrapper"
                   initial={{ opacity: 0, y: -10 }}
@@ -2049,7 +2489,7 @@ export function ProjectDetail({ projectId, onBack, onNavigateToProject, onNaviga
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: [0.19, 1, 0.22, 1] }}
-            style={{ marginBottom: '50px' }}
+            style={{ marginBottom: project.summary ? '36px' : '50px' }}
           >
             <h1 style={{
               fontSize: '56px',
@@ -2062,6 +2502,20 @@ export function ProjectDetail({ projectId, onBack, onNavigateToProject, onNaviga
             }}>
               {project.title}
             </h1>
+            {project.summary && (
+              <p style={{
+                fontSize: '18px',
+                lineHeight: 1.7,
+                color: 'rgba(255, 255, 255, 0.82)',
+                fontFamily: '"SD Greta Sans", "IBM Plex Sans KR", sans-serif',
+                fontWeight: 300,
+                marginTop: '28px',
+                marginBottom: 0,
+                whiteSpace: 'pre-line'
+              }}>
+                {project.summary}
+              </p>
+            )}
           </motion.div>
 
           {/* Hero Video or Image */}
@@ -2071,8 +2525,8 @@ export function ProjectDetail({ projectId, onBack, onNavigateToProject, onNaviga
             transition={{ duration: 0.8, delay: 0.2, ease: [0.19, 1, 0.22, 1] }}
             style={{
               width: '100%',
-              height: '55vh',
-              maxHeight: '600px',
+              aspectRatio: heroAspectRatio,
+              maxHeight: heroMaxHeight,
               background: 'rgba(255, 255, 255, 0.02)',
               borderRadius: '16px',
               overflow: 'hidden',
@@ -2220,39 +2674,6 @@ export function ProjectDetail({ projectId, onBack, onNavigateToProject, onNaviga
             </div>
           </motion.div>
 
-          {/* Summary Section */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.5 }}
-            style={{
-              marginBottom: '100px',
-              background: 'rgba(255, 217, 0, 0.03)',
-              padding: '50px',
-              borderRadius: '16px',
-              border: '1px solid rgba(255, 217, 0, 0.08)'
-            }}
-          >
-            <h2 style={{
-              fontSize: '28px',
-              fontWeight: 600,
-              marginBottom: '28px',
-              fontFamily: '"Darker Grotesque", sans-serif',
-              color: '#ffd900',
-              letterSpacing: '-0.02em'
-            }}>Project Overview</h2>
-            <p style={{
-              fontSize: '18px',
-              lineHeight: 1.8,
-              color: 'rgba(255, 255, 255, 0.9)',
-              fontFamily: '"SD Greta Sans", "IBM Plex Sans KR", sans-serif',
-              fontWeight: 300,
-              whiteSpace: 'pre-line'
-            }}>
-              {project.summary}
-            </p>
-          </motion.div>
-
           {/* Detail Sections */}
           {project.sections.map((section, index) => (
             <motion.div
@@ -2332,6 +2753,23 @@ export function ProjectDetail({ projectId, onBack, onNavigateToProject, onNaviga
                     '탐색 피로'를 줄이고 '모든 고객층'을 포용하기 위해 3가지 전략을 사용했습니다.
                   </p>
                   <HourTasteSolutionViz />
+                </>
+              ) : project.id === 'nook' && section.title === '서비스 기획' ? (
+                <>
+                  {section.content && (
+                    <p style={{
+                      fontSize: '17px',
+                      lineHeight: 1.9,
+                      color: 'rgba(255, 255, 255, 0.8)',
+                      fontFamily: '"SD Greta Sans", "IBM Plex Sans KR", sans-serif',
+                      marginBottom: '40px',
+                      whiteSpace: 'pre-line',
+                      fontWeight: 300
+                    }}>
+                      {section.content}
+                    </p>
+                  )}
+                  <NookServiceBackgroundViz />
                 </>
               ) : project.id === 'railway-redesign' && section.title === '문제 (WHY)' ? (
                 <>
@@ -2647,7 +3085,7 @@ export function ProjectDetail({ projectId, onBack, onNavigateToProject, onNaviga
                 lineHeight: 1.9,
                 color: 'rgba(255, 255, 255, 0.8)',
                 fontFamily: '"SD Greta Sans", "IBM Plex Sans KR", sans-serif',
-                marginBottom: section.image ? '50px' : '0',
+                marginBottom: section.image ? '24px' : '0',
                 whiteSpace: 'pre-line',
                 fontWeight: 300
               }}>
@@ -2664,21 +3102,26 @@ export function ProjectDetail({ projectId, onBack, onNavigateToProject, onNaviga
                   transition={{ duration: 0.6, delay: 0.2 }}
                   style={{
                     width: '100%',
-                    height: '45vh',
-                    maxHeight: '500px',
                     background: 'rgba(255, 255, 255, 0.02)',
                     borderRadius: '16px',
                     overflow: 'hidden',
-                    border: '1px solid rgba(255, 217, 0, 0.08)'
+                    border: '1px solid rgba(255, 217, 0, 0.08)',
+                    cursor: 'pointer',
+                    marginTop: 0
+                  }}
+                  onClick={() => {
+                    const imageSrc = section.image.startsWith('http') || section.image.startsWith('/') || section.image.includes('project') ? section.image : `https://source.unsplash.com/1200x500/?${section.image}`;
+                    setSelectedImage(imageSrc);
                   }}
                 >
                   <ImageWithFallback
-                    src={`https://source.unsplash.com/1200x500/?${section.image}`}
+                    src={section.image.startsWith('http') || section.image.startsWith('/') || section.image.includes('project') ? section.image : `https://source.unsplash.com/1200x500/?${section.image}`}
                     alt={section.title}
                     style={{
                       width: '100%',
-                      height: '100%',
-                      objectFit: 'cover'
+                      height: 'auto',
+                      display: 'block',
+                      borderRadius: '16px'
                     }}
                   />
                 </motion.div>
@@ -2904,6 +3347,87 @@ export function ProjectDetail({ projectId, onBack, onNavigateToProject, onNaviga
           </a>
         </div>
       </footer>
+
+      {/* Image Modal */}
+      {selectedImage && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            backgroundColor: 'rgba(0, 0, 0, 0.95)',
+            zIndex: 9999,
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            padding: '40px',
+            cursor: 'pointer'
+          }}
+          onClick={() => setSelectedImage(null)}
+        >
+          <motion.div
+            initial={{ scale: 0.8, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            exit={{ scale: 0.8, opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            style={{
+              maxWidth: '90vw',
+              maxHeight: '90vh',
+              position: 'relative'
+            }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <img
+              src={selectedImage}
+              alt="Enlarged view"
+              style={{
+                width: '100%',
+                height: 'auto',
+                maxHeight: '90vh',
+                objectFit: 'contain',
+                borderRadius: '8px'
+              }}
+            />
+            <button
+              onClick={() => setSelectedImage(null)}
+              style={{
+                position: 'absolute',
+                top: '-40px',
+                right: 0,
+                background: 'rgba(255, 255, 255, 0.1)',
+                border: '1px solid rgba(255, 255, 255, 0.2)',
+                borderRadius: '50%',
+                width: '36px',
+                height: '36px',
+                color: '#fff',
+                fontSize: '24px',
+                cursor: 'pointer',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                fontFamily: 'Arial, sans-serif',
+                lineHeight: 1,
+                transition: 'all 0.2s ease'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = 'rgba(255, 255, 255, 0.2)';
+                e.currentTarget.style.transform = 'scale(1.1)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = 'rgba(255, 255, 255, 0.1)';
+                e.currentTarget.style.transform = 'scale(1)';
+              }}
+            >
+              ×
+            </button>
+          </motion.div>
+        </motion.div>
+      )}
     </div>
   );
 }
