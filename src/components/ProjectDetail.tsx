@@ -1788,7 +1788,7 @@ function NookServiceBackgroundViz() {
               </p>
             </div>
           </div>
-          <div style={sourceStyle}>출처: 마크로밀 엠브레인 트렌드모니터 (2024) / 엠브레인트렌드모니터 (2012, n=1000)</div>
+          <div style={sourceStyle}>출처: 네이버 트렌드, 오늘의 집(2025)</div>
         </div>
       </div>
 
