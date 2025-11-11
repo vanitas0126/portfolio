@@ -335,72 +335,92 @@ export default function About({ onNavigateHome, onNavigateToWork, onNavigateToPr
           maxWidth: '1180px',
           margin: '0 auto'
         }}>
-          <div style={{ marginBottom: '28px' }}>
-            <h2 style={{
-              fontSize: '42px',
-              fontWeight: 600,
-              marginBottom: '0',
-              color: '#fff'
-            }}>
-              About Me
-            </h2>
-          </div>
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'minmax(0, 1fr) minmax(0, 1.5fr)',
+            gap: '48px',
+            alignItems: 'start'
+          }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '18px' }}>
+              <p style={{
+                fontSize: '22px',
+                lineHeight: 1.6,
+                color: '#fff',
+                margin: 0,
+                fontWeight: 600,
+                fontFamily: 'SD Greta Sans'
+              }}>
+                안녕하세요,<br />UX/UI 디자이너 박송희입니다.
+              </p>
 
-          <div>
-            <p style={{
-              fontSize: '16px',
-              lineHeight: 1.7,
-              color: 'rgba(255, 255, 255, 0.85)',
-              marginBottom: '22px',
-              fontWeight: 400,
-              fontFamily: 'SD Greta Sans'
-            }}>
-              안녕하세요, UX/UI 디자이너 박송희입니다.
-            </p>
+              <p style={{
+                fontSize: '16px',
+                lineHeight: 1.7,
+                color: 'rgba(255, 255, 255, 0.7)',
+                margin: 0,
+                fontWeight: 400,
+                fontFamily: 'SD Greta Sans'
+              }}>
+                생각과 감각이 만나는 지점을 설계하며,<br />이유 있는 아름다움을 탐구하고 있습니다.
+              </p>
+            </div>
 
-            <p style={{
-              fontSize: '16px',
-              lineHeight: 1.7,
-              color: 'rgba(255, 255, 255, 0.85)',
-              marginBottom: '22px',
-              fontWeight: 400,
-              fontFamily: 'SD Greta Sans'
-            }}>
-              저는 디자인을 &#39;보이지 않는 본질을 보이는 형태로 만들어내는 과정&#39;이라고 생각합니다. 단순히 미학적으로 아름답다는 것을 만드는 것이 아니라, 그 안에 담긴 논리와 철학이 명확하게 드러나는 결과물을 만드는 것이 제 목표입니다.
-            </p>
+            <div>
+              <p style={{
+                fontSize: '16px',
+                lineHeight: 1.7,
+                color: 'rgba(255, 255, 255, 0.85)',
+                marginBottom: '22px',
+                fontWeight: 400,
+                fontFamily: 'SD Greta Sans'
+              }}>
+                저는 복잡한 생각과 전략을 가장 명료한 시각 언어로 구조화하는 일을 합니다. 제게 완성된 디자인이란, 그 치열한 논리가 빚어낸 가장 명확한 해답입니다.
+              </p>
 
-            <p style={{
-              fontSize: '16px',
-              lineHeight: 1.7,
-              color: 'rgba(255, 255, 255, 0.85)',
-              marginBottom: '22px',
-              fontWeight: 400,
-              fontFamily: 'SD Greta Sans'
-            }}>
-              저에게 디자인은 질문에서 시작합니다. &#39;왜 이 형태인가?&#39;, &#39;이것이 문제의 핵심을 관통하는가?&#39; 이 질문들에 답하는 과정에서 불필요한 장식은 덜어내고, 기능과 의미가 자연스럽게 드러나는 디자인을 추구합니다.
-            </p>
+              <p style={{
+                fontSize: '16px',
+                lineHeight: 1.7,
+                color: 'rgba(255, 255, 255, 0.85)',
+                marginBottom: '22px',
+                fontWeight: 400,
+                fontFamily: 'SD Greta Sans'
+              }}>
+                그래서 제 디자인은 '왜'라는 질문에 답할 수 없는 장식을 허용하지 않습니다. 모든 시각적 결정은 순간의 감각이 아닌, 명확한 목적과 근거를 기반으로 합니다.
+              </p>
 
-            <p style={{
-              fontSize: '16px',
-              lineHeight: 1.7,
-              color: 'rgba(255, 255, 255, 0.85)',
-              marginBottom: '22px',
-              fontWeight: 400,
-              fontFamily: 'SD Greta Sans'
-            }}>
-              제가 생각하는 좋은 디자인은 &#39;단순하지만 깊이가 있는 것&#39;입니다. 사용자가 직관적으로 이해할 수 있으면서도, 그 이면에는 사용자의 필요와 제품의 목적에 대한 깊은 고민이 담겨 있어야 합니다.
-            </p>
+              <p style={{
+                fontSize: '16px',
+                lineHeight: 1.7,
+                color: 'rgba(255, 255, 255, 0.85)',
+                marginBottom: '22px',
+                fontWeight: 400,
+                fontFamily: 'SD Greta Sans'
+              }}>
+                겉으로 드러나는 단순함은 텅 비어있다는 뜻이 아닙니다. 오히려 그 이면에 치열하게 정돈된 논리적 질서와 세심한 감성이 받치고 있다는 증거입니다.
+              </p>
 
-            <p style={{
-              fontSize: '16px',
-              lineHeight: 1.7,
-              color: 'rgba(255, 255, 255, 0.85)',
-              marginBottom: '0',
-              fontWeight: 400,
-              fontFamily: 'SD Greta Sans'
-            }}>
-              이러한 철학을 바탕으로, 저는 명확한 논리와 정제된 감성이 조화를 이루는 디자인을 만들어가고 있습니다.
-            </p>
+              <p style={{
+                fontSize: '16px',
+                lineHeight: 1.7,
+                color: 'rgba(255, 255, 255, 0.85)',
+                marginBottom: '12px',
+                fontWeight: 400,
+                fontFamily: 'SD Greta Sans'
+              }}>
+                저의 모든 작업은 "이것이 최선인가?", "이것이 꼭 필요한가?"라는 근본적인 질문에서 시작합니다. 이 과정을 통해 불필요한 것을 걷어내고, 오직 문제 해결이라는 핵심에만 집중합니다.
+              </p>
+
+              <p style={{
+                fontSize: '16px',
+                lineHeight: 1.7,
+                color: 'rgba(255, 255, 255, 0.85)',
+                marginBottom: '0',
+                fontWeight: 400,
+                fontFamily: 'SD Greta Sans'
+              }}>
+                결국 제가 추구하는 것은 차가운 이성(논리)과 따뜻한 감성(심미성)이 분리되지 않고 완벽하게 조화되는 지점입니다. 깊이 있으면서, 동시에 직관적인 디자인을 만듭니다.
+              </p>
+            </div>
           </div>
         </section>
       </SectionWithAnimation>

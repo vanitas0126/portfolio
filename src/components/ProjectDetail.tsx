@@ -2321,25 +2321,25 @@ export function ProjectDetail({ projectId, onBack, onNavigateToProject, onNaviga
                   onNavigateToWork();
                 }
               }}
-              style={{ 
-                color: '#ffd900', 
-                textDecoration: 'none', 
-                fontSize: isCompact ? '14px' : '17px', 
-                fontWeight: 600,
-                cursor: 'pointer',
-                background: 'none',
-                border: 'none',
-                padding: 0
-              }}
-              whileHover={{ 
-                scale: 1.08,
-                color: 'rgba(255, 217, 0, 0.7)',
-                transition: { type: "spring", stiffness: 300, damping: 15 }
-              }}
-              whileTap={{ scale: 0.95 }}
-            >
-              WORK
-            </motion.button>
+                style={{ 
+                  color: '#ffd900', 
+                  textDecoration: 'none', 
+                  fontSize: isCompact ? '14px' : '17px', 
+                  fontWeight: 600,
+                  cursor: 'pointer',
+                  background: 'none',
+                  border: 'none',
+                  padding: 0
+                }}
+                whileHover={{ 
+                  scale: 1.08,
+                  color: 'rgba(255, 217, 0, 0.7)',
+                  transition: { type: "spring", stiffness: 300, damping: 15 }
+                }}
+                whileTap={{ scale: 0.95 }}
+              >
+                WORK
+              </motion.button>
 
             {/* ABOUT Button */}
             {onNavigateToAbout && (
@@ -2599,11 +2599,11 @@ export function ProjectDetail({ projectId, onBack, onNavigateToProject, onNaviga
               {project.id === 'hourtaste' && section.title === '시장배경' ? (
                 <>
                   {section.content && (
-                    <p style={{
-                      fontSize: '17px',
-                      lineHeight: 1.9,
-                      color: 'rgba(255, 255, 255, 0.8)',
-                      fontFamily: '"SD Greta Sans", "IBM Plex Sans KR", sans-serif',
+              <p style={{
+                fontSize: '17px',
+                lineHeight: 1.9,
+                color: 'rgba(255, 255, 255, 0.8)',
+                fontFamily: '"SD Greta Sans", "IBM Plex Sans KR", sans-serif',
                       marginBottom: '50px',
                       whiteSpace: 'pre-line',
                       fontWeight: 300
@@ -2848,12 +2848,12 @@ export function ProjectDetail({ projectId, onBack, onNavigateToProject, onNaviga
                     color: 'rgba(255, 255, 255, 0.8)',
                     fontFamily: '"SD Greta Sans", "IBM Plex Sans KR", sans-serif',
                     marginBottom: '50px',
-                    whiteSpace: 'pre-line',
-                    fontWeight: 300
-                  }}>
-                    {section.content}
-                  </p>
-                  
+                whiteSpace: 'pre-line',
+                fontWeight: 300
+              }}>
+                {section.content}
+              </p>
+
                   {/* 홈페이지 단순화 */}
                   <p style={{
                     fontSize: '17px',
@@ -3066,15 +3066,15 @@ export function ProjectDetail({ projectId, onBack, onNavigateToProject, onNaviga
                       <img
                         src={`${import.meta.env.BASE_URL}project4/${file}`}
                         alt={`reference ${i+1}`}
-                        style={{
-                          width: '100%',
-                          height: '100%',
-                          objectFit: 'cover'
-                        }}
-                      />
+                    style={{
+                      width: '100%',
+                      height: '100%',
+                      objectFit: 'cover'
+                    }}
+                  />
                     </div>
                   ))}
-            </motion.div>
+                </motion.div>
               )}
 
               {project.id === 'cat-peaceful-day' && section.title === '의도 (Why)' && (
@@ -3121,7 +3121,7 @@ export function ProjectDetail({ projectId, onBack, onNavigateToProject, onNaviga
                       />
                     </div>
                   ))}
-                </motion.div>
+            </motion.div>
               )}
 
               {project.id === 'cat-peaceful-day' && section.title === '방법 (How)' && (
