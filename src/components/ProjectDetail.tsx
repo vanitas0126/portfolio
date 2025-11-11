@@ -2867,28 +2867,61 @@ export function ProjectDetail({ projectId, onBack, onNavigateToProject, onNaviga
                     홈은 "기업 정체성 명확화 + 정보 우선순위 재배치" 중심으로 단순화하고, 승객 실행 기능(예매/노선/요금)은 별도 승객 포털로 분리했습니다.
                   </p>
                   <div style={{ display: 'grid', gridTemplateColumns: '40% 60%', gap: '20px', marginBottom: '80px' }}>
-                    <img 
-                      src={`${import.meta.env.BASE_URL}project3/철도공사.JPG`}
-                      alt="철도공사"
-                      style={{
-                        width: '100%',
-                        height: 'auto',
-                        borderRadius: '12px',
-                        border: '1px solid rgba(255, 217, 0, 0.08)',
-                        background: 'rgba(255,255,255,0.02)'
-                      }}
-                    />
-                    <img 
-                      src={`${import.meta.env.BASE_URL}project3/homepage.png`}
-                      alt="홈페이지"
-                      style={{
-                        width: '100%',
-                        height: 'auto',
-                        borderRadius: '12px',
-                        border: '1px solid rgba(255, 217, 0, 0.08)',
-                        background: 'rgba(255,255,255,0.02)'
-                      }}
-                    />
+                    <div style={{ position: 'relative' }}>
+                      <span style={{
+                        position: 'absolute',
+                        top: '10px',
+                        left: '10px',
+                        padding: '6px 10px',
+                        borderRadius: '999px',
+                        background: 'rgba(0,0,0,0.65)',
+                        color: '#fff',
+                        fontSize: '12px',
+                        fontWeight: 600,
+                        letterSpacing: '0.02em',
+                        zIndex: 1,
+                        border: '1px solid rgba(255,255,255,0.18)'
+                      }}>Before</span>
+                      <img 
+                        src={`${import.meta.env.BASE_URL}project3/철도공사.JPG`}
+                        alt="철도공사"
+                        style={{
+                          width: '100%',
+                          height: 'auto',
+                          borderRadius: '12px',
+                          border: '1px solid rgba(255, 217, 0, 0.08)',
+                          background: 'rgba(255,255,255,0.02)',
+                          filter: 'grayscale(100%)'
+                        }}
+                      />
+                    </div>
+                    <div style={{ position: 'relative' }}>
+                      <span style={{
+                        position: 'absolute',
+                        top: '10px',
+                        left: '10px',
+                        padding: '6px 10px',
+                        borderRadius: '999px',
+                        background: 'rgba(255, 217, 0, 0.16)',
+                        color: '#fff',
+                        fontSize: '12px',
+                        fontWeight: 700,
+                        letterSpacing: '0.02em',
+                        zIndex: 1,
+                        border: '1px solid rgba(255, 217, 0, 0.35)'
+                      }}>After</span>
+                      <img 
+                        src={`${import.meta.env.BASE_URL}project3/homepage.png`}
+                        alt="홈페이지"
+                        style={{
+                          width: '100%',
+                          height: 'auto',
+                          borderRadius: '12px',
+                          border: '1px solid rgba(255, 217, 0, 0.08)',
+                          background: 'rgba(255,255,255,0.02)'
+                        }}
+                      />
+                    </div>
                   </div>
                   
                   {/* HISTORY */}
@@ -2904,28 +2937,61 @@ export function ProjectDetail({ projectId, onBack, onNavigateToProject, onNaviga
                     OUR HISTORY는 "연대기+인프라 발전"을 역순으로 정리해 현재까지의 변화 흐름을 보여주고, 인디케이터로 현재 위치를 확인할 수 있도록 하여 기업의 신뢰성을 강화했습니다
                   </p>
                   <div style={{ display: 'grid', gridTemplateColumns: '40% 60%', gap: '20px', marginBottom: '80px' }}>
-                    <img 
-                      src={`${import.meta.env.BASE_URL}project3/철도공사2.JPG`}
-                      alt="철도공사 2"
-                      style={{
-                        width: '100%',
-                        height: 'auto',
-                        borderRadius: '12px',
-                        border: '1px solid rgba(255, 217, 0, 0.08)',
-                        background: 'rgba(255,255,255,0.02)'
-                      }}
-                    />
-                    <img 
-                      src={`${import.meta.env.BASE_URL}project3/history.png`}
-                      alt="히스토리"
-                      style={{
-                        width: '100%',
-                        height: 'auto',
-                        borderRadius: '12px',
-                        border: '1px solid rgba(255, 217, 0, 0.08)',
-                        background: 'rgba(255,255,255,0.02)'
-                      }}
-                    />
+                    <div style={{ position: 'relative' }}>
+                      <span style={{
+                        position: 'absolute',
+                        top: '10px',
+                        left: '10px',
+                        padding: '6px 10px',
+                        borderRadius: '999px',
+                        background: 'rgba(0,0,0,0.65)',
+                        color: '#fff',
+                        fontSize: '12px',
+                        fontWeight: 600,
+                        letterSpacing: '0.02em',
+                        zIndex: 1,
+                        border: '1px solid rgba(255,255,255,0.18)'
+                      }}>Before</span>
+                      <img 
+                        src={`${import.meta.env.BASE_URL}project3/철도공사2.JPG`}
+                        alt="철도공사 2"
+                        style={{
+                          width: '100%',
+                          height: 'auto',
+                          borderRadius: '12px',
+                          border: '1px solid rgba(255, 217, 0, 0.08)',
+                          background: 'rgba(255,255,255,0.02)',
+                          filter: 'grayscale(100%)'
+                        }}
+                      />
+                    </div>
+                    <div style={{ position: 'relative' }}>
+                      <span style={{
+                        position: 'absolute',
+                        top: '10px',
+                        left: '10px',
+                        padding: '6px 10px',
+                        borderRadius: '999px',
+                        background: 'rgba(255, 217, 0, 0.16)',
+                        color: '#fff',
+                        fontSize: '12px',
+                        fontWeight: 700,
+                        letterSpacing: '0.02em',
+                        zIndex: 1,
+                        border: '1px solid rgba(255, 217, 0, 0.35)'
+                      }}>After</span>
+                      <img 
+                        src={`${import.meta.env.BASE_URL}project3/history.png`}
+                        alt="히스토리"
+                        style={{
+                          width: '100%',
+                          height: 'auto',
+                          borderRadius: '12px',
+                          border: '1px solid rgba(255, 217, 0, 0.08)',
+                          background: 'rgba(255,255,255,0.02)'
+                        }}
+                      />
+                    </div>
                   </div>
                   
                   {/* 프로젝트/노선 */}
@@ -2943,40 +3009,50 @@ export function ProjectDetail({ projectId, onBack, onNavigateToProject, onNaviga
                   </p>
                   <div style={{ display: 'grid', gridTemplateColumns: '40% 60%', gap: '20px' }}>
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+                      <div style={{ position: 'relative' }}>
+                        <span style={{
+                          position: 'absolute', top: '10px', left: '10px', padding: '6px 10px', borderRadius: '999px',
+                          background: 'rgba(255, 217, 0, 0.16)', color: '#fff', fontSize: '12px', fontWeight: 700, letterSpacing: '0.02em', zIndex: 1,
+                          border: '1px solid rgba(255, 217, 0, 0.35)'
+                        }}>After</span>
+                        <img 
+                          src={`${import.meta.env.BASE_URL}project3/프로젝트웹.png`}
+                          alt="프로젝트 웹"
+                          style={{
+                            width: '100%', height: 'auto', borderRadius: '12px', border: '1px solid rgba(255, 217, 0, 0.08)', background: 'rgba(255,255,255,0.02)'
+                          }}
+                        />
+                      </div>
+                      <div style={{ position: 'relative' }}>
+                        <span style={{
+                          position: 'absolute', top: '10px', left: '10px', padding: '6px 10px', borderRadius: '999px',
+                          background: 'rgba(0,0,0,0.65)', color: '#fff', fontSize: '12px', fontWeight: 600, letterSpacing: '0.02em', zIndex: 1,
+                          border: '1px solid rgba(255,255,255,0.18)'
+                        }}>Before</span>
+                        <img 
+                          src={`${import.meta.env.BASE_URL}project3/철도공사2.3.JPG`}
+                          alt="철도공사 2.3"
+                          style={{
+                            width: '100%', height: 'auto', borderRadius: '12px', border: '1px solid rgba(255, 217, 0, 0.08)', background: 'rgba(255,255,255,0.02)',
+                            filter: 'grayscale(100%)'
+                          }}
+                        />
+                      </div>
+                    </div>
+                    <div style={{ position: 'relative' }}>
+                      <span style={{
+                        position: 'absolute', top: '10px', left: '10px', padding: '6px 10px', borderRadius: '999px',
+                        background: 'rgba(255, 217, 0, 0.16)', color: '#fff', fontSize: '12px', fontWeight: 700, letterSpacing: '0.02em', zIndex: 1,
+                        border: '1px solid rgba(255, 217, 0, 0.35)'
+                      }}>After</span>
                       <img 
-                        src={`${import.meta.env.BASE_URL}project3/프로젝트웹.png`}
-                        alt="프로젝트 웹"
+                        src={`${import.meta.env.BASE_URL}project3/projects.png`}
+                        alt="프로젝트"
                         style={{
-                          width: '100%',
-                          height: 'auto',
-                          borderRadius: '12px',
-                          border: '1px solid rgba(255, 217, 0, 0.08)',
-                          background: 'rgba(255,255,255,0.02)'
-                        }}
-                      />
-                      <img 
-                        src={`${import.meta.env.BASE_URL}project3/철도공사2.3.JPG`}
-                        alt="철도공사 2.3"
-                        style={{
-                          width: '100%',
-                          height: 'auto',
-                          borderRadius: '12px',
-                          border: '1px solid rgba(255, 217, 0, 0.08)',
-                          background: 'rgba(255,255,255,0.02)'
+                          width: '100%', height: 'auto', borderRadius: '12px', border: '1px solid rgba(255, 217, 0, 0.08)', background: 'rgba(255,255,255,0.02)'
                         }}
                       />
                     </div>
-                    <img 
-                      src={`${import.meta.env.BASE_URL}project3/projects.png`}
-                      alt="프로젝트"
-                      style={{
-                        width: '100%',
-                        height: 'auto',
-                        borderRadius: '12px',
-                        border: '1px solid rgba(255, 217, 0, 0.08)',
-                        background: 'rgba(255,255,255,0.02)'
-                      }}
-                    />
                   </div>
                 </>
               ) : (
