@@ -335,45 +335,6 @@ export default function About({ onNavigateHome, onNavigateToWork, onNavigateToPr
           maxWidth: '1180px',
           margin: '0 auto'
         }}>
-          <div style={{ display: 'flex', justifyContent: 'flex-start', width: '100%', marginBottom: '24px' }}>
-            <pre style={{
-              margin: 0,
-              padding: '12px 16px',
-              borderRadius: '12px',
-              background: '#000',
-              color: '#fff',
-              fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace',
-              fontSize: '16px',
-              lineHeight: 1.2,
-              textAlign: 'left',
-              overflowX: 'auto',
-              textShadow: 'none'
-            }}>
-{`         _._         `}
-{'\n'}
-{`        (\\!/)        `}
-{'\n'}
-{`      .(|||||).      `}
-{'\n'}
-{`     ((/.'~'.\\))     `}
-{'\n'}
-{`     (! ^   ^ !)     `}
-{'\n'}
-{`     (~.=.-.=.~)     `}
-{'\n'}
-{`      |   <   |      `}
-{'\n'}
-{`      !  '-'  !      `}
-{'\n'}
-{`       !.___.!       `}
-{'\n'}
-{`      /'-. .-'\\      `}
-{'\n'}
-{` _.-~'\\_/\\ /\\_/'~-._ `}
-{'\n'}
-{`'         V         '`}
-            </pre>
-          </div>
           <div style={{ marginBottom: '28px' }}>
             <h2 style={{
               fontSize: '42px',
@@ -394,8 +355,7 @@ export default function About({ onNavigateHome, onNavigateToWork, onNavigateToPr
               fontWeight: 400,
               fontFamily: 'SD Greta Sans'
             }}>
-              저에게 디자인은 겉을 예쁘게 만드는 일이 아니라, 생각을 눈에 보이게 정리하는 과정입니다.<br />
-              완성된 형태는 그 생각이 차근차근 펼쳐진 결과이고, 그 과정이 남긴 흔적입니다.
+              안녕하세요, UX/UI 디자이너 박송희입니다.
             </p>
 
             <p style={{
@@ -406,7 +366,7 @@ export default function About({ onNavigateHome, onNavigateToWork, onNavigateToPr
               fontWeight: 400,
               fontFamily: 'SD Greta Sans'
             }}>
-              그래서 작업을 시작할 때 항상 <strong style={{ fontWeight: 600 }}>&quot;왜 이 형태가 가장 좋은가?&quot;</strong>라는 질문부터 던집니다.
+              저는 디자인을 &#39;보이지 않는 본질을 보이는 형태로 만들어내는 과정&#39;이라고 생각합니다. 단순히 미학적으로 아름답다는 것을 만드는 것이 아니라, 그 안에 담긴 논리와 철학이 명확하게 드러나는 결과물을 만드는 것이 제 목표입니다.
             </p>
 
             <p style={{
@@ -417,8 +377,7 @@ export default function About({ onNavigateHome, onNavigateToWork, onNavigateToPr
               fontWeight: 400,
               fontFamily: 'SD Greta Sans'
             }}>
-              아름다움을 보는 방식도 비슷합니다. 뭔가 아름답다는 건 단순히 보기 좋다는 게 아니라, 거기에 이유가 있다는 뜻입니다.<br />
-              그 안에 담긴 가치, 질서, 존재 이유가 아름다움을 만듭니다.
+              저에게 디자인은 질문에서 시작합니다. &#39;왜 이 형태인가?&#39;, &#39;이것이 문제의 핵심을 관통하는가?&#39; 이 질문들에 답하는 과정에서 불필요한 장식은 덜어내고, 기능과 의미가 자연스럽게 드러나는 디자인을 추구합니다.
             </p>
 
             <p style={{
@@ -429,30 +388,7 @@ export default function About({ onNavigateHome, onNavigateToWork, onNavigateToPr
               fontWeight: 400,
               fontFamily: 'SD Greta Sans'
             }}>
-              제가 만드는 디자인은 겉모습만 그럴듯한 게 아니라, 윤리와 균형 같은 깊은 가치가 함께 작동하길 바랍니다.
-            </p>
-
-            <p style={{
-              fontSize: '16px',
-              lineHeight: 1.7,
-              color: 'rgba(255, 255, 255, 0.85)',
-              marginBottom: '22px',
-              fontWeight: 400,
-              fontFamily: 'SD Greta Sans'
-            }}>
-              겉은 명료하고 간결하게<br />
-              속에는 정교한 논리와 정돈된 감정이 흐르도록
-            </p>
-
-            <p style={{
-              fontSize: '16px',
-              lineHeight: 1.7,
-              color: 'rgba(255, 255, 255, 0.85)',
-              marginBottom: '22px',
-              fontWeight: 400,
-              fontFamily: 'SD Greta Sans'
-            }}>
-              제가 가장 중요하게 여기는 건 &#39;단순해 보이지만 깊이 있는 것&#39;입니다.
+              제가 생각하는 좋은 디자인은 &#39;단순하지만 깊이가 있는 것&#39;입니다. 사용자가 직관적으로 이해할 수 있으면서도, 그 이면에는 사용자의 필요와 제품의 목적에 대한 깊은 고민이 담겨 있어야 합니다.
             </p>
 
             <p style={{
@@ -463,8 +399,7 @@ export default function About({ onNavigateHome, onNavigateToWork, onNavigateToPr
               fontWeight: 400,
               fontFamily: 'SD Greta Sans'
             }}>
-              결국 제가 추구하는 디자인은 머리(논리)와 감각이 따로 놀지 않고 자연스럽게 만나는 지점입니다.<br />
-              생각이 구체적인 감각을 만들고, 그 감각이 다시 생각을 더 선명하게 만드는 순환. 이 둘 사이의 건강한 긴장 속에서 진짜 의미 있는 디자인이 나온다고 믿습니다.
+              이러한 철학을 바탕으로, 저는 명확한 논리와 정제된 감성이 조화를 이루는 디자인을 만들어가고 있습니다.
             </p>
           </div>
         </section>
