@@ -2047,7 +2047,7 @@ const projectsData: { [key: string]: ProjectData } = {
     heroImage: `${import.meta.env.BASE_URL}project3/projects3_thumb.png`,
     myRole: ['Lead UX/UI Designer', 'Web Designer', 'User Research'],
     team: ['3명 (기획 공동, 디자인 1명)'],
-    duration: '3개월',
+    duration: '3 months',
     industry: 'Transportation / Public Service',
     summary: '나이지리아 철도공사(NRC) 웹사이트에서 기업/투자자 정보(B2B)와 승객 이용 정보(B2C)가 한 화면에 섞여 있던 문제를 해결하기 위해, 철도 산업의 기본 원칙인 상하 분리를 사이트 구조에 반영한 프로젝트입니다.\n승객 포털과 기업 사이트를 분리하여 각 사용자 그룹의 목적에 맞는 접근 경로를 제공했습니다.',
     sections: [
@@ -2074,7 +2074,7 @@ const projectsData: { [key: string]: ProjectData } = {
     heroVideo: undefined,
     myRole: ['Product Designer', 'UX/UI Designer', 'Service Planner'],
     team: ['박송희 (1명)'],
-    duration: '15주',
+    duration: '15 weeks',
     industry: 'Food Tech / E-commerce',
     summary: 'HourTaste는 단순한 마감 할인을 넘어, 개인 맞춤 알림과 "지도 스탬프"라는 재미 요소를 더해, 사용자가 계속 방문하며 "나만의 맛집 지도"를 완성해나가는 서비스입니다.',
     sections: [
@@ -2137,7 +2137,7 @@ const projectsData: { [key: string]: ProjectData } = {
     heroVideo: undefined,
     myRole: ['Art Director'],
     team: ['3 Photography & Strategy', '1 Art Director & Strategy (본인)'],
-    duration: '1개월',
+    duration: '1 month',
     industry: 'Art / Figure Design',
     summary: '낚시하는 고양이 피규어 두 마리를 중심으로, 작고 평화로운 하루를 "미니어처 세계"로 표현한 촬영 프로젝트입니다. 거울을 연못처럼 사용해 반사를 적극 활용하고, 샷마다 물/하늘 톤을 조절해 두 고양이의 시선 흐름이 자연스럽게 먼저 읽히도록 구성했습니다.',
     sections: [
