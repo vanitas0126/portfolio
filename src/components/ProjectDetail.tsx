@@ -2576,34 +2576,34 @@ export function ProjectDetail({ projectId, onBack, onNavigateToProject, onNaviga
             const isHourtasteMarket = project.id === 'hourtaste' && section.title === '시장배경';
             
             return (
-            <motion.div
+          <motion.div
               key={index}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 0.6, delay: 0.1 }}
-              style={{
+            style={{
                 marginBottom: '100px'
-              }}
-            >
-              <h2 style={{
+            }}
+          >
+            <h2 style={{
                 fontSize: '32px',
-                fontWeight: 600,
+              fontWeight: 600,
                 marginBottom: '24px',
-                fontFamily: '"Darker Grotesque", sans-serif',
+              fontFamily: '"Darker Grotesque", sans-serif',
                 color: '#fff',
-                letterSpacing: '-0.02em'
+              letterSpacing: '-0.02em'
               }}>{section.title}</h2>
               
               {/* 시장배경 섹션은 특별 처리: 텍스트와 이미지를 분리하여 배치 */}
               {project.id === 'hourtaste' && section.title === '시장배경' ? (
                 <>
                   {section.content && (
-              <p style={{
+            <p style={{
                 fontSize: '17px',
                 lineHeight: 1.9,
                 color: 'rgba(255, 255, 255, 0.8)',
-                fontFamily: '"SD Greta Sans", "IBM Plex Sans KR", sans-serif',
+              fontFamily: '"SD Greta Sans", "IBM Plex Sans KR", sans-serif',
                       marginBottom: '50px',
                       whiteSpace: 'pre-line',
                       fontWeight: 300
@@ -2747,12 +2747,12 @@ export function ProjectDetail({ projectId, onBack, onNavigateToProject, onNaviga
                     독일/한국의 국철 사이트들도 공공기관 정보 페이지와 승객용 예매 페이지를 서로 다른 경로로 분리해 제공합니다.
                   </p>
                   {/* 국철 사례 비교 이미지 그리드 */}
-                  <motion.div
+            <motion.div
                     initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
+              whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.6, delay: 0.3 }}
-                    style={{
+              style={{
                       display: 'grid',
                       gridTemplateColumns: 'repeat(4, 1fr)',
                       gap: '20px'
@@ -2799,9 +2799,9 @@ export function ProjectDetail({ projectId, onBack, onNavigateToProject, onNaviga
                         <div style={{
                           marginBottom: '16px',
                           fontSize: '16px',
-                          fontWeight: 600,
+                fontWeight: 600,
                           color: '#fff',
-                          fontFamily: '"Darker Grotesque", sans-serif',
+                fontFamily: '"Darker Grotesque", sans-serif',
                           textAlign: 'center'
                         }}>
                           {group.country}
@@ -2875,7 +2875,7 @@ export function ProjectDetail({ projectId, onBack, onNavigateToProject, onNaviga
                         padding: '6px 10px',
                         borderRadius: '999px',
                         background: 'rgba(0,0,0,0.65)',
-                        color: '#fff',
+                color: '#fff',
                         fontSize: '12px',
                         fontWeight: 600,
                         letterSpacing: '0.02em',
@@ -2925,11 +2925,11 @@ export function ProjectDetail({ projectId, onBack, onNavigateToProject, onNaviga
                   </div>
                   
                   {/* HISTORY */}
-                  <p style={{
-                    fontSize: '17px',
-                    lineHeight: 1.9,
-                    color: 'rgba(255, 255, 255, 0.8)',
-                    fontFamily: '"SD Greta Sans", "IBM Plex Sans KR", sans-serif',
+              <p style={{
+                fontSize: '17px',
+                lineHeight: 1.9,
+                color: 'rgba(255, 255, 255, 0.8)',
+                fontFamily: '"SD Greta Sans", "IBM Plex Sans KR", sans-serif',
                     marginBottom: '20px',
                     whiteSpace: 'pre-line',
                     fontWeight: 300
