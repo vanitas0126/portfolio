@@ -2136,7 +2136,7 @@ const projectsData: { [key: string]: ProjectData } = {
     heroImage: `${import.meta.env.BASE_URL}project4/project4_thumbnail.png`,
     heroVideo: undefined,
     myRole: ['Art Director'],
-    team: ['(박소현, 본인, 강민진, 송예준)'],
+    team: ['3 Photography & Strategy', '1 Art Director & Strategy (본인)'],
     duration: '1개월',
     industry: 'Art / Figure Design',
     summary: '낚시하는 고양이 피규어 두 마리를 중심으로, 작고 평화로운 하루를 "미니어처 세계"로 표현한 촬영 프로젝트입니다. 거울을 연못처럼 사용해 반사를 적극 활용하고, 샷마다 물/하늘 톤을 조절해 두 고양이의 시선 흐름이 자연스럽게 먼저 읽히도록 구성했습니다.',
