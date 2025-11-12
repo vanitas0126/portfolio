@@ -15,7 +15,7 @@ if (!existsSync(docsDir)) {
 
 if (existsSync(indexPath)) {
   copyFileSync(indexPath, notFoundPath);
-  console.log('Created docs/404.html for GitHub Pages routing.');
+  console.log('Created docs/404.html for SPA routing.');
 } else {
   console.error('vite build did not produce docs/index.html. Run npm run build first.');
   process.exit(1);
