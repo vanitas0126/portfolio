@@ -22,10 +22,17 @@ export default function App() {
   const [currentPage, setCurrentPage] = useState<'home' | 'about'>('home');
   const [selectedProject, setSelectedProject] = useState<string | null>(null);
   const pathnameRef = useRef<string | null>(null);
+  const basePath = (import.meta.env.BASE_URL || '/').replace(/\/+$/, '');
+  const withBase = (path: string) => `${basePath}${path === '/' ? '' : path}`;
+  const stripBase = (pathname: string) =>
+    basePath && pathname.startsWith(basePath)
+      ? pathname.slice(basePath.length) || '/'
+      : pathname || '/';
 
   // Simple path-based routing to enable real-ish URLs (/project/:id, /about)
   useEffect(() => {
-    const parsePath = (pathname: string) => {
+    const parsePath = (rawPath: string) => {
+      const pathname = stripBase(rawPath);
       if (!pathname) return null;
       // Support: /project/hourtaste  and /about
       if (pathname.startsWith('/project/')) return pathname.replace('/project/', '').toLowerCase();
@@ -64,17 +71,20 @@ export default function App() {
 
     if (selectedProject) {
       const desired = `/project/${selectedProject}`;
-      window.history.pushState(null, '', desired);
-      pathnameRef.current = desired;
+      const fullPath = withBase(desired === '/' ? '/' : desired);
+      window.history.pushState(null, '', fullPath);
+      pathnameRef.current = fullPath;
     } else if (currentPage === 'about') {
-      if (pathnameRef.current !== '/about') {
-        window.history.pushState(null, '', '/about');
-        pathnameRef.current = '/about';
+      const fullAbout = withBase('/about');
+      if (pathnameRef.current !== fullAbout) {
+        window.history.pushState(null, '', fullAbout);
+        pathnameRef.current = fullAbout;
       }
     } else {
-      if (!pathnameRef.current || pathnameRef.current !== '/') {
-        window.history.pushState(null, '', '/');
-        pathnameRef.current = '/';
+      const fullHome = withBase('/');
+      if (!pathnameRef.current || pathnameRef.current !== fullHome) {
+        window.history.pushState(null, '', fullHome);
+        pathnameRef.current = fullHome;
       }
     }
   }, [selectedProject, currentPage]);
