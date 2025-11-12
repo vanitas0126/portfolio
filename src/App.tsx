@@ -24,24 +24,23 @@ export default function App() {
   const pathnameRef = useRef<string | null>(null);
   const basePath = (import.meta.env.BASE_URL || '/').replace(/\/+$/, '');
   const withBase = useCallback((path: string) => `${basePath}${path === '/' ? '' : path}`, [basePath]);
-  const stripBase = useCallback((pathname: string) => {
-    if (basePath && basePath !== '/' && pathname.startsWith(basePath)) {
-      const stripped = pathname.slice(basePath.length);
-      return stripped || '/';
-    }
-    return pathname || '/';
-  }, [basePath]);
-
+  
   // Simple path-based routing to enable real-ish URLs (/project/:id, /about)
   useEffect(() => {
+    const stripBase = (pathname: string) => {
+      if (basePath && basePath !== '/' && pathname.startsWith(basePath)) {
+        const stripped = pathname.slice(basePath.length);
+        return stripped || '/';
+      }
+      return pathname || '/';
+    };
+
     const parsePath = (rawPath: string) => {
       const pathname = stripBase(rawPath);
-      console.log('parsePath - rawPath:', rawPath, 'basePath:', basePath, 'stripped:', pathname);
       if (!pathname) return null;
       // Support: /project/hourtaste  and /about
       if (pathname.startsWith('/project/')) {
         const id = pathname.replace('/project/', '').replace(/\/+$/, '').toLowerCase();
-        console.log('parsePath - extracted project id:', id);
         return id || null;
       }
       if (pathname === '/about' || pathname === '/about/') return 'about';
@@ -49,57 +48,69 @@ export default function App() {
     };
 
     const applyPath = () => {
-      const p = parsePath(window.location.pathname || '/');
-      console.log('applyPath - parsed:', p, 'from pathname:', window.location.pathname, 'basePath:', basePath);
-      if (p === 'about') {
-        setSelectedProject(null);
-        setCurrentPage('about');
-      } else if (p) {
-        console.log('Setting selectedProject to:', p);
-        setSelectedProject(p);
-        setCurrentPage('home');
-      } else {
-        // default
-        console.log('No project found, going to home');
+      try {
+        const p = parsePath(window.location.pathname || '/');
+        if (p === 'about') {
+          setSelectedProject(null);
+          setCurrentPage('about');
+        } else if (p) {
+          setSelectedProject(p);
+          setCurrentPage('home');
+        } else {
+          // default
+          setSelectedProject(null);
+          setCurrentPage('home');
+        }
+      } catch (error) {
+        console.error('Error in applyPath:', error);
         setSelectedProject(null);
         setCurrentPage('home');
       }
     };
 
-    // On mount, apply current path
+    // On mount, apply current path immediately
     applyPath();
 
     // Keep in sync when user navigates back/forward
-    const onPopState = () => applyPath();
+    const onPopState = () => {
+      applyPath();
+    };
     window.addEventListener('popstate', onPopState);
     return () => window.removeEventListener('popstate', onPopState);
-  }, [basePath, stripBase]);
+  }, [basePath]);
 
   // Update the browser URL (history) when selectedProject or currentPage changes
   useEffect(() => {
     if (typeof window === 'undefined') return;
-
-    if (selectedProject) {
-      const desired = `/project/${selectedProject}`;
-      const fullPath = withBase(desired === '/' ? '/' : desired);
-      if (pathnameRef.current !== fullPath) {
-        window.history.pushState(null, '', fullPath);
-        pathnameRef.current = fullPath;
+    
+    // Prevent infinite loop by checking if we're already on the correct path
+    const currentPath = window.location.pathname;
+    
+    try {
+      if (selectedProject) {
+        const desired = `/project/${selectedProject}`;
+        const fullPath = withBase(desired === '/' ? '/' : desired);
+        if (pathnameRef.current !== fullPath && currentPath !== fullPath) {
+          window.history.pushState(null, '', fullPath);
+          pathnameRef.current = fullPath;
+        }
+      } else if (currentPage === 'about') {
+        const fullAbout = withBase('/about');
+        if (pathnameRef.current !== fullAbout && currentPath !== fullAbout) {
+          window.history.pushState(null, '', fullAbout);
+          pathnameRef.current = fullAbout;
+        }
+      } else {
+        const fullHome = withBase('/');
+        if (pathnameRef.current !== fullHome && currentPath !== fullHome && currentPath !== basePath) {
+          window.history.pushState(null, '', fullHome);
+          pathnameRef.current = fullHome;
+        }
       }
-    } else if (currentPage === 'about') {
-      const fullAbout = withBase('/about');
-      if (pathnameRef.current !== fullAbout) {
-        window.history.pushState(null, '', fullAbout);
-        pathnameRef.current = fullAbout;
-      }
-    } else {
-      const fullHome = withBase('/');
-      if (!pathnameRef.current || pathnameRef.current !== fullHome) {
-        window.history.pushState(null, '', fullHome);
-        pathnameRef.current = fullHome;
-      }
+    } catch (error) {
+      console.error('Error updating URL:', error);
     }
-  }, [selectedProject, currentPage, withBase]);
+  }, [selectedProject, currentPage, withBase, basePath]);
 
   useEffect(() => {
     if (!selectedProject) {
