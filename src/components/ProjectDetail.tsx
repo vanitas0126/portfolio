@@ -3155,8 +3155,8 @@ export function ProjectDetail({ projectId, onBack, onNavigateToProject, onNaviga
                     marginTop: '60px',
                     marginBottom: '64px',
                     display: 'grid',
-                    gridTemplateColumns: 'repeat(3, 1fr)',
-                    gap: '18px'
+                    gridTemplateColumns: windowWidth < 768 ? '1fr' : 'repeat(3, 1fr)',
+                    gap: windowWidth < 768 ? '16px' : '18px'
                   }}
                 >
                   <div style={{ gridColumn: '1 / -1' }}>
@@ -3202,8 +3202,8 @@ export function ProjectDetail({ projectId, onBack, onNavigateToProject, onNaviga
                   style={{
                     marginTop: '18px',
                     display: 'grid',
-                    gridTemplateColumns: 'repeat(3, 1fr)',
-                    gap: '18px'
+                    gridTemplateColumns: windowWidth < 768 ? '1fr' : 'repeat(3, 1fr)',
+                    gap: windowWidth < 768 ? '16px' : '18px'
                   }}
                 >
                   <div style={{ gridColumn: '1 / -1' }}>
