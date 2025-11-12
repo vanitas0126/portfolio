@@ -22,6 +22,54 @@ export default function App() {
   const [currentPage, setCurrentPage] = useState<'home' | 'about'>('home');
   const [selectedProject, setSelectedProject] = useState<string | null>(null);
 
+  // Sync with URL hash to enable deep-linking for project pages and about
+  useEffect(() => {
+    const parseHash = (hash: string) => {
+      if (!hash) return null;
+      // Support: #project/hourtaste  and #about
+      if (hash.startsWith('#project/')) return hash.replace('#project/', '').toLowerCase();
+      if (hash === '#about') return 'about';
+      return null;
+    };
+
+    const applyHash = () => {
+      const h = parseHash(window.location.hash || '');
+      if (h === 'about') {
+        setSelectedProject(null);
+        setCurrentPage('about');
+      } else if (h) {
+        setSelectedProject(h);
+        setCurrentPage('home');
+      } else {
+        // default
+        setSelectedProject(null);
+        setCurrentPage('home');
+      }
+    };
+
+    // On mount, apply current hash
+    applyHash();
+
+    // Keep in sync when user changes the hash (back/forward or manual)
+    const onHashChange = () => applyHash();
+    window.addEventListener('hashchange', onHashChange);
+    return () => window.removeEventListener('hashchange', onHashChange);
+  }, []);
+
+  // Update the URL hash when selectedProject or currentPage changes
+  useEffect(() => {
+    if (selectedProject) {
+      const desired = `#project/${selectedProject}`;
+      if (window.location.hash !== desired) {
+        window.history.pushState(null, '', desired);
+      }
+    } else if (currentPage === 'about') {
+      if (window.location.hash !== '#about') window.history.pushState(null, '', '#about');
+    } else {
+      if (window.location.hash && window.location.hash !== '#') window.history.pushState(null, '', window.location.pathname + window.location.search + '#');
+    }
+  }, [selectedProject, currentPage]);
+
   useEffect(() => {
     if (!selectedProject) {
       document.title = currentPage === 'about' ? 'About - SONGHEE PORTFOLIO' : 'SONGHEE PORTFOLIO';
@@ -1508,9 +1556,10 @@ function HomePage({ onNavigateToAbout, onNavigateToProject }: { onNavigateToAbou
                 variants={scaleIn}
                 custom={idx}
               >
-                <div
-                  onClick={() => onNavigateToProject(project.projectId)}
-                  style={{ cursor: 'pointer' }}
+                <a
+                  href={`#project/${project.projectId}`}
+                  onClick={(e) => { e.preventDefault(); onNavigateToProject(project.projectId); }}
+                  style={{ cursor: 'pointer', display: 'block', textDecoration: 'none' }}
                 >
                 <TiltCard
                   maxTilt={3}
@@ -1625,7 +1674,7 @@ function HomePage({ onNavigateToAbout, onNavigateToProject }: { onNavigateToAbou
                     </div>
                   )}
                 </TiltCard>
-                </div>
+                </a>
                 <div style={{
                   display: 'flex',
                   justifyContent: 'space-between',
