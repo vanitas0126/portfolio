@@ -638,14 +638,15 @@ export default function About({ onNavigateHome, onNavigateToWork, onNavigateToPr
               left: '50%',
               transform: 'translate(-50%, -50%)',
               zIndex: 3,
-              textAlign: 'right',
               maxWidth: '1180px',
               width: '100%',
-              padding: `0 ${isMobile ? 'clamp(20px, 5vw, 40px)' : (windowWidth < 1400 ? 'clamp(20px, 4vw, 50px)' : 'clamp(40px, 8vw, 120px)')}`,
+              padding: `0 ${isMobile ? '20px' : (windowWidth < 1400 ? '50px' : '60px')}`,
               boxSizing: 'border-box',
               display: 'flex',
-              justifyContent: 'flex-end',
-              alignItems: 'center'
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignItems: isMobile ? 'flex-start' : 'flex-end',
+              gap: '38px'
             }}
             initial={false}
             animate={{ opacity: 1 }}
@@ -657,7 +658,8 @@ export default function About({ onNavigateHome, onNavigateToWork, onNavigateToPr
                 fontSize: '64px',
                 fontWeight: 600,
                 lineHeight: 1,
-                marginBottom: '38px'
+                marginBottom: 0,
+                textAlign: isMobile ? 'left' : 'right'
               }}
               initial={{
                 textShadow: '0 0 0px rgba(255, 217, 0, 0)'
@@ -683,78 +685,52 @@ export default function About({ onNavigateHome, onNavigateToWork, onNavigateToPr
               meaningful.
             </motion.h2>
             
-            <div
+            <a
+              href="mailto:allisvanitas@gmail.com"
               style={{
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: isMobile ? 'flex-start' : 'flex-end',
-                gap: '10px'
+                textDecoration: 'none',
+                display: 'inline-flex',
+                alignItems: 'center',
+                justifyContent: 'center'
               }}
             >
-              <a
-                href="mailto:allisvanitas@gmail.com"
+              <motion.button
+                className="cta-button"
                 style={{
-                  textDecoration: 'none',
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  justifyContent: 'center'
+                  padding: '10px 28px',
+                  fontSize: '20px',
+                  fontWeight: 600,
+                  color: '#fff',
+                  background: 'transparent',
+                  border: '2.5px solid rgba(255, 255, 255, 0.8)',
+                  borderRadius: '9999px',
+                  cursor: 'pointer',
+                  fontFamily: '"Darker Grotesque", -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif'
+                }}
+                whileHover={{
+                  y: -6,
+                  scale: 1.03,
+                  background: 'rgba(255, 255, 255, 1)',
+                  color: '#000',
+                  borderColor: 'rgba(255, 255, 255, 1)',
+                  transition: {
+                    type: 'spring',
+                    stiffness: 300,
+                    damping: 15
+                  }
+                }}
+                whileTap={{
+                  scale: 0.97,
+                  transition: {
+                    type: 'spring',
+                    stiffness: 400,
+                    damping: 10
+                  }
                 }}
               >
-                <motion.button
-                  className="cta-button"
-                  style={{
-                    padding: '10px 28px',
-                    fontSize: '20px',
-                    fontWeight: 600,
-                    color: '#fff',
-                    background: 'transparent',
-                    border: '2.5px solid rgba(255, 255, 255, 0.8)',
-                    borderRadius: '9999px',
-                    cursor: 'pointer',
-                    fontFamily: '"Darker Grotesque", -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif'
-                  }}
-                  whileHover={{
-                    y: -6,
-                    scale: 1.03,
-                    background: 'rgba(255, 255, 255, 1)',
-                    color: '#000',
-                    borderColor: 'rgba(255, 255, 255, 1)',
-                    transition: {
-                      type: 'spring',
-                      stiffness: 300,
-                      damping: 15
-                    }
-                  }}
-                  whileTap={{
-                    scale: 0.97,
-                    transition: {
-                      type: 'spring',
-                      stiffness: 400,
-                      damping: 10
-                    }
-                  }}
-                >
-                  Get in touch →
-                </motion.button>
-              </a>
-              <a
-                href="mailto:allisvanitas@gmail.com"
-                style={{
-                  fontSize: isMobile ? '16px' : '18px',
-                  fontWeight: 500,
-                  color: 'rgba(255, 255, 255, 0.8)',
-                  textDecoration: 'none'
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.color = '#fff';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.color = 'rgba(255, 255, 255, 0.8)';
-                }}
-              >
-                allisvanitas@gmail.com
-              </a>
-            </div>
+                Get in touch →
+              </motion.button>
+            </a>
           </motion.div>
 
           {/* Footer Content */}
@@ -773,7 +749,7 @@ export default function About({ onNavigateHome, onNavigateToWork, onNavigateToPr
             <div className="footer-bottom-content" style={{
             maxWidth: '1180px',
               width: '100%',
-              padding: `0 ${isMobile ? 'clamp(20px, 5vw, 40px)' : (windowWidth < 1400 ? 'clamp(20px, 4vw, 50px)' : 'clamp(40px, 8vw, 120px)')}`,
+              padding: `0 ${isMobile ? '20px' : (windowWidth < 1400 ? '50px' : '60px')}`,
               display: 'flex',
               flexDirection: 'column',
               gap: isMobile ? '6px' : '9px'

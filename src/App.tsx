@@ -1076,14 +1076,16 @@ function HomePage({ onNavigateToAbout, onNavigateToProject, withBase }: { onNavi
           
           /* 푸터 CTA 컨텐츠 우측 정렬 */
           .footer-cta-content {
-            right: 6vw !important;
+            right: 20px !important;
             left: auto !important;
             text-align: right !important;
+            flex-direction: column !important;
+            align-items: flex-end !important;
           }
           
           /* 푸터 하단 컨텐츠 좌측 정렬 */
           .footer-bottom-content {
-            left: 6vw !important;
+            left: 20px !important;
             right: auto !important;
             flex-direction: column !important;
             gap: 2vw !important;
@@ -1114,14 +1116,16 @@ function HomePage({ onNavigateToAbout, onNavigateToProject, withBase }: { onNavi
           
           /* 푸터 CTA 컨텐츠 우측 정렬 */
           .footer-cta-content {
-            right: clamp(20px, 4vw, 50px) !important;
+            right: 50px !important;
             left: auto !important;
             text-align: right !important;
+            flex-direction: column !important;
+            align-items: flex-end !important;
           }
           
           /* 푸터 하단 컨텐츠 좌측 정렬 */
           .footer-bottom-content {
-            left: clamp(20px, 4vw, 50px) !important;
+            left: 50px !important;
             right: auto !important;
           }
         }
@@ -1931,14 +1935,15 @@ function HomePage({ onNavigateToAbout, onNavigateToProject, withBase }: { onNavi
               left: '50%',
               transform: 'translate(-50%, -50%)',
               zIndex: 3,
-              textAlign: 'right',
               maxWidth: '1180px',
               width: '100%',
-              padding: `0 ${windowWidth < 1400 ? 'clamp(20px, 4vw, 50px)' : 'clamp(40px, 8vw, 120px)'}`,
+              padding: `0 ${windowWidth < 1400 ? '50px' : '60px'}`,
               boxSizing: 'border-box',
               display: 'flex',
-              justifyContent: 'flex-end',
-              alignItems: 'center'
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignItems: windowWidth < 768 ? 'flex-start' : 'flex-end',
+              gap: '38px'
             }}
             initial={{ opacity: 0.5 }}
             whileInView={{ 
@@ -1964,7 +1969,8 @@ function HomePage({ onNavigateToAbout, onNavigateToProject, withBase }: { onNavi
                 fontSize: '64px',
                 fontWeight: 600,
                 lineHeight: 1,
-                marginBottom: '38px'
+                marginBottom: 0,
+                textAlign: windowWidth < 768 ? 'left' : 'right'
               }}
               initial={{ 
                 textShadow: '0 0 0px rgba(255, 217, 0, 0)'
@@ -1990,68 +1996,44 @@ function HomePage({ onNavigateToAbout, onNavigateToProject, withBase }: { onNavi
               meaningful.
             </motion.h2>
             
-            <div style={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: windowWidth < 768 ? 'flex-start' : 'flex-end',
-              gap: '10px'
-            }}>
-              <a href="mailto:allisvanitas@gmail.com" style={{ textDecoration: 'none', display: 'inline-block' }}>
-                <motion.button 
-                  className="cta-button" 
-                  style={{
-                    padding: '10px 28px',
-                    fontSize: '20px',
-                    fontWeight: 600,
-                    color: '#fff',
-                    background: 'transparent',
-                    border: '2.5px solid rgba(255, 255, 255, 0.8)',
-                    borderRadius: '9999px',
-                    cursor: 'pointer',
-                    fontFamily: '"Darker Grotesque", -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif'
-                  }}
-                  whileHover={{ 
-                    y: -6,
-                    scale: 1.03,
-                    background: 'rgba(255, 255, 255, 1)',
-                    color: '#000',
-                    borderColor: 'rgba(255, 255, 255, 1)',
-                    transition: {
-                      type: "spring",
-                      stiffness: 300,
-                      damping: 15
-                    }
-                  }}
-                  whileTap={{ 
-                    scale: 0.97,
-                    transition: {
-                      type: "spring",
-                      stiffness: 400,
-                      damping: 10
-                    }
-                  }}
-                >
-                  Get in touch →
-                </motion.button>
-              </a>
-              <a
-                href="mailto:allisvanitas@gmail.com"
+            <a href="mailto:allisvanitas@gmail.com" style={{ textDecoration: 'none', display: 'inline-block' }}>
+              <motion.button 
+                className="cta-button" 
                 style={{
-                  fontSize: '18px',
-                  fontWeight: 500,
-                  color: 'rgba(255, 255, 255, 0.8)',
-                  textDecoration: 'none'
+                  padding: '10px 28px',
+                  fontSize: '20px',
+                  fontWeight: 600,
+                  color: '#fff',
+                  background: 'transparent',
+                  border: '2.5px solid rgba(255, 255, 255, 0.8)',
+                  borderRadius: '9999px',
+                  cursor: 'pointer',
+                  fontFamily: '"Darker Grotesque", -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif'
                 }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.color = '#fff';
+                whileHover={{ 
+                  y: -6,
+                  scale: 1.03,
+                  background: 'rgba(255, 255, 255, 1)',
+                  color: '#000',
+                  borderColor: 'rgba(255, 255, 255, 1)',
+                  transition: {
+                    type: "spring",
+                    stiffness: 300,
+                    damping: 15
+                  }
                 }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.color = 'rgba(255, 255, 255, 0.8)';
+                whileTap={{ 
+                  scale: 0.97,
+                  transition: {
+                    type: "spring",
+                    stiffness: 400,
+                    damping: 10
+                  }
                 }}
               >
-                allisvanitas@gmail.com
-              </a>
-            </div>
+                Get in touch →
+              </motion.button>
+            </a>
           </motion.div>
 
           {/* Footer Content */}
@@ -2070,7 +2052,7 @@ function HomePage({ onNavigateToAbout, onNavigateToProject, withBase }: { onNavi
             <div className="footer-bottom-content" style={{
             maxWidth: '1180px',
               width: '100%',
-              padding: `0 ${windowWidth < 1400 ? 'clamp(20px, 4vw, 50px)' : 'clamp(40px, 8vw, 120px)'}`,
+              padding: `0 ${windowWidth < 1400 ? '50px' : '60px'}`,
               display: 'flex',
               flexDirection: 'column',
               gap: windowWidth < 768 ? '6px' : '9px'
