@@ -25,8 +25,9 @@ export default function App() {
   const basePath = (import.meta.env.BASE_URL || '/').replace(/\/+$/, '');
   const withBase = useCallback((path: string) => `${basePath}${path === '/' ? '' : path}`, [basePath]);
   const stripBase = useCallback((pathname: string) => {
-    if (basePath && pathname.startsWith(basePath)) {
-      return pathname.slice(basePath.length) || '/';
+    if (basePath && basePath !== '/' && pathname.startsWith(basePath)) {
+      const stripped = pathname.slice(basePath.length);
+      return stripped || '/';
     }
     return pathname || '/';
   }, [basePath]);
@@ -35,10 +36,12 @@ export default function App() {
   useEffect(() => {
     const parsePath = (rawPath: string) => {
       const pathname = stripBase(rawPath);
+      console.log('parsePath - rawPath:', rawPath, 'basePath:', basePath, 'stripped:', pathname);
       if (!pathname) return null;
       // Support: /project/hourtaste  and /about
       if (pathname.startsWith('/project/')) {
         const id = pathname.replace('/project/', '').replace(/\/+$/, '').toLowerCase();
+        console.log('parsePath - extracted project id:', id);
         return id || null;
       }
       if (pathname === '/about' || pathname === '/about/') return 'about';
@@ -47,7 +50,7 @@ export default function App() {
 
     const applyPath = () => {
       const p = parsePath(window.location.pathname || '/');
-      console.log('applyPath - parsed:', p, 'from pathname:', window.location.pathname);
+      console.log('applyPath - parsed:', p, 'from pathname:', window.location.pathname, 'basePath:', basePath);
       if (p === 'about') {
         setSelectedProject(null);
         setCurrentPage('about');
@@ -57,6 +60,7 @@ export default function App() {
         setCurrentPage('home');
       } else {
         // default
+        console.log('No project found, going to home');
         setSelectedProject(null);
         setCurrentPage('home');
       }
