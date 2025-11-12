@@ -1074,18 +1074,27 @@ function HomePage({ onNavigateToAbout, onNavigateToProject, withBase }: { onNavi
             padding: 8vw 6vw 6vw !important;
           }
           
-          .footer-content {
+          /* 푸터 CTA 컨텐츠 우측 정렬 */
+          .footer-cta-content {
+            right: 6vw !important;
+            left: auto !important;
+            text-align: right !important;
+          }
+          
+          /* 푸터 하단 컨텐츠 좌측 정렬 */
+          .footer-bottom-content {
+            left: 6vw !important;
+            right: auto !important;
             flex-direction: column !important;
-            gap: 4vw !important;
-            align-items: flex-start !important;
+            gap: 2vw !important;
           }
           
           .footer-logo {
-            font-size: 5vw !important;
+            font-size: 3.5vw !important;
           }
           
           .footer-email {
-            font-size: 3.5vw !important;
+            font-size: 3vw !important;
           }
         }
         
@@ -1103,16 +1112,17 @@ function HomePage({ onNavigateToAbout, onNavigateToProject, withBase }: { onNavi
             padding-right: clamp(20px, 4vw, 50px) !important;
           }
           
-          /* 푸터 CTA 컨텐츠 중앙 정렬 */
+          /* 푸터 CTA 컨텐츠 우측 정렬 */
           .footer-cta-content {
-            padding-left: clamp(20px, 4vw, 50px) !important;
-            padding-right: clamp(20px, 4vw, 50px) !important;
+            right: clamp(20px, 4vw, 50px) !important;
+            left: auto !important;
+            text-align: right !important;
           }
           
-          /* 푸터 하단 컨텐츠 중앙 정렬 */
+          /* 푸터 하단 컨텐츠 좌측 정렬 */
           .footer-bottom-content {
-            padding-left: clamp(20px, 4vw, 50px) !important;
-            padding-right: clamp(20px, 4vw, 50px) !important;
+            left: clamp(20px, 4vw, 50px) !important;
+            right: auto !important;
           }
         }
         
@@ -1906,13 +1916,14 @@ function HomePage({ onNavigateToAbout, onNavigateToProject, withBase }: { onNavi
           <motion.div 
             className="footer-cta-content"
             style={{
-              position: 'relative',
+              position: 'absolute',
+              top: '50%',
+              right: windowWidth < 1400 ? 'clamp(20px, 4vw, 50px)' : 'clamp(40px, 8vw, 120px)',
+              transform: 'translateY(-50%)',
               zIndex: 3,
               textAlign: 'right',
-              padding: `0 ${windowWidth < 1400 ? 'clamp(20px, 4vw, 50px)' : '60px'} 0`,
               maxWidth: '1180px',
-              margin: '0 auto',
-              width: '100%'
+              width: 'auto'
             }}
             initial={{ opacity: 0.5 }}
             whileInView={{ 
@@ -1959,9 +1970,9 @@ function HomePage({ onNavigateToAbout, onNavigateToProject, withBase }: { onNavi
                 ease: "easeOut"
               }}
             >
-              Light up<br />
+              Let's create<br />
               something<br />
-              together.
+              meaningful.
             </motion.h2>
             
             <a href="mailto:allisvanitas@gmail.com" style={{ textDecoration: 'none', display: 'inline-block' }}>
@@ -2018,24 +2029,17 @@ function HomePage({ onNavigateToAbout, onNavigateToProject, withBase }: { onNavi
             pointerEvents: 'none'
           }}>
             <div className="footer-bottom-content" style={{
-            maxWidth: '1180px',
-              width: '100%',
-              padding: `0 ${windowWidth < 1400 ? 'clamp(20px, 4vw, 50px)' : 'clamp(40px, 8vw, 120px)'}`,
+              position: 'absolute',
+              bottom: 'clamp(40px, 8vh, 80px)',
+              left: windowWidth < 1400 ? 'clamp(20px, 4vw, 50px)' : 'clamp(40px, 8vw, 120px)',
+              zIndex: 3,
               display: 'flex',
               flexDirection: 'column',
-              gap: '9px'
+              gap: '4px',
+              pointerEvents: 'auto'
           }}>
-            <div className="footer-content" style={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-                width: '100%',
-              paddingBottom: '0',
-                borderBottom: 'none',
-                pointerEvents: 'auto'
-            }}>
               <p className="footer-logo" style={{
-                fontSize: '14px',
+                fontSize: '12px',
                 fontWeight: 600,
                 lineHeight: 'normal',
                 margin: 0,
@@ -2045,7 +2049,7 @@ function HomePage({ onNavigateToAbout, onNavigateToProject, withBase }: { onNavi
                 SONGHEE ⓒ
               </p>
               <a href="mailto:allisvanitas@gmail.com" className="footer-email" style={{
-                fontSize: '14px',
+                fontSize: '12px',
                 fontWeight: 500,
                 lineHeight: 'normal',
                 margin: 0,
@@ -2063,7 +2067,6 @@ function HomePage({ onNavigateToAbout, onNavigateToProject, withBase }: { onNavi
               >
                 allisvanitas@gmail.com
               </a>
-            </div>
             </div>
           </div>
         </section>

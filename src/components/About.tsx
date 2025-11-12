@@ -630,21 +630,23 @@ export default function About({ onNavigateHome, onNavigateToWork, onNavigateToPr
           </motion.div>
 
           {/* CTA Content */}
-          <motion.div 
+          <motion.div
+            className="footer-cta-content"
             style={{
-              position: 'relative',
+              position: 'absolute',
+              top: '50%',
+              right: windowWidth < 1400 ? 'clamp(20px, 4vw, 50px)' : 'clamp(40px, 8vw, 120px)',
+              transform: 'translateY(-50%)',
               zIndex: 3,
-              textAlign: isMobile ? 'left' : 'right',
-              padding: isMobile ? '0 24px' : '0 60px 0',
-              maxWidth: '1180px',
-              margin: '0 auto',
-              width: '100%'
+              textAlign: 'right',
+              width: 'auto'
             }}
             initial={false}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.6 }}
           >
-            <h2 
+            <h2
+              className="cta-title"
               style={{
                 fontSize: isMobile ? '42px' : '64px',
                 fontWeight: 600,
@@ -667,7 +669,7 @@ export default function About({ onNavigateHome, onNavigateToWork, onNavigateToPr
               }}
             >
               <motion.button
-                className="get-in-touch-btn"
+                className="cta-button"
                 style={{
                   padding: isMobile ? '10px 22px' : '10px 28px',
                   fontSize: isMobile ? '18px' : '20px',
@@ -718,22 +720,21 @@ export default function About({ onNavigateHome, onNavigateToWork, onNavigateToPr
             justifyContent: 'center',
             pointerEvents: 'none'
           }}>
-            <div className="footer-bottom-content" style={{
-            maxWidth: '1180px',
-              width: '100%',
-              padding: `0 ${windowWidth < 1400 ? 'clamp(20px, 4vw, 50px)' : 'clamp(40px, 8vw, 120px)'}`,
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '9px'
-          }}>
-            <div className="footer-content" style={{
-                width: '100%',
-              paddingBottom: '0',
-                borderBottom: 'none',
+            <div
+              className="footer-bottom-content"
+              style={{
+                position: 'absolute',
+                bottom: 'clamp(40px, 8vh, 80px)',
+                left: windowWidth < 1400 ? 'clamp(20px, 4vw, 50px)' : 'clamp(40px, 8vw, 120px)',
+                zIndex: 3,
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '4px',
                 pointerEvents: 'auto'
-            }}>
+              }}
+            >
               <p className="footer-logo" style={{
-                fontSize: '14px',
+                fontSize: '12px',
                 fontWeight: 600,
                 lineHeight: 'normal',
                 margin: 0,
@@ -743,7 +744,7 @@ export default function About({ onNavigateHome, onNavigateToWork, onNavigateToPr
                 SONGHEE ⓒ
               </p>
               <a href="mailto:allisvanitas@gmail.com" className="footer-email" style={{
-                fontSize: '14px',
+                fontSize: '12px',
                 fontWeight: 500,
                 lineHeight: 'normal',
                 margin: 0,
@@ -761,7 +762,6 @@ export default function About({ onNavigateHome, onNavigateToWork, onNavigateToPr
               >
                 allisvanitas@gmail.com
               </a>
-            </div>
             </div>
           </div>
         </section>
