@@ -21,6 +21,7 @@ declare global {
 export default function App() {
   const [currentPage, setCurrentPage] = useState<'home' | 'about'>('home');
   const [selectedProject, setSelectedProject] = useState<string | null>(null);
+  const [isInitialized, setIsInitialized] = useState(false);
   const pathnameRef = useRef<string | null>(null);
   const basePath = (import.meta.env.BASE_URL || '/').replace(/\/+$/, '');
   const withBase = useCallback((path: string) => `${basePath}${path === '/' ? '' : path}`, [basePath]);
@@ -70,6 +71,7 @@ export default function App() {
 
     // On mount, apply current path immediately
     applyPath();
+    setIsInitialized(true);
 
     // Keep in sync when user navigates back/forward
     const onPopState = () => {
@@ -118,7 +120,25 @@ export default function App() {
     }
   }, [currentPage, selectedProject]);
 
+  // Show loading state during initialization
+  if (!isInitialized) {
+    return (
+      <div style={{ 
+        minHeight: '100vh', 
+        background: '#000', 
+        display: 'flex', 
+        alignItems: 'center', 
+        justifyContent: 'center' 
+      }}>
+        <div style={{ color: '#fff', fontFamily: '"Darker Grotesque", sans-serif' }}>Loading...</div>
+      </div>
+    );
+  }
+
+  console.log('App render - isInitialized:', isInitialized, 'selectedProject:', selectedProject, 'currentPage:', currentPage);
+
   if (selectedProject) {
+    console.log('Rendering ProjectDetail for project:', selectedProject);
     return (
       <ProjectDetail
         projectId={selectedProject}
@@ -180,7 +200,9 @@ export default function App() {
         window.scrollTo({ top: 0, left: 0 });
       }}
       onNavigateToProject={(projectId: string) => {
+        console.log('HomePage onNavigateToProject called with:', projectId);
         setSelectedProject(projectId);
+        setCurrentPage('home');
         window.scrollTo(0, 0);
       }}
       withBase={withBase}
@@ -1651,6 +1673,7 @@ function HomePage({ onNavigateToAbout, onNavigateToProject, withBase }: { onNavi
                       return; // let the browser handle it
                     }
                     e.preventDefault();
+                    console.log('Project card clicked:', project.projectId);
                     onNavigateToProject(project.projectId);
                   }}
                   style={{ cursor: 'pointer', display: 'block', textDecoration: 'none' }}
