@@ -727,9 +727,6 @@ export default function About({ onNavigateHome, onNavigateToWork, onNavigateToPr
               gap: '9px'
           }}>
             <div className="footer-content" style={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center',
                 width: '100%',
               paddingBottom: '0',
                 borderBottom: 'none',
