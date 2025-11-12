@@ -208,8 +208,40 @@ export default function About({ onNavigateHome, onNavigateToWork, onNavigateToPr
           -webkit-font-smoothing: antialiased;
           -moz-osx-font-smoothing: grayscale;
         }
+        /* Get in touch button responsive styles */
+        .get-in-touch-btn {
+          display: inline-flex;
+          align-items: flex-start;
+          padding: 10px 32px 20px 32px;
+          min-height: 48px;
+          font-size: 20px;
+          font-weight: 600;
+          color: #fff;
+          background: transparent;
+          border: 2.5px solid rgba(255, 255, 255, 0.8);
+          border-radius: 9999px;
+          cursor: pointer;
+          box-sizing: border-box;
+          line-height: 1;
+        }
+        .get-in-touch-label {
+          display: inline-block;
+          transform: translateY(-6px);
+          transition: transform 120ms ease;
+        }
+
+        /* Medium / tablet */
+        @media (max-width: 768px) {
+          .get-in-touch-btn { padding-top: 9px; padding-bottom: 16px; }
+          .get-in-touch-label { transform: translateY(-4px); }
+        }
+
+        /* Mobile */
+        @media (max-width: 420px) {
+          .get-in-touch-btn { padding-top: 8px; padding-bottom: 14px; font-size: 18px; }
+          .get-in-touch-label { transform: translateY(-2px); }
+        }
       `}</style>
-      
       {/* Scroll Progress */}
       <motion.div
         style={{
@@ -575,22 +607,8 @@ export default function About({ onNavigateHome, onNavigateToWork, onNavigateToPr
                 justifyContent: 'center'
               }}
             >
-              <button
-                style={{
-                  padding: '12px 32px',
-                  minHeight: '48px',
-                  fontSize: '20px',
-                  fontWeight: 600,
-                  color: '#fff',
-                  background: 'transparent',
-                  border: '2.5px solid rgba(255, 255, 255, 0.8)',
-                  borderRadius: '9999px',
-                  cursor: 'pointer',
-                  boxSizing: 'border-box',
-                  lineHeight: 1
-                }}
-              >
-                <span style={{ display: 'inline-block', transform: 'translateY(-8px)', transition: 'transform 120ms ease' }}>Get in touch →</span>
+              <button className="get-in-touch-btn">
+                <span className="get-in-touch-label">Get in touch →</span>
               </button>
             </a>
           </motion.div>
