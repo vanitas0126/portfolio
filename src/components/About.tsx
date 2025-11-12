@@ -639,25 +639,44 @@ export default function About({ onNavigateHome, onNavigateToWork, onNavigateToPr
               transform: 'translateY(-50%)',
               zIndex: 3,
               textAlign: 'right',
+              maxWidth: '1180px',
               width: 'auto'
             }}
             initial={false}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.6 }}
           >
-            <h2
+            <motion.h2
               className="cta-title"
               style={{
-                fontSize: isMobile ? '42px' : '64px',
+                fontSize: '64px',
                 fontWeight: 600,
                 lineHeight: 1,
-                marginBottom: isMobile ? '28px' : '38px'
+                marginBottom: '38px'
+              }}
+              initial={{
+                textShadow: '0 0 0px rgba(255, 217, 0, 0)'
+              }}
+              whileInView={{
+                textShadow: [
+                  '0 0 0px rgba(255, 217, 0, 0)',
+                  '0 0 8px rgba(255, 217, 0, 0.15)',
+                  '0 0 5px rgba(255, 217, 0, 0.1)',
+                  '0 0 12px rgba(255, 217, 0, 0.2), 0 0 25px rgba(255, 217, 0, 0.1)',
+                  '0 0 15px rgba(255, 217, 0, 0.25), 0 0 30px rgba(255, 217, 0, 0.15)'
+                ]
+              }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{
+                duration: 1.2,
+                times: [0, 0.25, 0.4, 0.7, 1],
+                ease: 'easeOut'
               }}
             >
               Let's create<br />
               something<br />
               meaningful.
-            </h2>
+            </motion.h2>
             
             <a
               href="mailto:allisvanitas@gmail.com"
@@ -671,8 +690,8 @@ export default function About({ onNavigateHome, onNavigateToWork, onNavigateToPr
               <motion.button
                 className="cta-button"
                 style={{
-                  padding: isMobile ? '10px 22px' : '10px 28px',
-                  fontSize: isMobile ? '18px' : '20px',
+                  padding: '10px 28px',
+                  fontSize: '20px',
                   fontWeight: 600,
                   color: '#fff',
                   background: 'transparent',
