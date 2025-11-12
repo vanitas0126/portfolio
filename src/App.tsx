@@ -35,8 +35,11 @@ export default function App() {
       const pathname = stripBase(rawPath);
       if (!pathname) return null;
       // Support: /project/hourtaste  and /about
-      if (pathname.startsWith('/project/')) return pathname.replace('/project/', '').toLowerCase();
-      if (pathname === '/about') return 'about';
+      if (pathname.startsWith('/project/')) {
+        const id = pathname.replace('/project/', '').replace(/\/+$/, '').toLowerCase();
+        return id || null;
+      }
+      if (pathname === '/about' || pathname === '/about/') return 'about';
       return null;
     };
 
@@ -160,6 +163,7 @@ export default function App() {
         setSelectedProject(projectId);
         window.scrollTo(0, 0);
       }}
+      withBase={withBase}
     />
   );
 }
@@ -649,7 +653,7 @@ function ExpertiseItem({ skill, videoNumber, variants }: { skill: string; videoN
   );
 }
 
-function HomePage({ onNavigateToAbout, onNavigateToProject }: { onNavigateToAbout: () => void; onNavigateToProject: (projectId: string) => void }) {
+function HomePage({ onNavigateToAbout, onNavigateToProject, withBase }: { onNavigateToAbout: () => void; onNavigateToProject: (projectId: string) => void; withBase: (path: string) => string }) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isCompact, setIsCompact] = useState(false);
   const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 1920);
@@ -1596,7 +1600,7 @@ function HomePage({ onNavigateToAbout, onNavigateToProject }: { onNavigateToAbou
                 custom={idx}
               >
                 <a
-                  href={`/project/${project.projectId}`}
+                  href={withBase(`/project/${project.projectId}`)}
                   onClick={(e) => {
                     // Allow open-in-new-tab (meta/ctrl/middle click).
                     const mouseEvent = e as React.MouseEvent<HTMLAnchorElement>;
@@ -1605,7 +1609,7 @@ function HomePage({ onNavigateToAbout, onNavigateToProject }: { onNavigateToAbou
                     }
                     // Force a full navigation so the project detail loads reliably (auto-refresh behavior)
                     e.preventDefault();
-                    window.location.assign(`/project/${project.projectId}`);
+                    window.location.assign(withBase(`/project/${project.projectId}`));
                   }}
                   style={{ cursor: 'pointer', display: 'block', textDecoration: 'none' }}
                 >
