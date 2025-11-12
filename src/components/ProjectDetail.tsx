@@ -2796,10 +2796,11 @@ export function ProjectDetail({ projectId, onBack, onNavigateToProject, onNaviga
               whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.6, delay: 0.3 }}
-              style={{
+                    style={{
                       display: 'grid',
-                      gridTemplateColumns: 'repeat(4, 1fr)',
-                      gap: '20px'
+                      gridTemplateColumns: windowWidth < 768 ? 'repeat(2, 1fr)' : 'repeat(4, 1fr)',
+                      gap: windowWidth < 768 ? '16px' : '20px',
+                      rowGap: windowWidth < 768 ? '20px' : '20px'
                     }}
                   >
                     {[
@@ -2910,7 +2911,7 @@ export function ProjectDetail({ projectId, onBack, onNavigateToProject, onNaviga
                   }}>
                     홈은 "기업 정체성 명확화 + 정보 우선순위 재배치" 중심으로 단순화하고, 승객 실행 기능(예매/노선/요금)은 별도 승객 포털로 분리했습니다.
                   </p>
-                  <div style={{ display: 'grid', gridTemplateColumns: '40% 60%', gap: '20px', marginBottom: '80px' }}>
+                  <div style={{ display: 'grid', gridTemplateColumns: windowWidth < 768 ? '1fr 1fr' : '40% 60%', gap: windowWidth < 768 ? '12px' : '20px', marginBottom: windowWidth < 768 ? '50px' : '80px' }}>
                     <div style={{ position: 'relative' }}>
                       <span style={{
                         position: 'absolute',
@@ -2920,7 +2921,7 @@ export function ProjectDetail({ projectId, onBack, onNavigateToProject, onNaviga
                         borderRadius: '999px',
                         background: 'rgba(0,0,0,0.65)',
                 color: '#fff',
-                        fontSize: '12px',
+                        fontSize: windowWidth < 768 ? '11px' : '12px',
                         fontWeight: 600,
                         letterSpacing: '0.02em',
                         zIndex: 1,
@@ -2948,7 +2949,7 @@ export function ProjectDetail({ projectId, onBack, onNavigateToProject, onNaviga
                         borderRadius: '999px',
                         background: 'rgba(255, 217, 0, 0.16)',
                         color: '#fff',
-                        fontSize: '12px',
+                        fontSize: windowWidth < 768 ? '11px' : '12px',
                         fontWeight: 700,
                         letterSpacing: '0.02em',
                         zIndex: 1,
@@ -2980,7 +2981,7 @@ export function ProjectDetail({ projectId, onBack, onNavigateToProject, onNaviga
                   }}>
                     OUR HISTORY는 "연대기+인프라 발전"을 역순으로 정리해 현재까지의 변화 흐름을 보여주고, 인디케이터로 현재 위치를 확인할 수 있도록 하여 기업의 신뢰성을 강화했습니다
                   </p>
-                  <div style={{ display: 'grid', gridTemplateColumns: '40% 60%', gap: '20px', marginBottom: '80px' }}>
+                  <div style={{ display: 'grid', gridTemplateColumns: windowWidth < 768 ? '1fr 1fr' : '40% 60%', gap: windowWidth < 768 ? '12px' : '20px', marginBottom: windowWidth < 768 ? '50px' : '80px' }}>
                     <div style={{ position: 'relative' }}>
                       <span style={{
                         position: 'absolute',
@@ -2990,7 +2991,7 @@ export function ProjectDetail({ projectId, onBack, onNavigateToProject, onNaviga
                         borderRadius: '999px',
                         background: 'rgba(0,0,0,0.65)',
                         color: '#fff',
-                        fontSize: '12px',
+                        fontSize: windowWidth < 768 ? '11px' : '12px',
                         fontWeight: 600,
                         letterSpacing: '0.02em',
                         zIndex: 1,
@@ -3018,7 +3019,7 @@ export function ProjectDetail({ projectId, onBack, onNavigateToProject, onNaviga
                         borderRadius: '999px',
                         background: 'rgba(255, 217, 0, 0.16)',
                         color: '#fff',
-                        fontSize: '12px',
+                        fontSize: windowWidth < 768 ? '11px' : '12px',
                         fontWeight: 700,
                         letterSpacing: '0.02em',
                         zIndex: 1,
@@ -3051,8 +3052,8 @@ export function ProjectDetail({ projectId, onBack, onNavigateToProject, onNaviga
                     기존에 없던 '프로젝트/노선' UI를 추가하고 시각화를 적용해 각 프로젝트의 목적·상태를 직관적으로 제시했습니다.
 최근 나이지리아 철도 인프라 개발 사업이 활발하게 진행되고 있기 때문에, 철도 인프라 투자 확대 상황을 공공적으로 투명하게 전달하기 위한 방향입니다.
                   </p>
-                  <div style={{ display: 'grid', gridTemplateColumns: '40% 60%', gap: '20px' }}>
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+                  <div style={{ display: 'grid', gridTemplateColumns: windowWidth < 768 ? '1fr 1fr' : '40% 60%', gap: windowWidth < 768 ? '12px' : '20px' }}>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: windowWidth < 768 ? '12px' : '20px' }}>
                       <div style={{ position: 'relative' }}>
                         <img 
                           src={`${import.meta.env.BASE_URL}project3/프로젝트웹.png`}
@@ -3065,7 +3066,7 @@ export function ProjectDetail({ projectId, onBack, onNavigateToProject, onNaviga
                       <div style={{ position: 'relative' }}>
                         <span style={{
                           position: 'absolute', top: '10px', left: '10px', padding: '6px 10px', borderRadius: '999px',
-                          background: 'rgba(0,0,0,0.65)', color: '#fff', fontSize: '12px', fontWeight: 600, letterSpacing: '0.02em', zIndex: 1,
+                          background: 'rgba(0,0,0,0.65)', color: '#fff', fontSize: windowWidth < 768 ? '11px' : '12px', fontWeight: 600, letterSpacing: '0.02em', zIndex: 1,
                           border: '1px solid rgba(255,255,255,0.18)'
                         }}>Before</span>
                         <img 
@@ -3081,7 +3082,7 @@ export function ProjectDetail({ projectId, onBack, onNavigateToProject, onNaviga
                     <div style={{ position: 'relative' }}>
                       <span style={{
                         position: 'absolute', top: '10px', left: '10px', padding: '6px 10px', borderRadius: '999px',
-                        background: 'rgba(255, 217, 0, 0.16)', color: '#fff', fontSize: '12px', fontWeight: 700, letterSpacing: '0.02em', zIndex: 1,
+                        background: 'rgba(255, 217, 0, 0.16)', color: '#fff', fontSize: windowWidth < 768 ? '11px' : '12px', fontWeight: 700, letterSpacing: '0.02em', zIndex: 1,
                         border: '1px solid rgba(255, 217, 0, 0.35)'
                       }}>After</span>
                       <img 
