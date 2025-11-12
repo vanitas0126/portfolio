@@ -680,52 +680,78 @@ export default function About({ onNavigateHome, onNavigateToWork, onNavigateToPr
               meaningful.
             </motion.h2>
             
-            <a
-              href="mailto:allisvanitas@gmail.com"
+            <div
               style={{
-                textDecoration: 'none',
-                display: 'inline-flex',
-                alignItems: 'center',
-                justifyContent: 'center'
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: isMobile ? 'flex-start' : 'flex-end',
+                gap: '10px'
               }}
             >
-              <motion.button
-                className="cta-button"
+              <a
+                href="mailto:allisvanitas@gmail.com"
                 style={{
-                  padding: '10px 28px',
-                  fontSize: '20px',
-                  fontWeight: 600,
-                  color: '#fff',
-                  background: 'transparent',
-                  border: '2.5px solid rgba(255, 255, 255, 0.8)',
-                  borderRadius: '9999px',
-                  cursor: 'pointer',
-                  fontFamily: '"Darker Grotesque", -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif'
-                }}
-                whileHover={{
-                  y: -6,
-                  scale: 1.03,
-                  background: 'rgba(255, 255, 255, 1)',
-                  color: '#000',
-                  borderColor: 'rgba(255, 255, 255, 1)',
-                  transition: {
-                    type: 'spring',
-                    stiffness: 300,
-                    damping: 15
-                  }
-                }}
-                whileTap={{
-                  scale: 0.97,
-                  transition: {
-                    type: 'spring',
-                    stiffness: 400,
-                    damping: 10
-                  }
+                  textDecoration: 'none',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  justifyContent: 'center'
                 }}
               >
-                Get in touch →
-              </motion.button>
-            </a>
+                <motion.button
+                  className="cta-button"
+                  style={{
+                    padding: '10px 28px',
+                    fontSize: '20px',
+                    fontWeight: 600,
+                    color: '#fff',
+                    background: 'transparent',
+                    border: '2.5px solid rgba(255, 255, 255, 0.8)',
+                    borderRadius: '9999px',
+                    cursor: 'pointer',
+                    fontFamily: '"Darker Grotesque", -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif'
+                  }}
+                  whileHover={{
+                    y: -6,
+                    scale: 1.03,
+                    background: 'rgba(255, 255, 255, 1)',
+                    color: '#000',
+                    borderColor: 'rgba(255, 255, 255, 1)',
+                    transition: {
+                      type: 'spring',
+                      stiffness: 300,
+                      damping: 15
+                    }
+                  }}
+                  whileTap={{
+                    scale: 0.97,
+                    transition: {
+                      type: 'spring',
+                      stiffness: 400,
+                      damping: 10
+                    }
+                  }}
+                >
+                  Get in touch →
+                </motion.button>
+              </a>
+              <a
+                href="mailto:allisvanitas@gmail.com"
+                style={{
+                  fontSize: isMobile ? '16px' : '18px',
+                  fontWeight: 500,
+                  color: 'rgba(255, 255, 255, 0.8)',
+                  textDecoration: 'none'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.color = '#fff';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.color = 'rgba(255, 255, 255, 0.8)';
+                }}
+              >
+                allisvanitas@gmail.com
+              </a>
+            </div>
           </motion.div>
 
           {/* Footer Content */}

@@ -1987,44 +1987,68 @@ function HomePage({ onNavigateToAbout, onNavigateToProject, withBase }: { onNavi
               meaningful.
             </motion.h2>
             
-            <a href="mailto:allisvanitas@gmail.com" style={{ textDecoration: 'none', display: 'inline-block' }}>
-              <motion.button 
-                className="cta-button" 
+            <div style={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: windowWidth < 768 ? 'flex-start' : 'flex-end',
+              gap: '10px'
+            }}>
+              <a href="mailto:allisvanitas@gmail.com" style={{ textDecoration: 'none', display: 'inline-block' }}>
+                <motion.button 
+                  className="cta-button" 
+                  style={{
+                    padding: '10px 28px',
+                    fontSize: '20px',
+                    fontWeight: 600,
+                    color: '#fff',
+                    background: 'transparent',
+                    border: '2.5px solid rgba(255, 255, 255, 0.8)',
+                    borderRadius: '9999px',
+                    cursor: 'pointer',
+                    fontFamily: '"Darker Grotesque", -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif'
+                  }}
+                  whileHover={{ 
+                    y: -6,
+                    scale: 1.03,
+                    background: 'rgba(255, 255, 255, 1)',
+                    color: '#000',
+                    borderColor: 'rgba(255, 255, 255, 1)',
+                    transition: {
+                      type: "spring",
+                      stiffness: 300,
+                      damping: 15
+                    }
+                  }}
+                  whileTap={{ 
+                    scale: 0.97,
+                    transition: {
+                      type: "spring",
+                      stiffness: 400,
+                      damping: 10
+                    }
+                  }}
+                >
+                  Get in touch →
+                </motion.button>
+              </a>
+              <a
+                href="mailto:allisvanitas@gmail.com"
                 style={{
-                  padding: '10px 28px',
-                  fontSize: '20px',
-                  fontWeight: 600,
-                  color: '#fff',
-                  background: 'transparent',
-                  border: '2.5px solid rgba(255, 255, 255, 0.8)',
-                  borderRadius: '9999px',
-                  cursor: 'pointer',
-                  fontFamily: '"Darker Grotesque", -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif'
+                  fontSize: '18px',
+                  fontWeight: 500,
+                  color: 'rgba(255, 255, 255, 0.8)',
+                  textDecoration: 'none'
                 }}
-                whileHover={{ 
-                  y: -6,
-                  scale: 1.03,
-                  background: 'rgba(255, 255, 255, 1)',
-                  color: '#000',
-                  borderColor: 'rgba(255, 255, 255, 1)',
-                  transition: {
-                    type: "spring",
-                    stiffness: 300,
-                    damping: 15
-                  }
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.color = '#fff';
                 }}
-                whileTap={{ 
-                  scale: 0.97,
-                  transition: {
-                    type: "spring",
-                    stiffness: 400,
-                    damping: 10
-                  }
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.color = 'rgba(255, 255, 255, 0.8)';
                 }}
               >
-                Get in touch →
-              </motion.button>
-            </a>
+                allisvanitas@gmail.com
+              </a>
+            </div>
           </motion.div>
 
           {/* Footer Content */}
