@@ -332,9 +332,24 @@ function VideoComponent({ onHeightChange }: { onHeightChange?: (height: number) 
 
   // 기존 비디오와 동일한 스타일 적용
   useEffect(() => {
-    if (onHeightChange) {
-      // restore original fixed height used previously
-      onHeightChange(737.338);
+    if (!onHeightChange) return;
+
+    const updateHeight = () => {
+      const aspectRatio = 1080 / 1818;
+      const width = containerRef.current
+        ? containerRef.current.offsetWidth
+        : typeof window !== 'undefined'
+          ? window.innerWidth
+          : 1180;
+      const clampedWidth = Math.min(width, 1180);
+      onHeightChange(clampedWidth * aspectRatio);
+    };
+
+    updateHeight();
+
+    if (typeof window !== 'undefined') {
+      window.addEventListener('resize', updateHeight);
+      return () => window.removeEventListener('resize', updateHeight);
     }
   }, [onHeightChange]);
 
@@ -356,8 +371,8 @@ function VideoComponent({ onHeightChange }: { onHeightChange?: (height: number) 
           top: '50%',
           left: '50%',
           transform: 'translate(-50%, -50%) translateZ(0)',
-          width: '1180px',
-          height: '737.338px',
+          width: '100%',
+          height: '100%',
           maxWidth: '1180px',
           maxHeight: '100%',
           pointerEvents: 'none',
@@ -947,9 +962,9 @@ function HomePage({ onNavigateToAbout, onNavigateToProject }: { onNavigateToAbou
           
           /* Selected Work 그리드 */
           .work-grid {
-            grid-template-columns: 1fr !important;
-            gap: 6vw !important;
-            row-gap: 8vw !important;
+            grid-template-columns: repeat(2, 1fr) !important;
+            gap: 5vw !important;
+            row-gap: 7vw !important;
           }
           
           .work-grid > div {
@@ -1506,9 +1521,9 @@ function HomePage({ onNavigateToAbout, onNavigateToProject }: { onNavigateToAbou
             className="work-grid" 
             style={{
               display: 'grid',
-              gridTemplateColumns: windowWidth < 768 ? '1fr' : 'repeat(2, 1fr)',
-              gap: windowWidth < 1400 ? '20px' : '30px',
-              rowGap: windowWidth < 1400 ? '40px' : '50px',
+              gridTemplateColumns: windowWidth < 768 ? 'repeat(2, minmax(0, 1fr))' : 'repeat(2, 1fr)',
+              gap: windowWidth < 768 ? '16px' : windowWidth < 1400 ? '20px' : '30px',
+              rowGap: windowWidth < 768 ? '28px' : windowWidth < 1400 ? '40px' : '50px',
               width: '100%'
             }}
           >

@@ -184,8 +184,13 @@ function AboutFooterVideoComponent({ onHeightChange }: { onHeightChange?: (heigh
 export default function About({ onNavigateHome, onNavigateToWork, onNavigateToProject }: AboutProps) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isCompact, setIsCompact] = useState(false);
+  const [windowWidth, setWindowWidth] = useState(
+    typeof window !== 'undefined' ? window.innerWidth : 1920
+  );
   const footerSectionRef = useRef<HTMLElement>(null);
   const [footerHeight, setFooterHeight] = useState<number | null>(null);
+  const isMobile = windowWidth <= 768;
+  const isTablet = windowWidth <= 1024;
 
   const { scrollYProgress } = useScroll();
   const smoothProgress = useSpring(scrollYProgress, {
@@ -197,6 +202,13 @@ export default function About({ onNavigateHome, onNavigateToWork, onNavigateToPr
   // 문서 제목 설정
   useEffect(() => {
     document.title = 'About - SONGHEE PORTFOLIO';
+  }, []);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const handleResize = () => setWindowWidth(window.innerWidth);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
   }, []);
 
   // UnicornStudio 비디오를 페이지 진입 시 바로 로드
@@ -327,7 +339,7 @@ export default function About({ onNavigateHome, onNavigateToWork, onNavigateToPr
           maxWidth: '1180px',
           margin: '0 auto',
           width: '100%',
-          padding: isCompact ? '12px 60px' : '20px 60px',
+          padding: isMobile ? '14px 20px' : isCompact ? '12px 60px' : '20px 60px',
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center'
