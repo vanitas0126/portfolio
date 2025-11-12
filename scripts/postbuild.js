@@ -8,6 +8,7 @@ const __dirname = dirname(__filename);
 const docsDir = join(__dirname, '..', 'docs');
 const indexPath = join(docsDir, 'index.html');
 const notFoundPath = join(docsDir, '404.html');
+const projectSlugs = ['hourtaste', 'nook', 'railway-redesign', 'cat-peaceful-day'];
 
 if (!existsSync(docsDir)) {
   mkdirSync(docsDir, { recursive: true });
@@ -16,7 +17,6 @@ if (!existsSync(docsDir)) {
 if (existsSync(indexPath)) {
   copyFileSync(indexPath, notFoundPath);
   console.log('Created docs/404.html for SPA routing.');
-  const projectSlugs = ['hourtaste', 'nook', 'railway-redesign', 'cat-peaceful-day'];
   projectSlugs.forEach((slug) => {
     const targetDir = join(docsDir, 'project', slug);
     const targetIndex = join(targetDir, 'index.html');
