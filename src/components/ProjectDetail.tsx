@@ -2208,6 +2208,8 @@ export function ProjectDetail({ projectId, onBack, onNavigateToProject, onNaviga
   const [isCompact, setIsCompact] = useState(false);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const windowWidth = useWindowWidth();
+  const isMobile = windowWidth <= 768;
+  const isTablet = windowWidth <= 1024;
   
   // Normalize projectId: remove trailing slashes and convert to lowercase
   const normalizedProjectId = projectId?.replace(/\/+$/, '').toLowerCase() || '';
