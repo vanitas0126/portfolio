@@ -1737,29 +1737,39 @@ function HomePage({ onNavigateToAbout, onNavigateToProject, withBase }: { onNavi
                   )}
                 </TiltCard>
                 </a>
-                <div style={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'baseline',
-                  marginTop: '20px',
-                  padding: windowWidth < 768 ? '0 8px' : windowWidth < 1400 ? '0 12px' : '0 16px'
-                }}>
-                  <p className="project-category" style={{
-                    fontSize: windowWidth < 768 ? '20px' : '24px',
-                    fontWeight: 600,
-                    lineHeight: 1.2,
-                    margin: 0,
-                    color: '#fff'
-                  }}>
+                <div
+                  style={{
+                    display: 'flex',
+                    flexDirection: windowWidth < 768 ? 'column' : 'row',
+                    justifyContent: 'space-between',
+                    alignItems: windowWidth < 768 ? 'flex-start' : 'baseline',
+                    gap: windowWidth < 768 ? '8px' : '0',
+                    marginTop: '20px',
+                    padding: windowWidth < 768 ? '0 8px' : windowWidth < 1400 ? '0 12px' : '0 16px'
+                  }}
+                >
+                  <p
+                    className="project-category"
+                    style={{
+                      fontSize: windowWidth < 768 ? '20px' : '24px',
+                      fontWeight: 600,
+                      lineHeight: 1.2,
+                      margin: 0,
+                      color: '#fff'
+                    }}
+                  >
                     {project.category}
                   </p>
-                  <p className="project-tags" style={{
-                    fontSize: windowWidth < 768 ? '13px' : '15px',
-                    fontWeight: 500,
-                    lineHeight: 'normal',
-                    margin: 0,
-                    color: 'rgba(255, 255, 255, 0.6)'
-                  }}>
+                  <p
+                    className="project-tags"
+                    style={{
+                      fontSize: windowWidth < 768 ? '13px' : '15px',
+                      fontWeight: 500,
+                      lineHeight: 'normal',
+                      margin: 0,
+                      color: 'rgba(255, 255, 255, 0.6)'
+                    }}
+                  >
                     {project.tags}
                   </p>
                 </div>
