@@ -2521,10 +2521,11 @@ export function ProjectDetail({ projectId, onBack, onNavigateToProject, onNaviga
             transition={{ duration: 0.6, delay: 0.4 }}
             style={{
               display: 'grid',
-              gridTemplateColumns: 'repeat(4, 1fr)',
-              gap: '50px',
-              marginBottom: '80px',
-              paddingBottom: '70px',
+              gridTemplateColumns: windowWidth < 768 ? 'repeat(2, minmax(0, 1fr))' : 'repeat(4, minmax(0, 1fr))',
+              gap: windowWidth < 768 ? '28px' : '50px',
+              rowGap: windowWidth < 768 ? '36px' : '50px',
+              marginBottom: windowWidth < 768 ? '60px' : '80px',
+              paddingBottom: windowWidth < 768 ? '50px' : '70px',
               borderBottom: '1px solid rgba(255, 217, 0, 0.1)'
             }}
           >
