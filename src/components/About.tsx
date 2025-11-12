@@ -631,16 +631,14 @@ export default function About({ onNavigateHome, onNavigateToWork, onNavigateToPr
 
           {/* CTA Content */}
           <motion.div
-            className="footer-cta-content"
             style={{
-              position: 'absolute',
-              top: '50%',
-              right: isMobile ? '24px' : (windowWidth < 1400 ? 'clamp(20px, 4vw, 50px)' : 'clamp(40px, 8vw, 120px)'),
-              transform: 'translateY(-50%)',
+              position: 'relative',
               zIndex: 3,
-              textAlign: 'right',
-              width: 'auto',
-              maxWidth: 'calc(100% - clamp(40px, 8vw, 120px) * 2)'
+              textAlign: isMobile ? 'left' : 'right',
+              padding: isMobile ? '0 24px' : '0 60px 0',
+              maxWidth: '1180px',
+              margin: '0 auto',
+              width: '100%'
             }}
             initial={false}
             animate={{ opacity: 1 }}
@@ -727,21 +725,37 @@ export default function About({ onNavigateHome, onNavigateToWork, onNavigateToPr
           </motion.div>
 
           {/* Footer Content */}
-          <div
-            className="footer-bottom-content"
-            style={{
-              position: 'absolute',
-              bottom: 'clamp(40px, 8vh, 80px)',
-              left: isMobile ? '24px' : (windowWidth < 1400 ? 'clamp(20px, 4vw, 50px)' : 'clamp(40px, 8vw, 120px)'),
-              zIndex: 3,
+          <div style={{
+            position: 'absolute',
+            inset: 0,
+            zIndex: 3,
+            width: '100%',
+            height: '100%',
+            display: 'flex',
+            alignItems: 'flex-end',
+            paddingBottom: 'clamp(40px, 8vh, 80px)',
+            justifyContent: 'center',
+            pointerEvents: 'none'
+          }}>
+            <div className="footer-bottom-content" style={{
+            maxWidth: '1180px',
+              width: '100%',
+              padding: `0 ${isMobile ? '24px' : (windowWidth < 1400 ? 'clamp(20px, 4vw, 50px)' : 'clamp(40px, 8vw, 120px)')}`,
               display: 'flex',
               flexDirection: 'column',
-              gap: '4px',
-              pointerEvents: 'auto'
-            }}
-          >
+              gap: '9px'
+          }}>
+            <div className="footer-content" style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+                width: '100%',
+              paddingBottom: '0',
+                borderBottom: 'none',
+                pointerEvents: 'auto'
+            }}>
               <p className="footer-logo" style={{
-                fontSize: '12px',
+                fontSize: '14px',
                 fontWeight: 600,
                 lineHeight: 'normal',
                 margin: 0,
@@ -751,7 +765,7 @@ export default function About({ onNavigateHome, onNavigateToWork, onNavigateToPr
                 SONGHEE ⓒ
               </p>
               <a href="mailto:allisvanitas@gmail.com" className="footer-email" style={{
-                fontSize: '12px',
+                fontSize: '14px',
                 fontWeight: 500,
                 lineHeight: 'normal',
                 margin: 0,
@@ -769,6 +783,8 @@ export default function About({ onNavigateHome, onNavigateToWork, onNavigateToPr
               >
                 allisvanitas@gmail.com
               </a>
+            </div>
+            </div>
           </div>
         </section>
       </SectionWithAnimation>
