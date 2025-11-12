@@ -347,7 +347,7 @@ export default function About({ onNavigateHome, onNavigateToWork, onNavigateToPr
           <button
             onClick={onNavigateHome}
             style={{ 
-              fontSize: isCompact ? '17px' : '21px', 
+              fontSize: isMobile ? '18px' : isCompact ? '17px' : '21px', 
               fontWeight: 800,
               color: '#ffd900',
               background: 'none',
@@ -358,7 +358,7 @@ export default function About({ onNavigateHome, onNavigateToWork, onNavigateToPr
           >
             SONGHEE ⓒ
           </button>
-          <div style={{ display: 'flex', gap: isCompact ? '36px' : '47px' }}>
+          <div style={{ display: 'flex', gap: isMobile ? '24px' : isCompact ? '36px' : '47px' }}>
             <div 
               style={{ 
                 position: 'relative',
@@ -381,7 +381,7 @@ export default function About({ onNavigateHome, onNavigateToWork, onNavigateToPr
                 style={{ 
                   color: 'rgba(255, 217, 0, 0.6)', 
                   textDecoration: 'none', 
-                  fontSize: isCompact ? '14px' : '17px', 
+                fontSize: isMobile ? '15px' : isCompact ? '14px' : '17px', 
                   fontWeight: 600,
                   cursor: 'pointer',
                   background: 'none',
@@ -395,7 +395,7 @@ export default function About({ onNavigateHome, onNavigateToWork, onNavigateToPr
             <div 
               style={{ 
                 color: '#ffd900', 
-                fontSize: isCompact ? '14px' : '17px', 
+                fontSize: isMobile ? '15px' : isCompact ? '14px' : '17px', 
                 fontWeight: 600,
                 position: 'relative',
                 paddingBottom: '4px'
@@ -421,46 +421,48 @@ export default function About({ onNavigateHome, onNavigateToWork, onNavigateToPr
       {/* About Me Section */}
       <SectionWithAnimation>
         <section style={{
-          padding: '180px 60px 100px',
+          padding: isMobile ? '140px 24px 80px' : isTablet ? '160px 40px 100px' : '180px 60px 100px',
           maxWidth: '1180px',
           margin: '0 auto'
         }}>
           <div style={{
             display: 'grid',
-            gridTemplateColumns: 'minmax(0, 1fr) minmax(0, 1.5fr)',
-            gap: '48px',
+            gridTemplateColumns: isMobile ? '1fr' : 'minmax(0, 1fr) minmax(0, 1.5fr)',
+            gap: isMobile ? '32px' : '48px',
             alignItems: 'start'
           }}>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '18px' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: isMobile ? '14px' : '18px' }}>
               <p style={{
-                fontSize: '22px',
+                fontSize: isMobile ? '20px' : '22px',
                 lineHeight: 1.6,
                 color: '#fff',
                 margin: 0,
                 fontWeight: 600,
-                fontFamily: 'SD Greta Sans'
+                fontFamily: 'SD Greta Sans',
+                whiteSpace: 'pre-line'
               }}>
                 안녕하세요,<br />UX/UI 디자이너 박송희입니다.
               </p>
 
               <p style={{
-                fontSize: '16px',
+                fontSize: isMobile ? '15px' : '16px',
                 lineHeight: 1.7,
                 color: 'rgba(255, 255, 255, 0.7)',
                 margin: 0,
                 fontWeight: 400,
-                fontFamily: 'SD Greta Sans'
+                fontFamily: 'SD Greta Sans',
+                whiteSpace: 'pre-line'
               }}>
                 생각과 감각이 만나는 지점을 설계하며,<br />이유 있는 아름다움을 탐구하고 있습니다.
               </p>
             </div>
 
-            <div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '22px', marginTop: isMobile ? '-8px' : 0 }}>
               <p style={{
-                fontSize: '16px',
+                fontSize: isMobile ? '15px' : '16px',
                 lineHeight: 1.7,
                 color: 'rgba(255, 255, 255, 0.85)',
-                marginBottom: '22px',
+                margin: 0,
                 fontWeight: 400,
                 fontFamily: 'SD Greta Sans'
               }}>
@@ -468,10 +470,10 @@ export default function About({ onNavigateHome, onNavigateToWork, onNavigateToPr
               </p>
 
               <p style={{
-                fontSize: '16px',
+                fontSize: isMobile ? '15px' : '16px',
                 lineHeight: 1.7,
                 color: 'rgba(255, 255, 255, 0.85)',
-                marginBottom: '22px',
+                margin: 0,
                 fontWeight: 400,
                 fontFamily: 'SD Greta Sans'
               }}>
@@ -479,10 +481,10 @@ export default function About({ onNavigateHome, onNavigateToWork, onNavigateToPr
               </p>
 
               <p style={{
-                fontSize: '16px',
+                fontSize: isMobile ? '15px' : '16px',
                 lineHeight: 1.7,
                 color: 'rgba(255, 255, 255, 0.85)',
-                marginBottom: '22px',
+                margin: 0,
                 fontWeight: 400,
                 fontFamily: 'SD Greta Sans'
               }}>
@@ -490,10 +492,10 @@ export default function About({ onNavigateHome, onNavigateToWork, onNavigateToPr
               </p>
 
               <p style={{
-                fontSize: '16px',
+                fontSize: isMobile ? '15px' : '16px',
                 lineHeight: 1.7,
                 color: 'rgba(255, 255, 255, 0.85)',
-                marginBottom: '12px',
+                margin: 0,
                 fontWeight: 400,
                 fontFamily: 'SD Greta Sans'
               }}>
@@ -501,10 +503,10 @@ export default function About({ onNavigateHome, onNavigateToWork, onNavigateToPr
               </p>
 
               <p style={{
-                fontSize: '16px',
+                fontSize: isMobile ? '15px' : '16px',
                 lineHeight: 1.7,
                 color: 'rgba(255, 255, 255, 0.85)',
-                marginBottom: '0',
+                margin: 0,
                 fontWeight: 400,
                 fontFamily: 'SD Greta Sans'
               }}>
@@ -518,13 +520,13 @@ export default function About({ onNavigateHome, onNavigateToWork, onNavigateToPr
       {/* Education Section */}
       <SectionWithAnimation>
         <section style={{
-          padding: '100px 60px 180px',
+          padding: isMobile ? '80px 24px 140px' : isTablet ? '90px 40px 160px' : '100px 60px 180px',
           maxWidth: '1180px',
           margin: '0 auto'
         }}>
           <div style={{ marginBottom: '28px' }}>
             <h2 style={{
-              fontSize: '42px',
+              fontSize: isMobile ? '32px' : '42px',
               fontWeight: 600,
               marginBottom: '0',
               color: '#fff'
@@ -567,8 +569,8 @@ export default function About({ onNavigateHome, onNavigateToWork, onNavigateToPr
             display: 'flex',
             flexDirection: 'column',
             justifyContent: 'flex-start',
-            paddingTop: '80px',
-            borderRadius: '100px 100px 0 0'
+            paddingTop: isMobile ? '60px' : '80px',
+            borderRadius: isMobile ? '48px 48px 0 0' : '100px 100px 0 0'
           }}
         >
           {/* 배경 비디오 - 블러 제거 */}
@@ -632,8 +634,8 @@ export default function About({ onNavigateHome, onNavigateToWork, onNavigateToPr
             style={{
               position: 'relative',
               zIndex: 3,
-              textAlign: 'right',
-              padding: '0 60px 0',
+              textAlign: isMobile ? 'left' : 'right',
+              padding: isMobile ? '0 24px' : '0 60px 0',
               maxWidth: '1180px',
               margin: '0 auto',
               width: '100%'
@@ -644,10 +646,10 @@ export default function About({ onNavigateHome, onNavigateToWork, onNavigateToPr
           >
             <h2 
               style={{
-                fontSize: '64px',
+                fontSize: isMobile ? '42px' : '64px',
                 fontWeight: 600,
                 lineHeight: 1,
-                marginBottom: '38px'
+                marginBottom: isMobile ? '28px' : '38px'
               }}
             >
               Let's create<br />
@@ -667,8 +669,8 @@ export default function About({ onNavigateHome, onNavigateToWork, onNavigateToPr
               <motion.button
                 className="get-in-touch-btn"
                 style={{
-                  padding: '10px 28px',
-                  fontSize: '20px',
+                  padding: isMobile ? '10px 22px' : '10px 28px',
+                  fontSize: isMobile ? '18px' : '20px',
                   fontWeight: 600,
                   color: '#fff',
                   background: 'transparent',
@@ -719,22 +721,24 @@ export default function About({ onNavigateHome, onNavigateToWork, onNavigateToPr
             <div style={{
               maxWidth: '1180px',
               width: '100%',
-              padding: '0 clamp(40px, 8vw, 120px)',
+              padding: isMobile ? '0 24px' : '0 clamp(40px, 8vw, 120px)',
               display: 'flex',
               flexDirection: 'column',
-              gap: '9px'
+              gap: isMobile ? '12px' : '9px'
             }}>
               <div className="footer-content" style={{
                 display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center',
+                flexDirection: isMobile ? 'column' : 'row',
+                justifyContent: isMobile ? 'flex-start' : 'space-between',
+                alignItems: isMobile ? 'flex-start' : 'center',
+                gap: isMobile ? '10px' : '0',
                 width: '100%',
                 paddingBottom: '0',
                 borderBottom: 'none',
                 pointerEvents: 'auto'
               }}>
                 <p className="footer-logo" style={{
-                  fontSize: '14px',
+                  fontSize: isMobile ? '12px' : '14px',
                   fontWeight: 600,
                   lineHeight: 'normal',
                   margin: 0,
@@ -744,7 +748,7 @@ export default function About({ onNavigateHome, onNavigateToWork, onNavigateToPr
                   SONGHEE ⓒ
                 </p>
                 <a href="mailto:allisvanitas@gmail.com" className="footer-email" style={{
-                  fontSize: '14px',
+                  fontSize: isMobile ? '13px' : '14px',
                   fontWeight: 500,
                   lineHeight: 'normal',
                   margin: 0,
