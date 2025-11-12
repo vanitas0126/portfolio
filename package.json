@@ -1,5 +1,6 @@
 
   {
+      "type": "module",
       "name": "Create Responsive Layout (Copy)",
       "version": "0.1.0",
       "private": true,
@@ -57,6 +58,7 @@
       },
       "scripts": {
           "dev": "vite",
-          "build": "vite build"
+          "build": "vite build",
+          "postbuild": "node scripts/postbuild.js"
       }
   }

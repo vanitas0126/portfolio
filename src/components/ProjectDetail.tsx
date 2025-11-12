@@ -2212,6 +2212,13 @@ export function ProjectDetail({ projectId, onBack, onNavigateToProject, onNaviga
   // Normalize projectId: remove trailing slashes and convert to lowercase
   const normalizedProjectId = projectId?.replace(/\/+$/, '').toLowerCase() || '';
   const project = projectsData[normalizedProjectId];
+  
+  // Debug: Log project matching
+  useEffect(() => {
+    if (!project && normalizedProjectId) {
+      console.warn(`Project not found: "${normalizedProjectId}". Available projects:`, Object.keys(projectsData));
+    }
+  }, [project, normalizedProjectId]);
   const heroHasVideo = !!project?.heroVideo;
   const heroAspectRatio = heroHasVideo ? '16 / 9' : '875 / 583';
   const heroMaxHeight = heroHasVideo ? '600px' : '620px';

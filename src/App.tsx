@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { ImageWithFallback } from './components/figma/ImageWithFallback';
 import { TiltCard } from './components/TiltCard';
 import { AnimatedDots } from './components/AnimatedDots';
@@ -23,11 +23,13 @@ export default function App() {
   const [selectedProject, setSelectedProject] = useState<string | null>(null);
   const pathnameRef = useRef<string | null>(null);
   const basePath = (import.meta.env.BASE_URL || '/').replace(/\/+$/, '');
-  const withBase = (path: string) => `${basePath}${path === '/' ? '' : path}`;
-  const stripBase = (pathname: string) =>
-    basePath && pathname.startsWith(basePath)
-      ? pathname.slice(basePath.length) || '/'
-      : pathname || '/';
+  const withBase = useCallback((path: string) => `${basePath}${path === '/' ? '' : path}`, [basePath]);
+  const stripBase = useCallback((pathname: string) => {
+    if (basePath && pathname.startsWith(basePath)) {
+      return pathname.slice(basePath.length) || '/';
+    }
+    return pathname || '/';
+  }, [basePath]);
 
   // Simple path-based routing to enable real-ish URLs (/project/:id, /about)
   useEffect(() => {
@@ -45,10 +47,12 @@ export default function App() {
 
     const applyPath = () => {
       const p = parsePath(window.location.pathname || '/');
+      console.log('applyPath - parsed:', p, 'from pathname:', window.location.pathname);
       if (p === 'about') {
         setSelectedProject(null);
         setCurrentPage('about');
       } else if (p) {
+        console.log('Setting selectedProject to:', p);
         setSelectedProject(p);
         setCurrentPage('home');
       } else {
@@ -65,8 +69,7 @@ export default function App() {
     const onPopState = () => applyPath();
     window.addEventListener('popstate', onPopState);
     return () => window.removeEventListener('popstate', onPopState);
-    pathnameRef.current = window.location.pathname;
-  }, []);
+  }, [basePath, stripBase]);
 
   // Update the browser URL (history) when selectedProject or currentPage changes
   useEffect(() => {
@@ -75,8 +78,10 @@ export default function App() {
     if (selectedProject) {
       const desired = `/project/${selectedProject}`;
       const fullPath = withBase(desired === '/' ? '/' : desired);
-      window.history.pushState(null, '', fullPath);
-      pathnameRef.current = fullPath;
+      if (pathnameRef.current !== fullPath) {
+        window.history.pushState(null, '', fullPath);
+        pathnameRef.current = fullPath;
+      }
     } else if (currentPage === 'about') {
       const fullAbout = withBase('/about');
       if (pathnameRef.current !== fullAbout) {
@@ -90,7 +95,7 @@ export default function App() {
         pathnameRef.current = fullHome;
       }
     }
-  }, [selectedProject, currentPage]);
+  }, [selectedProject, currentPage, withBase]);
 
   useEffect(() => {
     if (!selectedProject) {
@@ -1630,9 +1635,8 @@ function HomePage({ onNavigateToAbout, onNavigateToProject, withBase }: { onNavi
                     if (mouseEvent.button === 1 || mouseEvent.metaKey || mouseEvent.ctrlKey || mouseEvent.shiftKey) {
                       return; // let the browser handle it
                     }
-                    // Force a full navigation so the project detail loads reliably (auto-refresh behavior)
                     e.preventDefault();
-                    window.location.assign(withBase(`/project/${project.projectId}`));
+                    onNavigateToProject(project.projectId);
                   }}
                   style={{ cursor: 'pointer', display: 'block', textDecoration: 'none' }}
                 >
