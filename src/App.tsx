@@ -22,23 +22,23 @@ export default function App() {
   const [currentPage, setCurrentPage] = useState<'home' | 'about'>('home');
   const [selectedProject, setSelectedProject] = useState<string | null>(null);
 
-  // Sync with URL hash to enable deep-linking for project pages and about
+  // Simple path-based routing to enable real-ish URLs (/project/:id, /about)
   useEffect(() => {
-    const parseHash = (hash: string) => {
-      if (!hash) return null;
-      // Support: #project/hourtaste  and #about
-      if (hash.startsWith('#project/')) return hash.replace('#project/', '').toLowerCase();
-      if (hash === '#about') return 'about';
+    const parsePath = (pathname: string) => {
+      if (!pathname) return null;
+      // Support: /project/hourtaste  and /about
+      if (pathname.startsWith('/project/')) return pathname.replace('/project/', '').toLowerCase();
+      if (pathname === '/about') return 'about';
       return null;
     };
 
-    const applyHash = () => {
-      const h = parseHash(window.location.hash || '');
-      if (h === 'about') {
+    const applyPath = () => {
+      const p = parsePath(window.location.pathname || '/');
+      if (p === 'about') {
         setSelectedProject(null);
         setCurrentPage('about');
-      } else if (h) {
-        setSelectedProject(h);
+      } else if (p) {
+        setSelectedProject(p);
         setCurrentPage('home');
       } else {
         // default
@@ -47,26 +47,26 @@ export default function App() {
       }
     };
 
-    // On mount, apply current hash
-    applyHash();
+    // On mount, apply current path
+    applyPath();
 
-    // Keep in sync when user changes the hash (back/forward or manual)
-    const onHashChange = () => applyHash();
-    window.addEventListener('hashchange', onHashChange);
-    return () => window.removeEventListener('hashchange', onHashChange);
+    // Keep in sync when user navigates back/forward
+    const onPopState = () => applyPath();
+    window.addEventListener('popstate', onPopState);
+    return () => window.removeEventListener('popstate', onPopState);
   }, []);
 
-  // Update the URL hash when selectedProject or currentPage changes
+  // Update the browser URL (history) when selectedProject or currentPage changes
   useEffect(() => {
     if (selectedProject) {
-      const desired = `#project/${selectedProject}`;
-      if (window.location.hash !== desired) {
+      const desired = `/project/${selectedProject}`;
+      if (window.location.pathname !== desired) {
         window.history.pushState(null, '', desired);
       }
     } else if (currentPage === 'about') {
-      if (window.location.hash !== '#about') window.history.pushState(null, '', '#about');
+      if (window.location.pathname !== '/about') window.history.pushState(null, '', '/about');
     } else {
-      if (window.location.hash && window.location.hash !== '#') window.history.pushState(null, '', window.location.pathname + window.location.search + '#');
+      if (window.location.pathname !== '/') window.history.pushState(null, '', '/');
     }
   }, [selectedProject, currentPage]);
 
@@ -1560,8 +1560,17 @@ function HomePage({ onNavigateToAbout, onNavigateToProject }: { onNavigateToAbou
                 custom={idx}
               >
                 <a
-                  href={`#project/${project.projectId}`}
-                  onClick={(e) => { e.preventDefault(); onNavigateToProject(project.projectId); }}
+                  href={`/project/${project.projectId}`}
+                  onClick={(e) => {
+                    // Allow open-in-new-tab (meta/ctrl/middle click).
+                    const mouseEvent = e as React.MouseEvent<HTMLAnchorElement>;
+                    if (mouseEvent.button === 1 || mouseEvent.metaKey || mouseEvent.ctrlKey || mouseEvent.shiftKey) {
+                      return; // let the browser handle it
+                    }
+                    // Force a full navigation so the project detail loads reliably (auto-refresh behavior)
+                    e.preventDefault();
+                    window.location.assign(`/project/${project.projectId}`);
+                  }}
                   style={{ cursor: 'pointer', display: 'block', textDecoration: 'none' }}
                 >
                 <TiltCard

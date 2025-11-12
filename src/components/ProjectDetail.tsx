@@ -3010,11 +3010,6 @@ export function ProjectDetail({ projectId, onBack, onNavigateToProject, onNaviga
                   <div style={{ display: 'grid', gridTemplateColumns: '40% 60%', gap: '20px' }}>
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
                       <div style={{ position: 'relative' }}>
-                        <span style={{
-                          position: 'absolute', top: '10px', left: '10px', padding: '6px 10px', borderRadius: '999px',
-                          background: 'rgba(255, 217, 0, 0.16)', color: '#fff', fontSize: '12px', fontWeight: 700, letterSpacing: '0.02em', zIndex: 1,
-                          border: '1px solid rgba(255, 217, 0, 0.35)'
-                        }}>After</span>
                         <img 
                           src={`${import.meta.env.BASE_URL}project3/프로젝트웹.png`}
                           alt="프로젝트 웹"
