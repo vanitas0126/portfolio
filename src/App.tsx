@@ -1053,25 +1053,33 @@ function HomePage({ onNavigateToAbout, onNavigateToProject }: { onNavigateToAbou
         
         /* 1400px 이하 - 컨텐츠 최대 너비 조정 */
         @media (max-width: 1400px) {
-          section {
-            max-width: 1000px !important;
-          }
-          
           nav > div {
             max-width: 1000px !important;
             padding-left: 50px !important;
             padding-right: 50px !important;
           }
+          
+          /* 히어로 섹션 컨텐츠 중앙 정렬 */
+          .hero-content-wrapper {
+            padding-left: clamp(20px, 4vw, 50px) !important;
+            padding-right: clamp(20px, 4vw, 50px) !important;
+          }
+          
+          /* 푸터 CTA 컨텐츠 중앙 정렬 */
+          .footer-cta-content {
+            padding-left: clamp(20px, 4vw, 50px) !important;
+            padding-right: clamp(20px, 4vw, 50px) !important;
+          }
+          
+          /* 푸터 하단 컨텐츠 중앙 정렬 */
+          .footer-bottom-content {
+            padding-left: clamp(20px, 4vw, 50px) !important;
+            padding-right: clamp(20px, 4vw, 50px) !important;
+          }
         }
         
         /* 1200px 이하 - 더 작게 */
         @media (max-width: 1200px) {
-          section {
-            max-width: 900px !important;
-            padding-left: 40px !important;
-            padding-right: 40px !important;
-          }
-          
           nav > div {
             max-width: 900px !important;
             padding-left: 40px !important;
@@ -1081,12 +1089,6 @@ function HomePage({ onNavigateToAbout, onNavigateToProject }: { onNavigateToAbou
         
         /* 992px 이하 */
         @media (max-width: 992px) {
-          section {
-            max-width: 100% !important;
-            padding-left: 30px !important;
-            padding-right: 30px !important;
-          }
-          
           nav > div {
             padding-left: 30px !important;
             padding-right: 30px !important;
@@ -1330,13 +1332,13 @@ function HomePage({ onNavigateToAbout, onNavigateToProject }: { onNavigateToAbou
           justifyContent: 'center',
           pointerEvents: 'none'
         }}>
-          <div style={{
+          <div className="hero-content-wrapper" style={{
             width: '100%',
             maxWidth: '1180px',
             position: 'relative',
             margin: '0 auto',
-            paddingLeft: '2.25rem',
-            paddingRight: '2.25rem'
+            paddingLeft: windowWidth < 1400 ? 'clamp(20px, 4vw, 50px)' : '2.25rem',
+            paddingRight: windowWidth < 1400 ? 'clamp(20px, 4vw, 50px)' : '2.25rem'
         }}>
           <motion.div 
             className="hero-content" 
@@ -1355,7 +1357,7 @@ function HomePage({ onNavigateToAbout, onNavigateToProject }: { onNavigateToAbou
                 className="hero-typing-text" 
                 style={{ 
                   position: 'absolute',
-                  left: '2.25rem',
+                  left: windowWidth < 1400 ? 'clamp(20px, 4vw, 50px)' : '2.25rem',
                   bottom: '-20px',
                   y: useTransform(smoothProgress, [0, 0.3], [0, -30])
                 }}
@@ -1392,7 +1394,7 @@ function HomePage({ onNavigateToAbout, onNavigateToProject }: { onNavigateToAbou
                 className="hero-main-text" 
                 style={{ 
                   position: 'absolute',
-                  left: '2.25rem',
+                  left: windowWidth < 1400 ? 'clamp(20px, 4vw, 50px)' : '2.25rem',
                   bottom: '-20px',
                   y: useTransform(smoothProgress, [0, 0.3], [0, -30])
                 }}
@@ -1427,7 +1429,7 @@ function HomePage({ onNavigateToAbout, onNavigateToProject }: { onNavigateToAbou
               className="hero-chinese" 
               style={{ 
                   position: 'absolute',
-                  right: '2.25rem',
+                  right: windowWidth < 1400 ? 'clamp(20px, 4vw, 50px)' : '2.25rem',
                   bottom: '-20px',
                 textAlign: 'right',
                 y: useTransform(smoothProgress, [0, 0.3], [0, -20])
@@ -1864,11 +1866,12 @@ function HomePage({ onNavigateToAbout, onNavigateToProject }: { onNavigateToAbou
 
           {/* CTA Content */}
           <motion.div 
+            className="footer-cta-content"
             style={{
               position: 'relative',
               zIndex: 3,
               textAlign: 'right',
-              padding: '0 60px 0',
+              padding: `0 ${windowWidth < 1400 ? 'clamp(20px, 4vw, 50px)' : '60px'} 0`,
               maxWidth: '1180px',
               margin: '0 auto',
               width: '100%'
@@ -1976,10 +1979,10 @@ function HomePage({ onNavigateToAbout, onNavigateToProject }: { onNavigateToAbou
             justifyContent: 'center',
             pointerEvents: 'none'
           }}>
-            <div style={{
+            <div className="footer-bottom-content" style={{
             maxWidth: '1180px',
               width: '100%',
-              padding: '0 clamp(40px, 8vw, 120px)',
+              padding: `0 ${windowWidth < 1400 ? 'clamp(20px, 4vw, 50px)' : 'clamp(40px, 8vw, 120px)'}`,
               display: 'flex',
               flexDirection: 'column',
               gap: '9px'

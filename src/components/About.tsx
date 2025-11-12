@@ -8,6 +8,65 @@ declare global {
       init: () => void;
       [key: string]: any;
     };
+    __unicornStudioScriptLoading?: Promise<void>;
+  }
+}
+
+const UNICORN_STUDIO_SCRIPT_SRC = 'https://cdn.jsdelivr.net/gh/hiunicornstudio/unicornstudio.js@v1.4.34/dist/unicornStudio.umd.js';
+
+async function ensureUnicornStudioScriptLoaded() {
+  if (typeof window === 'undefined') return;
+
+  if (window.UnicornStudio?.init) {
+    if (!window.UnicornStudio.isInitialized) {
+      window.UnicornStudio.init();
+      window.UnicornStudio.isInitialized = true;
+    }
+    return;
+  }
+
+  if (!window.__unicornStudioScriptLoading) {
+    window.__unicornStudioScriptLoading = new Promise<void>((resolve, reject) => {
+      const existing = document.querySelector<HTMLScriptElement>(`script[src="${UNICORN_STUDIO_SCRIPT_SRC}"]`);
+      if (existing) {
+        existing.addEventListener('load', () => {
+          if (window.UnicornStudio?.init && !window.UnicornStudio.isInitialized) {
+            window.UnicornStudio.init();
+            window.UnicornStudio.isInitialized = true;
+          }
+          resolve();
+        }, { once: true });
+        existing.addEventListener('error', (err) => {
+          console.error('Failed to load UnicornStudio script', err);
+          window.__unicornStudioScriptLoading = undefined;
+          reject(err as Event);
+        }, { once: true });
+        return;
+      }
+
+      const script = document.createElement('script');
+      script.src = UNICORN_STUDIO_SCRIPT_SRC;
+      script.async = true;
+      script.onload = () => {
+        if (window.UnicornStudio?.init && !window.UnicornStudio.isInitialized) {
+          window.UnicornStudio.init();
+          window.UnicornStudio.isInitialized = true;
+        }
+        resolve();
+      };
+      script.onerror = (err) => {
+        console.error('Failed to load UnicornStudio script', err);
+        window.__unicornStudioScriptLoading = undefined;
+        reject(err as Event);
+      };
+      (document.head || document.body).appendChild(script);
+    });
+  }
+
+  try {
+    await window.__unicornStudioScriptLoading;
+  } catch {
+    // handled in promise rejection above
   }
 }
 
@@ -24,6 +83,8 @@ function AboutFooterVideoComponent({ onHeightChange }: { onHeightChange?: (heigh
 
   // UnicornStudio 스크립트 로드 및 CSS 주입
   useEffect(() => {
+    if (typeof window === 'undefined') return;
+
     // CSS 스타일 주입으로 크기 강제 고정
     const styleId = 'unicorn-studio-about-footer-size-fix';
     if (!document.getElementById(styleId)) {
@@ -45,43 +106,31 @@ function AboutFooterVideoComponent({ onHeightChange }: { onHeightChange?: (heigh
       document.head.appendChild(style);
     }
 
-    // 원본 임베드 코드와 동일한 방식으로 스크립트 로드
-    if (!window.UnicornStudio) {
-      window.UnicornStudio = { isInitialized: false };
-      const script = document.createElement('script');
-      script.src = 'https://cdn.jsdelivr.net/gh/hiunicornstudio/unicornstudio.js@v1.4.34/dist/unicornStudio.umd.js';
-      script.onload = function() {
-        if (!window.UnicornStudio?.isInitialized) {
-          if (window.UnicornStudio?.init) {
-            window.UnicornStudio.init();
-          }
-          window.UnicornStudio.isInitialized = true;
-        }
-        setTimeout(() => {
-          if (embedRef.current && window.UnicornStudio?.init) {
-            window.UnicornStudio.init();
-          }
-        }, 100);
-      };
-      (document.head || document.body).appendChild(script);
-    } else if (!window.UnicornStudio.isInitialized && window.UnicornStudio.init) {
-      window.UnicornStudio.init();
-      window.UnicornStudio.isInitialized = true;
-    }
-    
-    const initCheck = () => {
-      if (embedRef.current) {
-        if (window.UnicornStudio && window.UnicornStudio.init) {
+    let isCancelled = false;
+    const timeoutIds: number[] = [];
+
+    const scheduleInit = (delay: number) => {
+      const id = window.setTimeout(() => {
+        if (isCancelled) return;
+        if (embedRef.current && window.UnicornStudio?.init) {
           window.UnicornStudio.init();
         }
-      }
+      }, delay);
+      timeoutIds.push(id);
     };
-    
-    setTimeout(initCheck, 100);
-    setTimeout(initCheck, 300);
-    setTimeout(initCheck, 500);
-    setTimeout(initCheck, 1000);
-    setTimeout(initCheck, 2000);
+
+    ensureUnicornStudioScriptLoaded().then(() => {
+      if (isCancelled) return;
+      if (embedRef.current && window.UnicornStudio?.init) {
+        window.UnicornStudio.init();
+      }
+      [100, 300, 500, 1000, 2000].forEach(scheduleInit);
+    });
+
+    return () => {
+      isCancelled = true;
+      timeoutIds.forEach((id) => window.clearTimeout(id));
+    };
   }, []);
 
   // 기존 비디오와 동일한 스타일 적용
@@ -150,6 +199,11 @@ export default function About({ onNavigateHome, onNavigateToWork, onNavigateToPr
     document.title = 'About - SONGHEE PORTFOLIO';
   }, []);
 
+  // UnicornStudio 비디오를 페이지 진입 시 바로 로드
+  useEffect(() => {
+    ensureUnicornStudioScriptLoaded();
+  }, []);
+
   useEffect(() => {
     const handleScroll = () => {
       const scrollY = window.scrollY;
@@ -211,35 +265,27 @@ export default function About({ onNavigateHome, onNavigateToWork, onNavigateToPr
         /* Get in touch button responsive styles */
         .get-in-touch-btn {
           display: inline-flex;
-          align-items: flex-start;
-          padding: 10px 32px 20px 32px;
-          min-height: 48px;
-          font-size: 20px;
+          align-items: center;
+          justify-content: center;
           font-weight: 600;
-          color: #fff;
-          background: transparent;
-          border: 2.5px solid rgba(255, 255, 255, 0.8);
-          border-radius: 9999px;
-          cursor: pointer;
-          box-sizing: border-box;
-          line-height: 1;
-        }
-        .get-in-touch-label {
-          display: inline-block;
-          transform: translateY(-6px);
-          transition: transform 120ms ease;
+          font-family: "Darker Grotesque", -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+          transition: transform 0.25s ease, background 0.25s ease, color 0.25s ease, border-color 0.25s ease;
         }
 
         /* Medium / tablet */
         @media (max-width: 768px) {
-          .get-in-touch-btn { padding-top: 9px; padding-bottom: 16px; }
-          .get-in-touch-label { transform: translateY(-4px); }
+          .get-in-touch-btn {
+            padding: 2.5vw 5vw !important;
+            font-size: 3vw !important;
+            border-width: 1px !important;
+          }
         }
 
         /* Mobile */
         @media (max-width: 420px) {
-          .get-in-touch-btn { padding-top: 8px; padding-bottom: 14px; font-size: 18px; }
-          .get-in-touch-label { transform: translateY(-2px); }
+          .get-in-touch-btn {
+            font-size: 18px !important;
+          }
         }
       `}</style>
       {/* Scroll Progress */}
@@ -580,10 +626,9 @@ export default function About({ onNavigateHome, onNavigateToWork, onNavigateToPr
               margin: '0 auto',
               width: '100%'
             }}
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true, amount: 0.3 }}
-            transition={{ duration: 0.8 }}
+            initial={false}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.6 }}
           >
             <h2 
               style={{
@@ -607,9 +652,42 @@ export default function About({ onNavigateHome, onNavigateToWork, onNavigateToPr
                 justifyContent: 'center'
               }}
             >
-              <button className="get-in-touch-btn">
-                <span className="get-in-touch-label">Get in touch →</span>
-              </button>
+              <motion.button
+                className="get-in-touch-btn"
+                style={{
+                  padding: '10px 28px',
+                  fontSize: '20px',
+                  fontWeight: 600,
+                  color: '#fff',
+                  background: 'transparent',
+                  border: '2.5px solid rgba(255, 255, 255, 0.8)',
+                  borderRadius: '9999px',
+                  cursor: 'pointer',
+                  fontFamily: '"Darker Grotesque", -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif'
+                }}
+                whileHover={{
+                  y: -6,
+                  scale: 1.03,
+                  background: 'rgba(255, 255, 255, 1)',
+                  color: '#000',
+                  borderColor: 'rgba(255, 255, 255, 1)',
+                  transition: {
+                    type: 'spring',
+                    stiffness: 300,
+                    damping: 15
+                  }
+                }}
+                whileTap={{
+                  scale: 0.97,
+                  transition: {
+                    type: 'spring',
+                    stiffness: 400,
+                    damping: 10
+                  }
+                }}
+              >
+                Get in touch →
+              </motion.button>
             </a>
           </motion.div>
 

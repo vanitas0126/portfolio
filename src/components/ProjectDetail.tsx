@@ -3,6 +3,21 @@ import { motion, useScroll, useSpring } from 'motion/react';
 import { ArrowLeft } from 'lucide-react';
 import { ImageWithFallback } from './figma/ImageWithFallback';
 
+function useWindowWidth() {
+  const [width, setWidth] = useState(
+    typeof window !== 'undefined' ? window.innerWidth : 1920
+  );
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const handleResize = () => setWidth(window.innerWidth);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  return width;
+}
+
 // Chart.js 차트 컴포넌트
 function RailwayChart() {
   const chartRef = useRef<HTMLCanvasElement>(null);
@@ -216,6 +231,9 @@ function HourTasteDataChart() {
   const barChartInstanceRef = useRef<any>(null);
   const doughnut1InstanceRef = useRef<any>(null);
   const doughnut2InstanceRef = useRef<any>(null);
+  const windowWidth = useWindowWidth();
+  const isMobile = windowWidth <= 768;
+  const isTablet = windowWidth <= 1024;
 
   useEffect(() => {
     const loadCharts = async () => {
@@ -368,6 +386,7 @@ function HourTasteDataChart() {
     };
   }, []);
 
+  const containerGap = windowWidth <= 768 ? '18px' : '24px';
   return (
     <motion.div 
       initial={{ opacity: 0, y: 30 }}
@@ -378,11 +397,11 @@ function HourTasteDataChart() {
         marginTop: '30px',
         marginBottom: '0px',
         display: 'grid',
-        gridTemplateColumns: 'repeat(2, 1fr)',
-        gridTemplateRows: 'repeat(2, 1fr)',
-        gap: '24px',
+        gridTemplateColumns: isMobile ? '1fr' : 'repeat(2, 1fr)',
+        gridTemplateRows: isMobile ? 'auto' : 'repeat(2, 1fr)',
+        gap: containerGap,
         width: '100%',
-        aspectRatio: '1 / 1'
+        aspectRatio: isMobile ? undefined : '1 / 1'
       }}
     >
       {/* Section 1: Market */}
@@ -390,11 +409,12 @@ function HourTasteDataChart() {
         background: 'rgba(255, 255, 255, 0.1)',
         border: 'none',
         borderRadius: '12px',
-        padding: '40px',
+        padding: isMobile ? '28px 24px' : '40px',
         display: 'flex',
         flexDirection: 'column',
         position: 'relative',
-        overflow: 'hidden'
+        overflow: 'hidden',
+        minHeight: isMobile ? '320px' : undefined
       }}>
         <div style={{
           fontSize: '12px',
@@ -422,7 +442,7 @@ function HourTasteDataChart() {
           flexDirection: 'column',
           justifyContent: 'center',
           alignItems: 'center',
-          minHeight: 0
+          minHeight: isMobile ? '220px' : 0
         }}>
           <div style={{
             fontSize: 'clamp(50px, 10vw, 120px)',
@@ -457,11 +477,12 @@ function HourTasteDataChart() {
         background: 'rgba(255, 255, 255, 0.1)',
         border: 'none',
         borderRadius: '12px',
-        padding: '40px',
+        padding: isMobile ? '28px 24px' : '40px',
         display: 'flex',
         flexDirection: 'column',
         position: 'relative',
-        overflow: 'hidden'
+        overflow: 'hidden',
+        minHeight: isMobile ? '320px' : undefined
       }}>
         <div style={{
           fontSize: '12px',
@@ -488,7 +509,7 @@ function HourTasteDataChart() {
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'center',
-          minHeight: 0,
+          minHeight: isMobile ? '220px' : 0,
           background: 'rgba(255, 255, 255, 0.05)',
           borderRadius: '16px',
           padding: '24px',
@@ -672,7 +693,7 @@ function HourTasteDataChart() {
         background: 'rgba(255, 255, 255, 0.1)',
         border: 'none',
         borderRadius: '12px',
-        padding: '40px',
+        padding: isMobile ? '28px 24px' : '40px',
         display: 'flex',
         flexDirection: 'column',
         position: 'relative',
@@ -833,7 +854,8 @@ function HourTasteDataChart() {
         }}>
           <div style={{
             display: 'flex',
-            gap: '18px',
+            flexDirection: isMobile ? 'column' : 'row',
+            gap: isMobile ? '14px' : '18px',
             width: '100%',
             height: '100%',
             alignItems: 'stretch'
@@ -847,15 +869,15 @@ function HourTasteDataChart() {
               justifyContent: 'center',
               background: 'rgba(255, 255, 255, 0.05)',
               borderRadius: '16px',
-              padding: '24px',
+              padding: isMobile ? '20px' : '24px',
               width: '100%',
-              marginBottom: '28px'
+              marginBottom: isMobile ? '12px' : '28px'
             }}>
               <div style={{
                 position: 'relative',
-                width: '140px',
-                height: '140px',
-                marginBottom: '20px'
+                width: isMobile ? '120px' : '140px',
+                height: isMobile ? '120px' : '140px',
+                marginBottom: isMobile ? '16px' : '20px'
               }}>
                 <canvas ref={doughnut1Ref} />
                 <div style={{
@@ -863,14 +885,14 @@ function HourTasteDataChart() {
                   top: '50%',
                   left: '50%',
                   transform: 'translate(-50%, -50%)',
-                  fontSize: '40px',
+                  fontSize: isTablet ? '36px' : '40px',
                   fontWeight: 800,
                   color: '#5B9EFF',
                   fontFamily: '"Darker Grotesque", sans-serif'
                 }}>69%</div>
               </div>
               <div style={{
-                fontSize: '12px',
+                fontSize: isTablet ? '11px' : '12px',
                 lineHeight: 1.5,
                 textAlign: 'center',
                 color: '#999999',
@@ -887,15 +909,15 @@ function HourTasteDataChart() {
               justifyContent: 'center',
               background: 'rgba(255, 255, 255, 0.05)',
               borderRadius: '16px',
-              padding: '24px',
+              padding: isMobile ? '20px' : '24px',
               width: '100%',
-              marginBottom: '28px'
+              marginBottom: isMobile ? '12px' : '28px'
             }}>
               <div style={{
                 position: 'relative',
-                width: '140px',
-                height: '140px',
-                marginBottom: '20px'
+                width: isMobile ? '120px' : '140px',
+                height: isMobile ? '120px' : '140px',
+                marginBottom: isMobile ? '16px' : '20px'
               }}>
                 <canvas ref={doughnut2Ref} />
                 <div style={{
@@ -903,14 +925,14 @@ function HourTasteDataChart() {
                   top: '50%',
                   left: '50%',
                   transform: 'translate(-50%, -50%)',
-                  fontSize: '40px',
+                  fontSize: isTablet ? '36px' : '40px',
                   fontWeight: 800,
                   color: '#1DD1A1',
                   fontFamily: '"Darker Grotesque", sans-serif'
                 }}>70%</div>
               </div>
               <div style={{
-                fontSize: '12px',
+                fontSize: isTablet ? '11px' : '12px',
                 lineHeight: 1.5,
                 textAlign: 'center',
                 color: '#999999',
@@ -938,6 +960,9 @@ function HourTasteDataChart() {
 function HourTasteUserChart() {
   const pieChartRef = useRef<HTMLCanvasElement>(null);
   const pieChartInstanceRef = useRef<any>(null);
+  const windowWidth = useWindowWidth();
+  const isTablet = windowWidth <= 1024;
+  const isMobile = windowWidth <= 768;
 
   useEffect(() => {
     const loadCharts = async () => {
@@ -1018,8 +1043,8 @@ function HourTasteUserChart() {
         marginTop: '30px',
         marginBottom: '0px',
         display: 'grid',
-        gridTemplateColumns: 'repeat(2, 1fr)',
-        gap: '24px',
+        gridTemplateColumns: isMobile ? '1fr' : 'repeat(2, 1fr)',
+        gap: isMobile ? '18px' : '24px',
         width: '100%'
       }}
     >
@@ -1028,12 +1053,13 @@ function HourTasteUserChart() {
         background: 'rgba(255, 255, 255, 0.1)',
         border: 'none',
         borderRadius: '12px',
-        padding: '40px',
+        padding: isMobile ? '28px 24px' : '40px',
         display: 'flex',
         flexDirection: 'column',
         position: 'relative',
         overflow: 'hidden',
-        aspectRatio: '1 / 1'
+        aspectRatio: isMobile ? undefined : '1 / 1',
+        minHeight: isMobile ? '300px' : undefined
       }}>
         <div style={{
           fontSize: '12px',
@@ -1058,35 +1084,39 @@ function HourTasteUserChart() {
         <div style={{
           flex: 1,
           display: 'flex',
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          alignItems: 'flex-start',
+          flexDirection: isMobile ? 'column' : 'row',
+          justifyContent: isMobile ? 'flex-start' : 'space-between',
+          alignItems: isMobile ? 'center' : 'flex-start',
           minHeight: 0,
           paddingTop: '0px',
-          gap: '30px'
+          gap: isMobile ? '24px' : '30px',
+          width: '100%'
         }}>
           {/* 차트 */}
           <div style={{
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'flex-start',
-            flex: 1,
-            padding: '10px 20px'
+            flex: isMobile ? 'unset' : 1,
+            width: isMobile ? '100%' : 'auto',
+            padding: isMobile ? '0' : '10px 20px'
           }}>
-            <div style={{
-              width: '180px',
-              height: '180px',
-              position: 'relative'
-            }}>
-              <canvas ref={pieChartRef} />
-            </div>
+              <div style={{
+                width: isMobile ? '140px' : isTablet ? '160px' : '180px',
+                height: isMobile ? '140px' : isTablet ? '160px' : '180px',
+                position: 'relative',
+                margin: isMobile ? '0 auto' : undefined
+              }}>
+                <canvas ref={pieChartRef} />
+              </div>
           </div>
           {/* 범례 */}
           <div style={{
             display: 'flex',
             flexDirection: 'column',
             gap: '12px',
-            flexShrink: 0
+            flexShrink: 0,
+            width: isMobile ? '100%' : 'auto'
           }}>
             <div style={{
               display: 'flex',
@@ -1163,12 +1193,13 @@ function HourTasteUserChart() {
         background: 'rgba(255, 255, 255, 0.1)',
         border: 'none',
         borderRadius: '12px',
-        padding: '40px',
+        padding: isMobile ? '28px 24px' : '40px',
         display: 'flex',
         flexDirection: 'column',
         position: 'relative',
         overflow: 'hidden',
-        aspectRatio: '1 / 1'
+        aspectRatio: isMobile ? undefined : '1 / 1',
+        minHeight: isMobile ? '300px' : undefined
       }}>
         <div style={{
           fontSize: '12px',
@@ -1201,15 +1232,17 @@ function HourTasteUserChart() {
             display: 'flex',
             width: '100%',
             height: '100%',
-            gap: '30px',
-            alignItems: 'center'
+            gap: isMobile ? '20px' : '30px',
+            alignItems: isMobile ? 'flex-start' : 'center',
+            flexDirection: isMobile ? 'column' : 'row'
           }}>
             <div style={{
               flex: 1,
               display: 'flex',
               flexDirection: 'column',
               justifyContent: 'center',
-              alignItems: 'center'
+              alignItems: isMobile ? 'flex-start' : 'center',
+              width: '100%'
             }}>
               <div style={{
                 fontSize: 'clamp(60px, 8vw, 100px)',
@@ -1586,6 +1619,9 @@ function HourTasteSolutionViz() {
 function NookServiceBackgroundViz() {
   const chart1Ref = useRef<HTMLCanvasElement>(null);
   const chart1InstanceRef = useRef<any>(null);
+  const windowWidth = useWindowWidth();
+  const isTablet = windowWidth <= 1024;
+  const isMobile = windowWidth <= 768;
 
   useEffect(() => {
     const createCharts = () => {
@@ -1676,29 +1712,31 @@ function NookServiceBackgroundViz() {
   const containerStyle = {
     width: '100%',
     maxWidth: '1180px',
-    margin: '0 auto 72px',
+    margin: isMobile ? '0 auto 48px' : '0 auto 72px',
     display: 'grid',
-    gridTemplateColumns: 'repeat(2, minmax(0, 1fr))',
-    gap: '28px'
+    gridTemplateColumns: isMobile ? '1fr' : 'repeat(2, minmax(0, 1fr))',
+    gap: isMobile ? '20px' : '28px'
   } as const;
 
   const cardWrapperStyle = {
     position: 'relative',
     width: '100%',
-    aspectRatio: '1 / 1',
+    aspectRatio: isMobile ? undefined : '1 / 1',
+    minHeight: isMobile ? '400px' : undefined,
     borderRadius: '22px',
     overflow: 'hidden',
     background: 'rgba(255, 255, 255, 0.12)'
   } as const;
 
   const sectionStyle = {
-    position: 'absolute',
-    inset: 0,
-    padding: '38px',
+    position: isMobile ? 'relative' : 'absolute',
+    inset: isMobile ? undefined : 0,
+    padding: isMobile ? '28px 24px' : '38px',
     display: 'flex',
     flexDirection: 'column',
     gap: '26px',
-    borderRadius: 'inherit'
+    borderRadius: 'inherit',
+    minHeight: isMobile ? '400px' : undefined
   } as const;
 
   const headerStyle = {
@@ -1722,10 +1760,11 @@ function NookServiceBackgroundViz() {
   const gridStyle = {
     flex: 1,
     display: 'grid',
-    gridTemplateColumns: '1fr 1fr',
-    gap: '18px',
+    gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr',
+    gap: isMobile ? '14px' : '18px',
     alignItems: 'stretch',
-    height: '100%'
+    height: isMobile ? 'auto' : '100%',
+    minHeight: isMobile ? '300px' : undefined
   } as const;
 
   const sourceStyle = {
@@ -1752,7 +1791,7 @@ function NookServiceBackgroundViz() {
   const innerCardStyle = {
     background: 'rgba(255, 255, 255, 0.05)',
     borderRadius: '18px',
-    padding: '24px',
+    padding: isMobile ? '20px' : '24px',
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-between',
@@ -1776,14 +1815,14 @@ function NookServiceBackgroundViz() {
           <div style={gridStyle}>
             <div style={{ ...innerCardStyle }}>
               <div style={{ fontSize: '12px', fontWeight: 600, color: '#9DA0A6', textAlign: 'center' }}>'감도' 키워드 검색량 추이</div>
-              <div style={{ position: 'relative', flex: 1, minHeight: 0 }}>
+              <div style={{ position: 'relative', flex: 1, minHeight: isMobile ? '200px' : 0, width: '100%' }}>
                 <canvas ref={chart1Ref} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%' }} />
               </div>
               <div style={{ fontSize: '11px', color: '#9DA0A6', textAlign: 'center' }}>2년간 6.5배 증가</div>
             </div>
             <div style={{ ...innerCardStyle, alignItems: 'center', justifyContent: 'center', gap: '18px' }}>
-              <div style={{ fontSize: '52px', fontWeight: 800, color: '#10B981', lineHeight: 1 }}>848%</div>
-              <p style={{ margin: 0, fontSize: '15px', color: 'rgba(255, 255, 255, 0.82)', textAlign: 'center', lineHeight: 1.55 }}>
+              <div style={{ fontSize: isMobile ? '42px' : '52px', fontWeight: 800, color: '#10B981', lineHeight: 1 }}>848%</div>
+              <p style={{ margin: 0, fontSize: isMobile ? '14px' : '15px', color: 'rgba(255, 255, 255, 0.82)', textAlign: 'center', lineHeight: 1.55 }}>
                 오늘의집 디자이너 가구<br />거래액 증가
               </p>
             </div>
@@ -1799,14 +1838,15 @@ function NookServiceBackgroundViz() {
           <div style={gridStyle}>
             <div style={{ ...innerCardStyle, justifyContent: 'center', alignItems: 'center', gap: '12px' }}>
               <div style={{ flex: 1, width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <div style={{
-                  width: '150px',
-                  height: '150px',
-                  position: 'relative',
-                  borderRadius: '50%',
-                  background: 'conic-gradient(#F59E0B 0deg 180deg, rgba(34,34,34,0.85) 180deg 360deg)',
-                  boxShadow: '0 12px 30px rgba(0,0,0,0.35)'
-                }}>
+                  <div style={{
+                    width: isMobile ? '120px' : '150px',
+                    height: isMobile ? '120px' : '150px',
+                    position: 'relative',
+                    borderRadius: '50%',
+                    background: 'conic-gradient(#F59E0B 0deg 180deg, rgba(34,34,34,0.85) 180deg 360deg)',
+                    boxShadow: '0 12px 30px rgba(0,0,0,0.35)',
+                    margin: isMobile ? '0 auto' : undefined
+                  }}>
                   <div style={{
                     position: 'absolute',
                     inset: '18px',
@@ -1819,7 +1859,7 @@ function NookServiceBackgroundViz() {
                     top: '50%',
                     left: '50%',
                     transform: 'translate(-50%, -50%)',
-                    fontSize: '24px',
+                    fontSize: isMobile ? '20px' : '24px',
                     fontWeight: 800,
                     color: '#F59E0B'
                   }}>50%</div>
@@ -1833,7 +1873,7 @@ function NookServiceBackgroundViz() {
                 {problemReasons.map((reason, index) => (
                   <div key={reason} style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
                     <div style={{ width: '42px', height: '42px', borderRadius: '999px', background: '#F59E0B', color: '#0B0B0B', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '17px', fontWeight: 800 }}>{index + 1}</div>
-                    <span style={{ fontSize: '15px', fontWeight: 600, color: 'rgba(255, 255, 255, 0.88)', whiteSpace: 'nowrap' }}>{reason}</span>
+                    <span style={{ fontSize: isMobile ? '14px' : '15px', fontWeight: 600, color: 'rgba(255, 255, 255, 0.88)', whiteSpace: isMobile ? 'normal' : 'nowrap', wordBreak: isMobile ? 'break-word' : 'normal' }}>{reason}</span>
                   </div>
                 ))}
               </div>
@@ -1848,15 +1888,15 @@ function NookServiceBackgroundViz() {
           <div style={headerStyle}>Solution 1</div>
           <h3 style={titleStyle}>렌탈로 가격 장벽 해소, 5년간 2.5배 성장</h3>
           <div style={gridStyle}>
-            <div style={{ ...innerCardStyle, alignItems: 'center', gap: '24px' }}>
+            <div style={{ ...innerCardStyle, alignItems: 'center', gap: '24px', minHeight: isMobile ? '240px' : undefined }}>
               <div style={{ fontSize: '12px', fontWeight: 600, color: '#9DA0A6', textAlign: 'center', letterSpacing: '0.08em' }}>국내 렌탈 시장 규모</div>
               <div style={{
                 display: 'grid',
-                gridTemplateColumns: 'repeat(2, minmax(0, 1fr))',
-                gap: '26px',
+                gridTemplateColumns: isMobile ? '1fr' : 'repeat(2, minmax(0, 1fr))',
+                gap: isMobile ? '14px' : '26px',
                 width: '100%',
                 height: '100%',
-                padding: '0 8%'
+                padding: isMobile ? '0' : '0 8%'
               }}>
                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'flex-end', height: '100%', gap: '10px' }}>
                   <div style={{ width: '100%', height: '62%', background: 'rgba(90, 90, 90, 0.95)', borderRadius: '12px 12px 6px 6px', position: 'relative', boxShadow: '0 -4px 16px rgba(0, 0, 0, 0.25)' }}>
@@ -1907,15 +1947,15 @@ function NookServiceBackgroundViz() {
           <div style={headerStyle}>Solution 2</div>
           <h3 style={titleStyle}>AR로 제품 불확실성 해소, 전환율 업</h3>
           <div style={gridStyle}>
-            <div style={{ ...innerCardStyle, alignItems: 'center', gap: '24px' }}>
+            <div style={{ ...innerCardStyle, alignItems: 'center', gap: '24px', minHeight: isMobile ? '240px' : undefined }}>
               <div style={{ fontSize: '12px', fontWeight: 600, color: '#9DA0A6', textAlign: 'center' }}>구매 전환율 비교</div>
               <div style={{
                 display: 'grid',
-                gridTemplateColumns: 'repeat(2, minmax(0, 1fr))',
-                gap: '26px',
+                gridTemplateColumns: isMobile ? '1fr' : 'repeat(2, minmax(0, 1fr))',
+                gap: isMobile ? '14px' : '26px',
                 width: '100%',
                 height: '100%',
-                padding: '0 8%'
+                padding: isMobile ? '0' : '0 8%'
               }}>
                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'flex-end', height: '100%', gap: '10px' }}>
                   <div style={{ width: '100%', height: '62%', background: 'rgba(80, 80, 80, 0.95)', borderRadius: '12px 12px 6px 6px', position: 'relative', boxShadow: '0 -4px 16px rgba(0, 0, 0, 0.25)' }}>
