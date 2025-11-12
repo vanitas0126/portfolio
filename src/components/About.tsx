@@ -633,15 +633,18 @@ export default function About({ onNavigateHome, onNavigateToWork, onNavigateToPr
           <motion.div
             className="footer-cta-content"
             style={{
-              position: 'relative',
+              position: 'absolute',
+              top: '50%',
+              left: '50%',
+              transform: 'translate(-50%, -50%)',
               zIndex: 3,
-              textAlign: isMobile ? 'left' : 'right',
-              padding: isMobile ? '0 clamp(20px, 5vw, 40px) 0' : '0 60px 0',
+              textAlign: 'right',
               maxWidth: '1180px',
-              margin: '0 auto',
               width: '100%',
+              padding: `0 ${isMobile ? 'clamp(20px, 5vw, 40px)' : (windowWidth < 1400 ? 'clamp(20px, 4vw, 50px)' : 'clamp(40px, 8vw, 120px)')}`,
+              boxSizing: 'border-box',
               display: 'flex',
-              justifyContent: isMobile ? 'flex-start' : 'flex-end',
+              justifyContent: 'flex-end',
               alignItems: 'center'
             }}
             initial={false}
