@@ -332,28 +332,10 @@ function VideoComponent({ onHeightChange }: { onHeightChange?: (height: number) 
 
   // 기존 비디오와 동일한 스타일 적용
   useEffect(() => {
-    const aspectRatio = 1818 / 1080;
-
-    const updateSize = () => {
-      try {
-  // Use container width (cap to 1180) to compute height responsively
-  const containerWidth = Math.min(window.innerWidth, 1180);
-  // Use a slightly smaller visual width (like footer) so hero scales inwards on large screens
-  const videoWidth = Math.round(containerWidth * 0.8);
-        const videoHeight = Math.round(videoWidth / aspectRatio);
-
-        if (embedRef.current) {
-          (embedRef.current as HTMLDivElement).style.width = `${videoWidth}px`;
-          (embedRef.current as HTMLDivElement).style.height = `${videoHeight}px`;
-        }
-
-        if (onHeightChange) onHeightChange(videoHeight);
-      } catch {}
-    };
-
-    updateSize();
-    window.addEventListener('resize', updateSize);
-    return () => window.removeEventListener('resize', updateSize);
+    if (onHeightChange) {
+      // restore original fixed height used previously
+      onHeightChange(737.338);
+    }
   }, [onHeightChange]);
 
   return (
@@ -1202,14 +1184,15 @@ function HomePage({ onNavigateToAbout, onNavigateToProject }: { onNavigateToAbou
                 cursor: 'pointer',
                 background: 'none',
                 border: 'none',
-                padding: 0
+                padding: 0,
+                willChange: 'transform'
               }}
               whileHover={{ 
                 scale: 1.08,
                 color: 'rgba(255, 217, 0, 0.7)',
-                transition: { type: "spring", stiffness: 300, damping: 15 }
+                transition: { duration: 0.12, ease: 'easeOut' }
               }}
-              whileTap={{ scale: 0.95 }}
+              whileTap={{ scale: 0.96, transition: { duration: 0.08 } }}
             >
               WORK
             </motion.button>
@@ -1224,14 +1207,15 @@ function HomePage({ onNavigateToAbout, onNavigateToProject }: { onNavigateToAbou
               cursor: 'pointer',
               background: 'none',
               border: 'none',
-              padding: 0
+              padding: 0,
+              willChange: 'transform'
             }}
             whileHover={{ 
               scale: 1.08,
               color: 'rgba(255, 217, 0, 0.7)',
-              transition: { type: "spring", stiffness: 300, damping: 15 }
+              transition: { duration: 0.12, ease: 'easeOut' }
             }}
-            whileTap={{ scale: 0.95 }}
+            whileTap={{ scale: 0.96, transition: { duration: 0.08 } }}
           >
             ABOUT
           </motion.button>
