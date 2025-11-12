@@ -718,65 +718,53 @@ export default function About({ onNavigateHome, onNavigateToWork, onNavigateToPr
             justifyContent: 'center',
             pointerEvents: 'none'
           }}>
-            <div
-              className="footer-bottom-content"
-              style={{
-                maxWidth: '1180px',
+            <div className="footer-bottom-content" style={{
+            maxWidth: '1180px',
+              width: '100%',
+              padding: `0 ${windowWidth < 1400 ? 'clamp(20px, 4vw, 50px)' : 'clamp(40px, 8vw, 120px)'}`,
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '9px'
+          }}>
+            <div className="footer-content" style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
                 width: '100%',
-                padding: `0 ${windowWidth < 1400 ? 'clamp(20px, 4vw, 50px)' : 'clamp(40px, 8vw, 120px)'}`,
-                display: 'flex',
-                flexDirection: 'column',
-                gap: '9px'
-              }}
-            >
-              <div
-                className="footer-content"
-              style={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                width: '100%',
-                paddingBottom: '0',
+              paddingBottom: '0',
                 borderBottom: 'none',
                 pointerEvents: 'auto'
+            }}>
+              <p className="footer-logo" style={{
+                fontSize: '14px',
+                fontWeight: 600,
+                lineHeight: 'normal',
+                margin: 0,
+                textShadow: '0 3px 13px rgba(0, 0, 0, 0.8)',
+                color: '#fff'
+              }}>
+                SONGHEE ⓒ
+              </p>
+              <a href="mailto:allisvanitas@gmail.com" className="footer-email" style={{
+                fontSize: '14px',
+                fontWeight: 500,
+                lineHeight: 'normal',
+                margin: 0,
+                textShadow: '0 2px 10px rgba(0, 0, 0, 0.8)',
+                color: 'rgba(255, 255, 255, 0.7)',
+                textDecoration: 'none',
+                transition: 'color 0.3s ease'
+              }}
+              onMouseEnter={(e) => {
+                  e.currentTarget.style.color = '#fff';
+              }}
+              onMouseLeave={(e) => {
+                  e.currentTarget.style.color = 'rgba(255, 255, 255, 0.7)';
               }}
               >
-                <p
-                  className="footer-logo"
-                  style={{
-                    fontSize: '14px',
-                    fontWeight: 600,
-                    lineHeight: 'normal',
-                    margin: 0,
-                    textShadow: '0 3px 13px rgba(0, 0, 0, 0.8)',
-                    color: '#fff'
-                  }}
-                >
-                  SONGHEE ⓒ
-                </p>
-                <a
-                  href="mailto:allisvanitas@gmail.com"
-                  className="footer-email"
-                  style={{
-                    fontSize: '14px',
-                    fontWeight: 500,
-                    lineHeight: 'normal',
-                    margin: 0,
-                    textShadow: '0 2px 10px rgba(0, 0, 0, 0.8)',
-                    color: 'rgba(255, 255, 255, 0.7)',
-                    textDecoration: 'none',
-                    transition: 'color 0.3s ease'
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.color = '#fff';
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.color = 'rgba(255, 255, 255, 0.7)';
-                  }}
-                >
-                  allisvanitas@gmail.com
-                </a>
-              </div>
+                allisvanitas@gmail.com
+              </a>
+            </div>
             </div>
           </div>
         </section>
