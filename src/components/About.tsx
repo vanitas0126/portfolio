@@ -566,20 +566,31 @@ export default function About({ onNavigateHome, onNavigateToWork, onNavigateToPr
               meaningful.
             </h2>
             
-            <a href="mailto:allisvanitas@gmail.com" style={{ textDecoration: 'none', display: 'inline-block' }}>
-              <button 
+            <a
+              href="mailto:allisvanitas@gmail.com"
+              style={{
+                textDecoration: 'none',
+                display: 'inline-flex',
+                alignItems: 'center',
+                justifyContent: 'center'
+              }}
+            >
+              <button
                 style={{
-                  padding: '10px 28px',
+                  padding: '12px 32px',
+                  minHeight: '48px',
                   fontSize: '20px',
                   fontWeight: 600,
                   color: '#fff',
                   background: 'transparent',
                   border: '2.5px solid rgba(255, 255, 255, 0.8)',
                   borderRadius: '9999px',
-                  cursor: 'pointer'
+                  cursor: 'pointer',
+                  boxSizing: 'border-box',
+                  lineHeight: 1
                 }}
               >
-                Get in touch →
+                <span style={{ display: 'inline-block', transform: 'translateY(-8px)', transition: 'transform 120ms ease' }}>Get in touch →</span>
               </button>
             </a>
           </motion.div>
