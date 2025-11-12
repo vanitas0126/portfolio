@@ -232,8 +232,8 @@ function HourTasteDataChart() {
   const doughnut1InstanceRef = useRef<any>(null);
   const doughnut2InstanceRef = useRef<any>(null);
   const windowWidth = useWindowWidth();
-  const isMobile = windowWidth <= 768;
   const isTablet = windowWidth <= 1024;
+  const isMobile = windowWidth <= 768;
 
   useEffect(() => {
     const loadCharts = async () => {
@@ -2338,15 +2338,16 @@ export function ProjectDetail({ projectId, onBack, onNavigateToProject, onNaviga
           maxWidth: '1180px',
           margin: '0 auto',
           width: '100%',
-          padding: isCompact ? '12px 60px' : '20px 60px',
+          padding: isMobile ? `12px ${Math.min(Math.max(windowWidth * 0.05, 18), 28)}px` : (isCompact ? '12px 60px' : '20px 60px'),
           display: 'flex',
           justifyContent: 'space-between',
-          alignItems: 'center'
+          alignItems: 'center',
+          gap: isMobile ? '18px' : '0'
         }}>
           <div 
             onClick={onBack}
             style={{ 
-              fontSize: isCompact ? '17px' : '21px', 
+              fontSize: isMobile ? '18px' : isCompact ? '17px' : '21px', 
               fontWeight: 800,
               color: '#ffd900',
               transition: 'all 0.8s cubic-bezier(0.19, 1, 0.22, 1)',
@@ -2356,33 +2357,47 @@ export function ProjectDetail({ projectId, onBack, onNavigateToProject, onNaviga
             SONGHEE ⓒ
           </div>
           
-          <div style={{ display: 'flex', gap: isCompact ? '36px' : '47px' }}>
-            <motion.button 
-              onClick={(e) => {
-                e.preventDefault();
-                if (onNavigateToWork) {
-                  onNavigateToWork();
-                }
+          <div style={{ 
+            display: 'flex', 
+            gap: isMobile ? '24px' : isCompact ? '36px' : '47px',
+            alignItems: 'center',
+            flexWrap: isMobile ? 'wrap' : 'nowrap'
+          }}>
+            <div
+              style={{
+                position: 'relative',
+                padding: '10px 15px',
+                margin: '-10px -15px'
               }}
+            >
+              <motion.button 
+                onClick={(e) => {
+                  e.preventDefault();
+                  if (onNavigateToWork) {
+                    onNavigateToWork();
+                  }
+                }}
                 style={{ 
                   color: '#ffd900', 
                   textDecoration: 'none', 
-                  fontSize: isCompact ? '14px' : '17px', 
+                  fontSize: isMobile ? '15px' : isCompact ? '14px' : '17px', 
                   fontWeight: 600,
                   cursor: 'pointer',
                   background: 'none',
                   border: 'none',
-                  padding: 0
+                  padding: 0,
+                  willChange: 'transform'
                 }}
                 whileHover={{ 
                   scale: 1.08,
                   color: 'rgba(255, 217, 0, 0.7)',
-                  transition: { type: "spring", stiffness: 300, damping: 15 }
+                  transition: { duration: 0.12, ease: 'easeOut' }
                 }}
-                whileTap={{ scale: 0.95 }}
+                whileTap={{ scale: 0.96, transition: { duration: 0.08 } }}
               >
                 WORK
               </motion.button>
+            </div>
 
             {/* ABOUT Button */}
             {onNavigateToAbout && (
@@ -2391,19 +2406,20 @@ export function ProjectDetail({ projectId, onBack, onNavigateToProject, onNaviga
                 style={{ 
                   color: '#ffd900', 
                   textDecoration: 'none', 
-                  fontSize: isCompact ? '14px' : '17px', 
+                  fontSize: isMobile ? '15px' : isCompact ? '14px' : '17px', 
                   fontWeight: 600,
                   cursor: 'pointer',
                   background: 'none',
                   border: 'none',
-                  padding: 0
+                  padding: 0,
+                  willChange: 'transform'
                 }}
                 whileHover={{ 
                   scale: 1.08,
                   color: 'rgba(255, 217, 0, 0.7)',
-                  transition: { type: "spring", stiffness: 300, damping: 15 }
+                  transition: { duration: 0.12, ease: 'easeOut' }
                 }}
-                whileTap={{ scale: 0.95 }}
+                whileTap={{ scale: 0.96, transition: { duration: 0.08 } }}
               >
                 ABOUT
               </motion.button>
