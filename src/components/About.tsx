@@ -634,13 +634,13 @@ export default function About({ onNavigateHome, onNavigateToWork, onNavigateToPr
             className="footer-cta-content"
             style={{
               position: 'absolute',
-              top: '50%',
+              top: '40%',
               left: '50%',
               transform: 'translate(-50%, -50%)',
               zIndex: 3,
-              maxWidth: '1180px',
+              maxWidth: windowWidth <= 1400 ? (windowWidth <= 1200 ? '900px' : '1000px') : '1180px',
               width: '100%',
-              padding: `0 ${isMobile ? '20px' : (windowWidth < 1400 ? '50px' : '60px')}`,
+              padding: `0 ${isMobile ? '20px' : (windowWidth <= 992 ? '30px' : (windowWidth <= 1200 ? '40px' : (windowWidth <= 1400 ? '50px' : '60px')))}`,
               boxSizing: 'border-box',
               display: 'flex',
               flexDirection: 'column',
@@ -747,9 +747,9 @@ export default function About({ onNavigateHome, onNavigateToWork, onNavigateToPr
             pointerEvents: 'none'
           }}>
             <div className="footer-bottom-content" style={{
-            maxWidth: '1180px',
+            maxWidth: windowWidth <= 1400 ? (windowWidth <= 1200 ? '900px' : '1000px') : '1180px',
               width: '100%',
-              padding: `0 ${isMobile ? '20px' : (windowWidth < 1400 ? '50px' : '60px')}`,
+              padding: `0 ${isMobile ? '20px' : (windowWidth <= 992 ? '30px' : (windowWidth <= 1200 ? '40px' : (windowWidth <= 1400 ? '50px' : '60px')))}`,
               display: 'flex',
               flexDirection: 'column',
               gap: isMobile ? '6px' : '9px'
@@ -758,10 +758,10 @@ export default function About({ onNavigateHome, onNavigateToWork, onNavigateToPr
               display: 'flex',
               justifyContent: 'space-between',
               alignItems: 'center',
-                width: '100%',
+              width: '100%',
               paddingBottom: '0',
-                borderBottom: 'none',
-                pointerEvents: 'auto'
+              borderBottom: 'none',
+              pointerEvents: 'auto'
             }}>
               <p className="footer-logo" style={{
                 fontSize: isMobile ? '12px' : '14px',

@@ -1076,8 +1076,8 @@ function HomePage({ onNavigateToAbout, onNavigateToProject, withBase }: { onNavi
           
           /* 푸터 CTA 컨텐츠 우측 정렬 */
           .footer-cta-content {
-            right: 20px !important;
-            left: auto !important;
+            left: 50% !important;
+            transform: translate(-50%, -50%) !important;
             text-align: right !important;
             flex-direction: column !important;
             align-items: flex-end !important;
@@ -1106,6 +1106,8 @@ function HomePage({ onNavigateToAbout, onNavigateToProject, withBase }: { onNavi
             max-width: 1000px !important;
             padding-left: 50px !important;
             padding-right: 50px !important;
+            padding-top: 12px !important;
+            padding-bottom: 12px !important;
           }
           
           /* 히어로 섹션 컨텐츠 중앙 정렬 */
@@ -1116,8 +1118,8 @@ function HomePage({ onNavigateToAbout, onNavigateToProject, withBase }: { onNavi
           
           /* 푸터 CTA 컨텐츠 우측 정렬 */
           .footer-cta-content {
-            right: 50px !important;
-            left: auto !important;
+            left: 50% !important;
+            transform: translate(-50%, -50%) !important;
             text-align: right !important;
             flex-direction: column !important;
             align-items: flex-end !important;
@@ -1136,6 +1138,8 @@ function HomePage({ onNavigateToAbout, onNavigateToProject, withBase }: { onNavi
             max-width: 900px !important;
             padding-left: 40px !important;
             padding-right: 40px !important;
+            padding-top: 12px !important;
+            padding-bottom: 12px !important;
           }
         }
         
@@ -1144,6 +1148,8 @@ function HomePage({ onNavigateToAbout, onNavigateToProject, withBase }: { onNavi
           nav > div {
             padding-left: 30px !important;
             padding-right: 30px !important;
+            padding-top: 12px !important;
+            padding-bottom: 12px !important;
           }
           
           .work-grid {
@@ -1198,23 +1204,23 @@ function HomePage({ onNavigateToAbout, onNavigateToProject, withBase }: { onNavi
       }}>
         {/* Nav Content Container */}
         <div style={{
-          maxWidth: '1180px',
+          maxWidth: windowWidth <= 1400 ? (windowWidth <= 1200 ? '900px' : '1000px') : '1180px',
           margin: '0 auto',
           width: '100%',
-          padding: isCompact ? '12px 60px' : '20px 60px',
+          padding: windowWidth <= 768 ? '14px 20px' : (windowWidth <= 992 ? '12px 30px' : (windowWidth <= 1200 ? '12px 40px' : (windowWidth <= 1400 ? '12px 50px' : (isCompact ? '12px 60px' : '20px 60px')))),
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center'
         }}>
           <div style={{ 
-            fontSize: isCompact ? '17px' : '21px', 
+            fontSize: windowWidth <= 768 ? '18px' : (isCompact ? '17px' : '21px'), 
             fontWeight: 800,
             color: '#ffd900',
             transition: 'all 0.8s cubic-bezier(0.19, 1, 0.22, 1)'
           }}>
             SONGHEE ⓒ
           </div>
-        <div style={{ display: 'flex', gap: isCompact ? '36px' : '47px' }}>
+        <div style={{ display: 'flex', gap: windowWidth <= 768 ? '24px' : (isCompact ? '36px' : '47px') }}>
           <div 
           style={{ 
             position: 'relative',
@@ -1233,7 +1239,7 @@ function HomePage({ onNavigateToAbout, onNavigateToProject, withBase }: { onNavi
               style={{ 
                 color: '#ffd900', 
                 textDecoration: 'none', 
-                fontSize: isCompact ? '14px' : '17px', 
+                fontSize: windowWidth <= 768 ? '15px' : (isCompact ? '14px' : '17px'), 
                 fontWeight: 600,
                 cursor: 'pointer',
                 background: 'none',
@@ -1256,7 +1262,7 @@ function HomePage({ onNavigateToAbout, onNavigateToProject, withBase }: { onNavi
             style={{ 
               color: '#ffd900', 
               textDecoration: 'none', 
-              fontSize: isCompact ? '14px' : '17px', 
+              fontSize: windowWidth <= 768 ? '15px' : (isCompact ? '14px' : '17px'), 
               fontWeight: 600,
               cursor: 'pointer',
               background: 'none',
@@ -1386,11 +1392,11 @@ function HomePage({ onNavigateToAbout, onNavigateToProject, withBase }: { onNavi
         }}>
           <div className="hero-content-wrapper" style={{
             width: '100%',
-            maxWidth: '1180px',
+            maxWidth: windowWidth <= 1400 ? (windowWidth <= 1200 ? '900px' : '1000px') : '1180px',
             position: 'relative',
             margin: '0 auto',
-            paddingLeft: windowWidth < 1400 ? 'clamp(20px, 4vw, 50px)' : '2.25rem',
-            paddingRight: windowWidth < 1400 ? 'clamp(20px, 4vw, 50px)' : '2.25rem'
+            padding: windowWidth <= 768 ? '14px 20px' : (windowWidth <= 992 ? '12px 30px' : (windowWidth <= 1200 ? '12px 40px' : (windowWidth <= 1400 ? '12px 50px' : '12px 60px'))),
+            boxSizing: 'border-box'
         }}>
           <motion.div 
             className="hero-content" 
@@ -1409,7 +1415,7 @@ function HomePage({ onNavigateToAbout, onNavigateToProject, withBase }: { onNavi
                 className="hero-typing-text" 
                 style={{ 
                   position: 'absolute',
-                  left: windowWidth < 1400 ? 'clamp(20px, 4vw, 50px)' : '2.25rem',
+                  left: 0,
                   bottom: '-20px',
                   y: useTransform(smoothProgress, [0, 0.3], [0, -30])
                 }}
@@ -1446,7 +1452,7 @@ function HomePage({ onNavigateToAbout, onNavigateToProject, withBase }: { onNavi
                 className="hero-main-text" 
                 style={{ 
                   position: 'absolute',
-                  left: windowWidth < 1400 ? 'clamp(20px, 4vw, 50px)' : '2.25rem',
+                  left: 0,
                   bottom: '-20px',
                   y: useTransform(smoothProgress, [0, 0.3], [0, -30])
                 }}
@@ -1481,7 +1487,7 @@ function HomePage({ onNavigateToAbout, onNavigateToProject, withBase }: { onNavi
               className="hero-chinese" 
               style={{ 
                   position: 'absolute',
-                  right: windowWidth < 1400 ? 'clamp(20px, 4vw, 50px)' : '2.25rem',
+                  right: 0,
                   bottom: '-20px',
                 textAlign: 'right',
                 y: useTransform(smoothProgress, [0, 0.3], [0, -20])
@@ -1521,9 +1527,12 @@ function HomePage({ onNavigateToAbout, onNavigateToProject, withBase }: { onNavi
       {/* Selected Work Section */}
       <SectionWithAnimation id="work">
         <section id="work" style={{
-          padding: windowWidth < 768 ? '120px 20px 80px' : windowWidth < 1400 ? '180px 40px 120px' : '180px 60px 120px',
+          paddingTop: windowWidth < 768 ? '120px' : '180px',
+          paddingBottom: windowWidth < 768 ? '80px' : '120px',
+          paddingLeft: windowWidth <= 768 ? '20px' : (windowWidth <= 992 ? '30px' : (windowWidth <= 1200 ? '40px' : (windowWidth <= 1400 ? '50px' : '60px'))),
+          paddingRight: windowWidth <= 768 ? '20px' : (windowWidth <= 992 ? '30px' : (windowWidth <= 1200 ? '40px' : (windowWidth <= 1400 ? '50px' : '60px'))),
           width: '100%',
-          maxWidth: '1180px',
+          maxWidth: windowWidth <= 1400 ? (windowWidth <= 1200 ? '900px' : '1000px') : '1180px',
           margin: '0 auto'
         }}>
           <motion.div 
@@ -1787,9 +1796,12 @@ function HomePage({ onNavigateToAbout, onNavigateToProject, withBase }: { onNavi
       {/* Expertise Section */}
       <SectionWithAnimation>
         <section style={{
-          padding: windowWidth < 768 ? '60px 20px 180px' : '60px 60px 240px',
+          paddingTop: windowWidth < 768 ? '60px' : '60px',
+          paddingBottom: windowWidth < 768 ? '180px' : '240px',
+          paddingLeft: windowWidth <= 768 ? '20px' : (windowWidth <= 992 ? '30px' : (windowWidth <= 1200 ? '40px' : (windowWidth <= 1400 ? '50px' : '60px'))),
+          paddingRight: windowWidth <= 768 ? '20px' : (windowWidth <= 992 ? '30px' : (windowWidth <= 1200 ? '40px' : (windowWidth <= 1400 ? '50px' : '60px'))),
           width: '100%',
-          maxWidth: '1180px',
+          maxWidth: windowWidth <= 1400 ? (windowWidth <= 1200 ? '900px' : '1000px') : '1180px',
           margin: '0 auto',
           background: 'linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(10,10,10,0.5) 100%)'
         }}>
@@ -1931,13 +1943,13 @@ function HomePage({ onNavigateToAbout, onNavigateToProject, withBase }: { onNavi
             className="footer-cta-content"
             style={{
               position: 'absolute',
-              top: '50%',
+              top: '40%',
               left: '50%',
               transform: 'translate(-50%, -50%)',
               zIndex: 3,
-              maxWidth: '1180px',
+              maxWidth: windowWidth <= 1400 ? (windowWidth <= 1200 ? '900px' : '1000px') : '1180px',
               width: '100%',
-              padding: `0 ${windowWidth < 1400 ? '50px' : '60px'}`,
+              padding: `0 ${windowWidth <= 768 ? '20px' : (windowWidth <= 992 ? '30px' : (windowWidth <= 1200 ? '40px' : (windowWidth <= 1400 ? '50px' : '60px')))}`,
               boxSizing: 'border-box',
               display: 'flex',
               flexDirection: 'column',
@@ -2050,9 +2062,9 @@ function HomePage({ onNavigateToAbout, onNavigateToProject, withBase }: { onNavi
             pointerEvents: 'none'
           }}>
             <div className="footer-bottom-content" style={{
-            maxWidth: '1180px',
+            maxWidth: windowWidth <= 1400 ? (windowWidth <= 1200 ? '900px' : '1000px') : '1180px',
               width: '100%',
-              padding: `0 ${windowWidth < 1400 ? '50px' : '60px'}`,
+              padding: `0 ${windowWidth <= 768 ? '20px' : (windowWidth <= 992 ? '30px' : (windowWidth <= 1200 ? '40px' : (windowWidth <= 1400 ? '50px' : '60px')))}`,
               display: 'flex',
               flexDirection: 'column',
               gap: windowWidth < 768 ? '6px' : '9px'
@@ -2061,10 +2073,10 @@ function HomePage({ onNavigateToAbout, onNavigateToProject, withBase }: { onNavi
               display: 'flex',
               justifyContent: 'space-between',
               alignItems: 'center',
-                width: '100%',
+              width: '100%',
               paddingBottom: '0',
-                borderBottom: 'none',
-                pointerEvents: 'auto'
+              borderBottom: 'none',
+              pointerEvents: 'auto'
             }}>
               <p className="footer-logo" style={{
                 fontSize: windowWidth < 768 ? '12px' : '14px',
