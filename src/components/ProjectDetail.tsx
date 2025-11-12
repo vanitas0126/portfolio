@@ -2208,7 +2208,9 @@ export function ProjectDetail({ projectId, onBack, onNavigateToProject, onNaviga
   const [isCompact, setIsCompact] = useState(false);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   
-  const project = projectsData[projectId];
+  // Normalize projectId: remove trailing slashes and convert to lowercase
+  const normalizedProjectId = projectId?.replace(/\/+$/, '').toLowerCase() || '';
+  const project = projectsData[normalizedProjectId];
   const heroHasVideo = !!project?.heroVideo;
   const heroAspectRatio = heroHasVideo ? '16 / 9' : '875 / 583';
   const heroMaxHeight = heroHasVideo ? '600px' : '620px';
