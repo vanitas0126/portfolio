@@ -1928,11 +1928,14 @@ function HomePage({ onNavigateToAbout, onNavigateToProject, withBase }: { onNavi
             style={{
               position: 'relative',
               zIndex: 3,
-              textAlign: 'right',
-              padding: `0 ${windowWidth < 1400 ? 'clamp(20px, 4vw, 50px)' : '60px'} 0`,
+              textAlign: windowWidth < 768 ? 'left' : 'right',
+              padding: `${windowWidth < 768 ? '0 clamp(20px, 4vw, 40px) 0' : `0 ${windowWidth < 1400 ? 'clamp(20px, 4vw, 50px)' : '60px'} 0`}`,
               maxWidth: '1180px',
               margin: '0 auto',
-              width: '100%'
+              width: '100%',
+              display: 'flex',
+              justifyContent: windowWidth < 768 ? 'flex-start' : 'flex-end',
+              alignItems: 'center'
             }}
             initial={{ opacity: 0.5 }}
             whileInView={{ 
@@ -2043,7 +2046,7 @@ function HomePage({ onNavigateToAbout, onNavigateToProject, withBase }: { onNavi
               padding: `0 ${windowWidth < 1400 ? 'clamp(20px, 4vw, 50px)' : 'clamp(40px, 8vw, 120px)'}`,
               display: 'flex',
               flexDirection: 'column',
-              gap: '9px'
+              gap: windowWidth < 768 ? '6px' : '9px'
           }}>
             <div className="footer-content" style={{
               display: 'flex',
@@ -2055,7 +2058,7 @@ function HomePage({ onNavigateToAbout, onNavigateToProject, withBase }: { onNavi
                 pointerEvents: 'auto'
             }}>
               <p className="footer-logo" style={{
-                fontSize: '14px',
+                fontSize: windowWidth < 768 ? '12px' : '14px',
                 fontWeight: 600,
                 lineHeight: 'normal',
                 margin: 0,
@@ -2065,7 +2068,7 @@ function HomePage({ onNavigateToAbout, onNavigateToProject, withBase }: { onNavi
                 SONGHEE ⓒ
               </p>
               <a href="mailto:allisvanitas@gmail.com" className="footer-email" style={{
-                fontSize: '14px',
+                fontSize: windowWidth < 768 ? '12px' : '14px',
                 fontWeight: 500,
                 lineHeight: 'normal',
                 margin: 0,

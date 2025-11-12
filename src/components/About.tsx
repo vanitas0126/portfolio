@@ -631,14 +631,18 @@ export default function About({ onNavigateHome, onNavigateToWork, onNavigateToPr
 
           {/* CTA Content */}
           <motion.div
+            className="footer-cta-content"
             style={{
               position: 'relative',
               zIndex: 3,
               textAlign: isMobile ? 'left' : 'right',
-              padding: isMobile ? '0 24px' : '0 60px 0',
+              padding: isMobile ? '0 clamp(20px, 5vw, 40px) 0' : '0 60px 0',
               maxWidth: '1180px',
               margin: '0 auto',
-              width: '100%'
+              width: '100%',
+              display: 'flex',
+              justifyContent: isMobile ? 'flex-start' : 'flex-end',
+              alignItems: 'center'
             }}
             initial={false}
             animate={{ opacity: 1 }}
@@ -740,10 +744,10 @@ export default function About({ onNavigateHome, onNavigateToWork, onNavigateToPr
             <div className="footer-bottom-content" style={{
             maxWidth: '1180px',
               width: '100%',
-              padding: `0 ${isMobile ? '24px' : (windowWidth < 1400 ? 'clamp(20px, 4vw, 50px)' : 'clamp(40px, 8vw, 120px)')}`,
+              padding: `0 ${isMobile ? 'clamp(20px, 5vw, 40px)' : (windowWidth < 1400 ? 'clamp(20px, 4vw, 50px)' : 'clamp(40px, 8vw, 120px)')}`,
               display: 'flex',
               flexDirection: 'column',
-              gap: '9px'
+              gap: isMobile ? '6px' : '9px'
           }}>
             <div className="footer-content" style={{
               display: 'flex',
@@ -755,7 +759,7 @@ export default function About({ onNavigateHome, onNavigateToWork, onNavigateToPr
                 pointerEvents: 'auto'
             }}>
               <p className="footer-logo" style={{
-                fontSize: '14px',
+                fontSize: isMobile ? '12px' : '14px',
                 fontWeight: 600,
                 lineHeight: 'normal',
                 margin: 0,
@@ -765,7 +769,7 @@ export default function About({ onNavigateHome, onNavigateToWork, onNavigateToPr
                 SONGHEE ⓒ
               </p>
               <a href="mailto:allisvanitas@gmail.com" className="footer-email" style={{
-                fontSize: '14px',
+                fontSize: isMobile ? '12px' : '14px',
                 fontWeight: 500,
                 lineHeight: 'normal',
                 margin: 0,
