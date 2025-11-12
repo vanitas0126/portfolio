@@ -635,12 +635,12 @@ export default function About({ onNavigateHome, onNavigateToWork, onNavigateToPr
             style={{
               position: 'absolute',
               top: '50%',
-              right: windowWidth < 1400 ? 'clamp(20px, 4vw, 50px)' : 'clamp(40px, 8vw, 120px)',
+              right: isMobile ? '24px' : (windowWidth < 1400 ? 'clamp(20px, 4vw, 50px)' : 'clamp(40px, 8vw, 120px)'),
               transform: 'translateY(-50%)',
               zIndex: 3,
               textAlign: 'right',
-              maxWidth: '1180px',
-              width: 'auto'
+              width: 'auto',
+              maxWidth: 'calc(100% - clamp(40px, 8vw, 120px) * 2)'
             }}
             initial={false}
             animate={{ opacity: 1 }}
@@ -727,31 +727,19 @@ export default function About({ onNavigateHome, onNavigateToWork, onNavigateToPr
           </motion.div>
 
           {/* Footer Content */}
-          <div style={{
-            position: 'absolute',
-            inset: 0,
-            zIndex: 3,
-            width: '100%',
-            height: '100%',
-            display: 'flex',
-            alignItems: 'flex-end',
-            paddingBottom: 'clamp(40px, 8vh, 80px)',
-            justifyContent: 'center',
-            pointerEvents: 'none'
-          }}>
-            <div
-              className="footer-bottom-content"
-              style={{
-                position: 'absolute',
-                bottom: 'clamp(40px, 8vh, 80px)',
-                left: windowWidth < 1400 ? 'clamp(20px, 4vw, 50px)' : 'clamp(40px, 8vw, 120px)',
-                zIndex: 3,
-                display: 'flex',
-                flexDirection: 'column',
-                gap: '4px',
-                pointerEvents: 'auto'
-              }}
-            >
+          <div
+            className="footer-bottom-content"
+            style={{
+              position: 'absolute',
+              bottom: 'clamp(40px, 8vh, 80px)',
+              left: isMobile ? '24px' : (windowWidth < 1400 ? 'clamp(20px, 4vw, 50px)' : 'clamp(40px, 8vw, 120px)'),
+              zIndex: 3,
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '4px',
+              pointerEvents: 'auto'
+            }}
+          >
               <p className="footer-logo" style={{
                 fontSize: '12px',
                 fontWeight: 600,
@@ -781,7 +769,6 @@ export default function About({ onNavigateHome, onNavigateToWork, onNavigateToPr
               >
                 allisvanitas@gmail.com
               </a>
-            </div>
           </div>
         </section>
       </SectionWithAnimation>

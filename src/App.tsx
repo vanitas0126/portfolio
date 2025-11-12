@@ -1932,8 +1932,8 @@ function HomePage({ onNavigateToAbout, onNavigateToProject, withBase }: { onNavi
               transform: 'translateY(-50%)',
               zIndex: 3,
               textAlign: 'right',
-              maxWidth: '1180px',
-              width: 'auto'
+              width: 'auto',
+              maxWidth: 'calc(100% - clamp(40px, 8vw, 120px) * 2)'
             }}
             initial={{ opacity: 0.5 }}
             whileInView={{ 
@@ -2026,27 +2026,15 @@ function HomePage({ onNavigateToAbout, onNavigateToProject, withBase }: { onNavi
           </motion.div>
 
           {/* Footer Content */}
-          <div style={{
+          <div className="footer-bottom-content" style={{
             position: 'absolute',
-            inset: 0,
+            bottom: 'clamp(40px, 8vh, 80px)',
+            left: windowWidth < 1400 ? 'clamp(20px, 4vw, 50px)' : 'clamp(40px, 8vw, 120px)',
             zIndex: 3,
-            width: '100%',
-            height: '100%',
             display: 'flex',
-            alignItems: 'flex-end',
-            paddingBottom: 'clamp(40px, 8vh, 80px)',
-            justifyContent: 'center',
-            pointerEvents: 'none'
-          }}>
-            <div className="footer-bottom-content" style={{
-              position: 'absolute',
-              bottom: 'clamp(40px, 8vh, 80px)',
-              left: windowWidth < 1400 ? 'clamp(20px, 4vw, 50px)' : 'clamp(40px, 8vw, 120px)',
-              zIndex: 3,
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '4px',
-              pointerEvents: 'auto'
+            flexDirection: 'column',
+            gap: '4px',
+            pointerEvents: 'auto'
           }}>
               <p className="footer-logo" style={{
                 fontSize: '12px',
@@ -2077,7 +2065,6 @@ function HomePage({ onNavigateToAbout, onNavigateToProject, withBase }: { onNavi
               >
                 allisvanitas@gmail.com
               </a>
-            </div>
           </div>
         </section>
       </SectionWithAnimation>
