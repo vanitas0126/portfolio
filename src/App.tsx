@@ -21,6 +21,7 @@ declare global {
 export default function App() {
   const [currentPage, setCurrentPage] = useState<'home' | 'about'>('home');
   const [selectedProject, setSelectedProject] = useState<string | null>(null);
+  const pathnameRef = useRef<string | null>(null);
 
   // Simple path-based routing to enable real-ish URLs (/project/:id, /about)
   useEffect(() => {
@@ -54,19 +55,27 @@ export default function App() {
     const onPopState = () => applyPath();
     window.addEventListener('popstate', onPopState);
     return () => window.removeEventListener('popstate', onPopState);
+    pathnameRef.current = window.location.pathname;
   }, []);
 
   // Update the browser URL (history) when selectedProject or currentPage changes
   useEffect(() => {
+    if (typeof window === 'undefined') return;
+
     if (selectedProject) {
       const desired = `/project/${selectedProject}`;
-      if (window.location.pathname !== desired) {
-        window.history.pushState(null, '', desired);
-      }
+      window.history.pushState(null, '', desired);
+      pathnameRef.current = desired;
     } else if (currentPage === 'about') {
-      if (window.location.pathname !== '/about') window.history.pushState(null, '', '/about');
+      if (pathnameRef.current !== '/about') {
+        window.history.pushState(null, '', '/about');
+        pathnameRef.current = '/about';
+      }
     } else {
-      if (window.location.pathname !== '/') window.history.pushState(null, '', '/');
+      if (!pathnameRef.current || pathnameRef.current !== '/') {
+        window.history.pushState(null, '', '/');
+        pathnameRef.current = '/';
+      }
     }
   }, [selectedProject, currentPage]);
 
